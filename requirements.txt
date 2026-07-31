@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+supabase
+python-dotenv
+pydantic
+python-jose[cryptography]
+bcrypt
+feedparser
+spacy
+email-validator
+slowapi
+httpx
+networkx
+reportlab
