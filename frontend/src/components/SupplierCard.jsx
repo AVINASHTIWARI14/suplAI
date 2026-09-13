@@ -9,22 +9,20 @@ const SupplierCard = ({ supplier, rank }) => {
   return (
     <div className="card supplier-card">
       {rank != null && (
-        <div style={{ fontSize: '0.72rem', color: '#64748b', marginBottom: 6 }}>#{rank}</div>
+        <div className="supplier-card-rank">#{rank}</div>
       )}
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10 }}>
-        <div>
-          <div style={{ fontWeight: 700 }}>{supplier.name}</div>
-          <div style={{ color: '#8b9bb4', fontSize: '0.85rem', marginTop: 4 }}>
-            {supplier.location || supplier.country || 'Unknown'}
-          </div>
-        </div>
+      <div className="supplier-card-header">
+        <div className="supplier-card-name">{supplier.name}</div>
         <RiskBadge score={risk} />
       </div>
-      <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ color: '#8b9bb4', fontSize: '0.82rem' }}>{'★'.repeat(stars)}{'☆'.repeat(5 - stars)}</span>
-        <span style={{ color: riskColor(risk), fontWeight: 700 }}>Score {Math.round(risk)}</span>
+      <div className="supplier-card-location">
+        {supplier.location || supplier.country || 'Unknown'}
       </div>
-      <div style={{ marginTop: 8, fontSize: '0.8rem', color: '#64748b' }}>Composite {composite}</div>
+      <div className="supplier-card-metrics">
+        <span className="supplier-card-rating">{'★'.repeat(stars)}{'☆'.repeat(5 - stars)}</span>
+        <span className="supplier-card-score" style={{ color: riskColor(risk) }}>Score {Math.round(risk)}</span>
+      </div>
+      <div className="supplier-card-composite">Composite {composite}</div>
     </div>
   );
 };

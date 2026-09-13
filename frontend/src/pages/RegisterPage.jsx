@@ -40,6 +40,7 @@ const RegisterPage = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
+        <div className="auth-logo-text" aria-label="SuplAI"><span>Supl</span><span className="logo-ai-text">AI<span className="logo-dot">.</span></span></div>
         <h1>Create account</h1>
         <p className="auth-tagline">Join SuplAI — built for Indian SMEs, works globally</p>
         <form onSubmit={onSubmit} className="auth-form">

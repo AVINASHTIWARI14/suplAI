@@ -138,7 +138,7 @@ const NetworkPage = ({ companyId }) => {
       </div>
 
       <div className="network-layout">
-        <section className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <section className="card network-graph-card" style={{ padding: 0, overflow: 'hidden' }}>
           <div className="card-header" style={{ padding: '16px 18px 0' }}>
             <h3 className="card-title">Dependency Graph</h3>
             <div className="graph-legend">

@@ -4,8 +4,8 @@ import { useAuth } from '../context/AuthContext.jsx';
 const AuthModal = ({ mode, onClose, onSwitchMode }) => {
   const { login, register } = useAuth();
   const isLogin = mode === 'login';
-  const [email, setEmail] = useState(isLogin ? 'admin@suplai.com' : '');
-  const [password, setPassword] = useState(isLogin ? 'admin123' : '');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -38,10 +38,10 @@ const AuthModal = ({ mode, onClose, onSwitchMode }) => {
 
   return (
     <div className="modal-overlay" onClick={onClose} role="presentation">
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-card login-modal-card" onClick={(e) => e.stopPropagation()}>
         <button type="button" className="modal-close" onClick={onClose}>×</button>
         <h2>{isLogin ? 'Sign in' : 'Register'}</h2>
-        <form onSubmit={onSubmit} className="auth-form">
+        <form onSubmit={onSubmit} className="form login-modal-form">
           {!isLogin && (
             <>
               <label>Full name</label>
@@ -53,7 +53,7 @@ const AuthModal = ({ mode, onClose, onSwitchMode }) => {
           <label>Password</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           {error && <div className="auth-error">{error}</div>}
-          <button type="submit" className="btn-primary" disabled={loading}>
+          <button type="submit" className="button-submit" disabled={loading}>
             {loading ? 'Please wait…' : isLogin ? 'Login' : 'Create account'}
           </button>
         </form>
@@ -64,7 +64,6 @@ const AuthModal = ({ mode, onClose, onSwitchMode }) => {
             <>Have an account? <button type="button" className="link-btn" onClick={() => onSwitchMode('login')}>Login</button></>
           )}
         </p>
-        {isLogin && <p className="auth-hint">Demo: admin@suplai.com / admin123</p>}
       </div>
     </div>
   );

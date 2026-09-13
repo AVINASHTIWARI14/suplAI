@@ -64,20 +64,27 @@ const ForceGraph = ({
     (node, ctx, globalScale) => {
       const isCompany = node.id === companyNodeId;
       const risk = riskFor ? riskFor(node.id) : node.risk ?? 0;
-      const r = isCompany ? 9 : 6;
+      const r = isCompany ? 12 : 8 + Math.min(Math.max(risk, 0), 100) / 35;
       const disrupted = disruptedIds?.has(node.id);
       const selected = node.id === selectedId;
 
-      ctx.beginPath();
-      ctx.arc(node.x, node.y, r, 0, 2 * Math.PI);
-      ctx.fillStyle = isCompany ? COMPANY_COLOR : nodeColorForRisk(risk);
-      ctx.fill();
+      const nodeColor = isCompany ? COMPANY_COLOR : nodeColorForRisk(risk);
+      const headRadius = r * 0.38;
+      const bodyWidth = r * 1.45;
+      const bodyHeight = r * 0.95;
+      ctx.fillStyle = nodeColor;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.5 / globalScale;
 
-      if (isCompany) {
-        ctx.lineWidth = 2 / globalScale;
-        ctx.strokeStyle = '#0b1220';
-        ctx.stroke();
-      }
+      ctx.beginPath();
+      ctx.arc(node.x, node.y - r * 0.42, headRadius, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.roundRect(node.x - bodyWidth / 2, node.y + r * 0.03, bodyWidth, bodyHeight, bodyHeight / 2);
+      ctx.fill();
+      ctx.stroke();
       if (disrupted) {
         ctx.beginPath();
         ctx.arc(node.x, node.y, r + 3, 0, 2 * Math.PI);
@@ -97,11 +104,18 @@ const ForceGraph = ({
 
       const label = node.label || node.id;
       const fontSize = Math.max(10 / globalScale, 3);
-      ctx.font = `${fontSize}px 'Inter', sans-serif`;
+      const detailSize = Math.max(8 / globalScale, 2.5);
+      ctx.font = `600 ${fontSize}px 'PT Serif', Georgia, serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = '#cbd5e1';
-      if (globalScale > 0.7) ctx.fillText(label, node.x, node.y + r + 2);
+      ctx.fillStyle = '#ffffff';
+      if (globalScale > 0.55) {
+        ctx.fillText(label, node.x, node.y + r + 2);
+        ctx.font = `${detailSize}px 'JetBrains Mono', monospace`;
+        ctx.fillStyle = '#f5f5f5';
+        const typeLabel = isCompany ? 'COMPANY' : (node.type || 'SUPPLIER').toUpperCase();
+        ctx.fillText(`${typeLabel} · RISK ${Math.round(risk)}`, node.x, node.y + r + fontSize + 4);
+      }
     },
     [companyNodeId, riskFor, disruptedIds, selectedId],
   );
@@ -111,8 +125,7 @@ const ForceGraph = ({
       const key = `${typeof link.source === 'object' ? link.source.id : link.source}>${
         typeof link.target === 'object' ? link.target.id : link.target
       }`;
-      if (highlightLinks?.has(key)) return '#f43f5e';
-      return 'rgba(148,163,184,0.25)';
+      return '#ffffff';
     },
     [highlightLinks],
   );
@@ -122,13 +135,14 @@ const ForceGraph = ({
       const key = `${typeof link.source === 'object' ? link.source.id : link.source}>${
         typeof link.target === 'object' ? link.target.id : link.target
       }`;
-      return highlightLinks?.has(key) ? 2.5 : 1;
+      return highlightLinks?.has(key) ? 2.5 : 1.4;
     },
     [highlightLinks],
   );
 
   return (
     <div className="force-graph-wrap" ref={wrapRef} style={{ height }}>
+      <div className="force-graph-grid" aria-hidden="true" />
       <ForceGraph2D
         ref={fgRef}
         width={width}
@@ -144,13 +158,16 @@ const ForceGraph = ({
         }}
         linkColor={linkColor}
         linkWidth={linkWidth}
+        linkDirectionalArrowLength={5}
+        linkDirectionalArrowRelPos={0.82}
+        linkDirectionalArrowColor={linkColor}
         linkDirectionalParticles={(link) => {
           const key = `${typeof link.source === 'object' ? link.source.id : link.source}>${
             typeof link.target === 'object' ? link.target.id : link.target
           }`;
           return highlightLinks?.has(key) ? 3 : 0;
         }}
-        linkDirectionalParticleColor={() => '#f43f5e'}
+        linkDirectionalParticleColor={() => '#ffffff'}
         linkDirectionalParticleWidth={2}
         onNodeClick={onNodeClick}
         cooldownTicks={80}

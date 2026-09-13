@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { MapContainer, TileLayer, CircleMarker, Polyline, Tooltip } from 'react-leaflet';
+import { Fragment, useMemo } from 'react';
+import { MapContainer, TileLayer, Marker, Polyline, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -23,6 +23,14 @@ const WORLD_BOUNDS = [
 const TERRAIN_TILES = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
 const TERRAIN_ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>';
+
+const userIcon = (color, size = 'small') => L.divIcon({
+  className: 'map-user-icon-wrap',
+  html: `<span class="map-user-icon ${size}" style="--user-color:${color}"><span class="map-user-head"></span><span class="map-user-body"></span></span>`,
+  iconSize: size === 'large' ? [28, 32] : [20, 24],
+  iconAnchor: size === 'large' ? [14, 32] : [10, 24],
+  tooltipAnchor: [0, -20],
+});
 
 const MapPanel = ({ suppliers = [], graph, companyCoords }) => {
   const points = useMemo(() => {
@@ -109,53 +117,55 @@ const MapPanel = ({ suppliers = [], graph, companyCoords }) => {
           <MapFitBounds points={points} hub={hub} />
 
           {hub && (
-            <CircleMarker
+            <Marker
               center={[hub.lat, hub.lng]}
-              radius={11}
-              pathOptions={{
-                color: '#0ea5e9',
-                fillColor: '#38bdf8',
-                fillOpacity: 0.9,
-                weight: 3,
-              }}
+              position={[hub.lat, hub.lng]}
+              icon={userIcon('#0ea5e9', 'large')}
             >
               <Tooltip direction="top">
                 <strong>Company HQ</strong>
               </Tooltip>
-            </CircleMarker>
+            </Marker>
           )}
 
           {points.map((supplier) => (
-            <CircleMarker
+            <Marker
               key={supplier.id}
-              center={[supplier.lat, supplier.lng]}
-              radius={9}
-              pathOptions={{
-                color: '#1a1a1a',
-                fillColor: supplier.color,
-                fillOpacity: 0.92,
-                weight: 2,
-              }}
+              position={[supplier.lat, supplier.lng]}
+              icon={userIcon(supplier.color)}
             >
               <Tooltip direction="top" offset={[0, -8]}>
                 <strong>{supplier.name}</strong>
                 <div>{supplier.location || supplier.country}</div>
                 <div>Risk {Math.round(supplier.risk_score ?? 0)}</div>
               </Tooltip>
-            </CircleMarker>
+            </Marker>
           ))}
 
           {edges.map((positions, index) => (
-            <Polyline
-              key={`edge-${index}`}
-              positions={positions}
-              pathOptions={{
-                color: '#38bdf8',
-                weight: 1.5,
-                opacity: 0.5,
-                dashArray: '5 7',
-              }}
-            />
+            <Fragment key={`edge-${index}`}>
+              <Polyline
+                positions={positions}
+                pathOptions={{
+                  color: '#111111',
+                  weight: 2,
+                  opacity: 0.9,
+                  className: 'map-connection-line',
+                  lineCap: 'round',
+                }}
+              />
+              <Polyline
+                positions={positions}
+                pathOptions={{
+                  color: '#ffffff',
+                  weight: 2,
+                  opacity: 0.95,
+                  className: 'map-connection-highlight',
+                  dashArray: '3 16',
+                  lineCap: 'round',
+                }}
+              />
+            </Fragment>
           ))}
         </MapContainer>
       </div>

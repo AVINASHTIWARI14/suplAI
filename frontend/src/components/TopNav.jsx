@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import NotificationsPanel from './NotificationsPanel.jsx';
+import AuthModal from './AuthModal.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 
-const TopNav = ({ companies, selectedCompanyId, onCompanyChange, companyName, user, apiOnline }) => {
+const TopNav = ({ companies, selectedCompanyId, onCompanyChange, companyName, user, apiOnline, sidebarOpen, onToggleSidebar }) => {
   const { logout, isAuthenticated, role } = useAuth();
   const [notifOpen, setNotifOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
   const initials = (user?.full_name || 'G')
     .split(' ')
     .map((n) => n[0])
@@ -16,17 +19,23 @@ const TopNav = ({ companies, selectedCompanyId, onCompanyChange, companyName, us
     <>
       <header className="top-nav">
         <div className="top-nav-brand">
-          <div className="logo"><span className="logo-supl">Supl</span><span className="logo-ai">AI</span></div>
-          <span className="logo-tag">RISK TERMINAL</span>
+          <div className="logo-text" aria-label="SuplAI"><span>Supl</span><span className="logo-ai-text">AI<span className="logo-dot">.</span></span></div>
         </div>
 
         <div className="top-nav-actions">
-          <span className={`api-pill ${apiOnline ? 'online' : 'offline'}`}>
-            {apiOnline ? '● DB connected' : '○ Backend offline'}
-          </span>
-
+          <button
+            type="button"
+            className={`hamburger-btn${sidebarOpen ? ' open' : ''}`}
+            onClick={onToggleSidebar}
+            aria-label="Toggle navigation"
+            aria-expanded={sidebarOpen}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
           <select
-            className="company-select"
+            className="company-select header-company-select"
             value={selectedCompanyId}
             onChange={(e) => onCompanyChange(e.target.value)}
             aria-label="Select company"
@@ -38,6 +47,10 @@ const TopNav = ({ companies, selectedCompanyId, onCompanyChange, companyName, us
             ))}
           </select>
 
+          <button type="button" className="header-login-button" onClick={() => { setAuthMode('login'); setLoginOpen(true); }}>
+            Login
+          </button>
+
           {isAuthenticated && (
             <button
               type="button"
@@ -46,7 +59,7 @@ const TopNav = ({ companies, selectedCompanyId, onCompanyChange, companyName, us
               aria-label="Open notifications"
               title="Notifications"
             >
-              🔔
+              <span aria-hidden="true">!</span>
             </button>
           )}
 
@@ -62,7 +75,7 @@ const TopNav = ({ companies, selectedCompanyId, onCompanyChange, companyName, us
                   </div>
                 </div>
               </div>
-              <button type="button" className="btn-header" onClick={logout}>
+              <button type="button" className="btn-header logout-button" onClick={logout}>
                 Logout
               </button>
             </>
@@ -72,6 +85,9 @@ const TopNav = ({ companies, selectedCompanyId, onCompanyChange, companyName, us
 
       {notifOpen && isAuthenticated && (
         <NotificationsPanel companyId={selectedCompanyId} onClose={() => setNotifOpen(false)} />
+      )}
+      {loginOpen && (
+        <AuthModal mode={authMode} onClose={() => setLoginOpen(false)} onSwitchMode={setAuthMode} />
       )}
     </>
   );

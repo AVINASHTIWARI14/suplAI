@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Sidebar = ({ onLogout, user }) => {
-  const [open, setOpen] = useState(false);
+const Sidebar = ({ onLogout, user, open, onToggle }) => {
 
   const items = [
     { to: '/', label: 'Dashboard' },
@@ -17,18 +15,6 @@ const Sidebar = ({ onLogout, user }) => {
   return (
     <aside className={`sidebar${open ? ' sidebar--open' : ''}`}>
       {/* Hamburger button */}
-      <button
-        type="button"
-        className={`hamburger-btn${open ? ' open' : ''}`}
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Toggle navigation"
-        aria-expanded={open}
-      >
-        <span />
-        <span />
-        <span />
-      </button>
-
       {/*
         Fully UNMOUNT the nav when closed. Previously it stayed mounted and was
         hidden only via max-height/opacity, which the mobile media query failed
@@ -43,7 +29,7 @@ const Sidebar = ({ onLogout, user }) => {
               to={item.to}
               end={item.to === '/'}
               className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
-              onClick={() => setOpen(false)}
+              onClick={() => onToggle(false)}
             >
               {item.label}
             </NavLink>
@@ -52,7 +38,7 @@ const Sidebar = ({ onLogout, user }) => {
       )}
 
       {open && user && (
-        <button type="button" className="sidebar-logout" onClick={onLogout}>Logout</button>
+        <button type="button" className="sidebar-logout logout-button" onClick={onLogout}>Logout</button>
       )}
     </aside>
   );

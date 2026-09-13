@@ -53,34 +53,6 @@ const SupplierExplorerPage = ({ companyId }) => {
       </div>
 
       <div className="explorer-layout">
-        <aside className="card filters-panel">
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search suppliers…"
-          />
-          <div className="filter-row">
-            <label>Country</label>
-            <select value={country} onChange={(e) => setCountry(e.target.value)}>
-              {countries.map((c) => (
-                <option key={c} value={c}>{c}</option>
-              ))}
-            </select>
-          </div>
-          <div className="filter-row">
-            <label>Max risk score: {riskMax}</label>
-            <input type="range" min="0" max="100" value={riskMax} onChange={(e) => setRiskMax(Number(e.target.value))} />
-          </div>
-          <div className="filter-row">
-            <label>Max cost index: {costMax}</label>
-            <input type="range" min="0" max="100" value={costMax} onChange={(e) => setCostMax(Number(e.target.value))} />
-          </div>
-          <div className="filter-row">
-            <label>Max lead time (days): {leadMax}</label>
-            <input type="range" min="1" max="90" value={leadMax} onChange={(e) => setLeadMax(Number(e.target.value))} />
-          </div>
-        </aside>
-
         <div className="supplier-grid">
           {loading ? (
             <div className="card loading-state">Loading suppliers…</div>
@@ -92,6 +64,38 @@ const SupplierExplorerPage = ({ companyId }) => {
             <div className="card empty-state">No suppliers match your filters.</div>
           )}
         </div>
+
+        <aside className="card filters-panel">
+          <div className="filter-basics">
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search suppliers…"
+            />
+            <div className="filter-row">
+              <label>Country</label>
+              <select value={country} onChange={(e) => setCountry(e.target.value)}>
+                {countries.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="filter-ranges">
+            <div className="filter-row">
+              <label>Max risk score: {riskMax}</label>
+              <input type="range" min="0" max="100" value={riskMax} onChange={(e) => setRiskMax(Number(e.target.value))} />
+            </div>
+            <div className="filter-row">
+              <label>Max cost index: {costMax}</label>
+              <input type="range" min="0" max="100" value={costMax} onChange={(e) => setCostMax(Number(e.target.value))} />
+            </div>
+            <div className="filter-row">
+              <label>Max lead time (days): {leadMax}</label>
+              <input type="range" min="1" max="90" value={leadMax} onChange={(e) => setLeadMax(Number(e.target.value))} />
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );

@@ -5,8 +5,8 @@ import { useAuth } from '../context/AuthContext.jsx';
 const LoginPage = () => {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('admin@suplai.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -29,7 +29,8 @@ const LoginPage = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1>SuplAI</h1>
+        <div className="auth-logo-text" aria-label="SuplAI"><span>Supl</span><span className="logo-ai-text">AI<span className="logo-dot">.</span></span></div>
+        <h1>Sign in</h1>
         <p className="auth-tagline">AI-Powered Supply Chain Disruption Prediction</p>
         <p className="auth-sub">Warn companies before disruptions hit — Monitor · Map · Score · Alert · Recommend</p>
         <form onSubmit={onSubmit} className="auth-form">
@@ -38,14 +39,13 @@ const LoginPage = () => {
           <label>Password</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           {error && <div className="auth-error">{error}</div>}
-          <button type="submit" className="btn-primary" disabled={loading}>
+          <button type="submit" className="btn-primary login-button" disabled={loading}>
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
         <p className="auth-footer">
           No account? <Link to="/register">Register</Link>
         </p>
-        <p className="auth-hint">Demo: admin@suplai.com / admin123</p>
       </div>
     </div>
   );
