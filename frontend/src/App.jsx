@@ -8,8 +8,9 @@ import AlternativesPage from './pages/AlternativesPage.jsx';
 import DisruptionFeedPage from './pages/DisruptionFeedPage.jsx';
 import AlertsPage from './pages/AlertsPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
+import Home from './pages/Home.jsx';
 import TopNav from './components/TopNav.jsx';
-import Sidebar from './components/Sidebar.jsx';
+import BrandLogo from './components/BrandLogo.jsx';
 import companiesFallback from './data/companies.js';
 import { fetchCompanies } from './api/client.js';
 import { checkBackendHealth } from './api.js';
@@ -21,7 +22,6 @@ function AppShell() {
   const [overallRisk, setOverallRisk] = useState(0);
   const [apiOnline, setApiOnline] = useState(false);
   const [apiError, setApiError] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     checkBackendHealth().then(setApiOnline);
@@ -56,7 +56,6 @@ function AppShell() {
 
   return (
     <div className="app-shell">
-      <Sidebar riskScore={overallRisk} onLogout={logout} user={user} open={sidebarOpen} onToggle={setSidebarOpen} />
       <div className="main-content">
         <TopNav
           companies={companies}
@@ -65,8 +64,6 @@ function AppShell() {
           companyName={companyName}
           user={user}
           apiOnline={apiOnline}
-          sidebarOpen={sidebarOpen}
-          onToggleSidebar={() => setSidebarOpen((value) => !value)}
         />
         {apiError && !apiOnline && (
           <div className="banner-error">
@@ -74,8 +71,9 @@ function AppShell() {
           </div>
         )}
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <DashboardPage
                 companyId={companyId}
@@ -94,7 +92,7 @@ function AppShell() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <footer className="site-footer">
-          <div className="site-footer-brand" aria-label="SuplAI"><span>Supl</span><span className="logo-ai-text">AI<span className="logo-dot">.</span></span></div>
+          <BrandLogo variant="footer" />
           <a href="#privacy">Privacy Policy</a>
           <div className="site-footer-socials" aria-label="Social links">
             <a className="social-linkedin" href="https://www.linkedin.com/in/avinash-tiwari-95b5932a6" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn">

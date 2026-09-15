@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { fetchCompanies } from '../api/client.js';
+import BrandLogo from '../components/BrandLogo.jsx';
 
 const RegisterPage = () => {
   const { register, isAuthenticated } = useAuth();
@@ -40,7 +41,7 @@ const RegisterPage = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-logo-text" aria-label="SuplAI"><span>Supl</span><span className="logo-ai-text">AI<span className="logo-dot">.</span></span></div>
+        <BrandLogo variant="auth" />
         <h1>Create account</h1>
         <p className="auth-tagline">Join SuplAI — built for Indian SMEs, works globally</p>
         <form onSubmit={onSubmit} className="auth-form">

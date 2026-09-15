@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import BrandLogo from '../components/BrandLogo.jsx';
 
 const LoginPage = () => {
   const { login, isAuthenticated } = useAuth();
@@ -29,7 +30,7 @@ const LoginPage = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-logo-text" aria-label="SuplAI"><span>Supl</span><span className="logo-ai-text">AI<span className="logo-dot">.</span></span></div>
+        <BrandLogo variant="auth" />
         <h1>Sign in</h1>
         <p className="auth-tagline">AI-Powered Supply Chain Disruption Prediction</p>
         <p className="auth-sub">Warn companies before disruptions hit — Monitor · Map · Score · Alert · Recommend</p>
