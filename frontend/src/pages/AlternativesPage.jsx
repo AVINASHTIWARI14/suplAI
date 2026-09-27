@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
-import RiskBadge from '../components/RiskBadge.jsx';
+
 import { fetchAlternatives } from '../api/client.js';
-import { alternativeRowTone } from '../utils/risk.js';
+
+const getRiskLevel = (score) => {
+  const value = Number(score ?? 0);
+
+  if (value >= 70) return 'HIGH';
+  if (value >= 40) return 'MEDIUM';
+  return 'LOW';
+};
 
 const AlternativesPage = ({ companyId }) => {
   const [alternatives, setAlternatives] = useState([]);
@@ -9,6 +16,7 @@ const AlternativesPage = ({ companyId }) => {
 
   useEffect(() => {
     setLoading(true);
+
     fetchAlternatives(companyId)
       .then((data) => setAlternatives(data || []))
       .catch(() => setAlternatives([]))
@@ -16,55 +24,108 @@ const AlternativesPage = ({ companyId }) => {
   }, [companyId]);
 
   return (
-    <div className="page-body">
-      <div>
-        <h1 style={{ margin: 0, fontSize: '1.6rem' }}>Alternatives</h1>
-        <p style={{ color: '#8b9bb4', margin: '6px 0 0' }}>Ranked alternate suppliers — green is best, red is avoid.</p>
-      </div>
+    <div className="alternatives-page">
+      <div className="alternatives-table-card">
 
-      <div className="card" style={{ overflowX: 'auto' }}>
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Cost Index</th>
-              <th>Lead Time</th>
-              <th>Risk</th>
-              <th>Composite</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="7" className="loading-state">Loading alternatives…</td>
-              </tr>
-            ) : alternatives.length ? (
-              alternatives.map((row, index) => {
-                const composite = row.composite_score ?? 0;
-                const tone = alternativeRowTone(composite);
-                return (
-                  <tr key={row.id} className={tone}>
-                    <td>{index + 1}</td>
-                    <td style={{ fontWeight: 700 }}>{row.name}</td>
-                    <td>{row.location || row.country || '—'}</td>
-                    <td>{row.cost_index != null ? row.cost_index.toFixed(1) : '—'}</td>
-                    <td>{row.lead_time_days != null ? `${row.lead_time_days}d` : '—'}</td>
-                    <td>
-                      <RiskBadge score={row.risk_score ?? 0} />
-                    </td>
-                    <td style={{ fontWeight: 700 }}>{composite.toFixed(1)}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="7" className="empty-state">No alternative suppliers for this company.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <div className="alternatives-table-header">
+          <div>Rank</div>
+          <div>Supplier</div>
+          <div>Location</div>
+          <div>Cost Index</div>
+          <div>Lead Time</div>
+          <div>Risk</div>
+          <div>Composite</div>
+        </div>
+
+        {loading ? (
+          <div className="alternatives-state">
+            Loading alternatives...
+          </div>
+        ) : alternatives.length ? (
+          alternatives.map((supplier, index) => {
+            const riskScore = Number(supplier.risk_score ?? 0);
+            const riskLevel = getRiskLevel(riskScore);
+
+            const costIndex =
+              supplier.cost_index != null
+                ? Number(supplier.cost_index).toFixed(1)
+                : '—';
+
+            const leadTime =
+              supplier.lead_time_days != null
+                ? `${supplier.lead_time_days}d`
+                : '—';
+
+            const composite =
+              supplier.composite_score != null
+                ? Number(supplier.composite_score).toFixed(1)
+                : '—';
+
+            return (
+              <div
+                className="alternative-table-row"
+                key={supplier.id ?? index}
+              >
+                <div className="alternative-rank">
+                  #{index + 1}
+                </div>
+
+                <div className="alternative-supplier">
+                  <div className="alternative-avatar">
+                    {supplier.name?.charAt(0)?.toUpperCase() || 'S'}
+                  </div>
+
+                  <div className="alternative-supplier-info">
+                    <strong>
+                      {supplier.name || 'Unknown Supplier'}
+                    </strong>
+
+                    <span>
+                      {supplier.category ||
+                        supplier.industry ||
+                        'Supplier'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="alternative-location">
+                  {supplier.location ||
+                    supplier.country ||
+                    'Global'}
+                </div>
+
+                <div className="alternative-value">
+                  {costIndex}
+                </div>
+
+                <div className="alternative-value">
+                  {leadTime}
+                </div>
+
+                <div>
+                  <span
+                    className={`alternative-risk alternative-risk-${riskLevel.toLowerCase()}`}
+                  >
+                    {riskLevel}
+                  </span>
+
+                  <small className="alternative-risk-score">
+                    {riskScore}
+                  </small>
+                </div>
+
+                <div className="alternative-composite">
+                  {composite}
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="alternatives-state">
+            No alternative suppliers for this company.
+          </div>
+        )}
+
       </div>
     </div>
   );

@@ -1,3 +1,6 @@
+import activeDisruptionBg from '../assets/active-disruption-bg.png';
+import riskySupplierBg from '../assets/risky-supplier-bg.png';
+import disruptionFeedBg from '../assets/disruption-feed-bg.png';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
@@ -127,7 +130,10 @@ const DashboardPage = ({ companyId, company, onRiskChange, apiOnline }) => {
 
       <section className="dashboard-info-grid">
         {/* ACTIVE DISRUPTIONS */}
-        <article className="dashboard-info-card">
+        <article
+          className="dashboard-info-card active-disruption-card"
+          style={{ '--disruption-bg': `url(${activeDisruptionBg})` }}
+        >
           <div className="dashboard-info-header">
             <div className="dashboard-info-title">Active Disruptions</div>
           </div>
@@ -172,7 +178,10 @@ const DashboardPage = ({ companyId, company, onRiskChange, apiOnline }) => {
         </article>
 
         {/* RISKY SUPPLIERS */}
-        <article className="dashboard-info-card">
+        <article
+          className="dashboard-info-card risky-supplier-card"
+          style={{ '--supplier-bg': `url(${riskySupplierBg})` }}
+        >
           <div className="dashboard-info-header">
             <div className="dashboard-info-title">Risky Suppliers</div>
           </div>
@@ -226,7 +235,10 @@ const DashboardPage = ({ companyId, company, onRiskChange, apiOnline }) => {
         </article>
 
         {/* DISRUPTION FEED */}
-        <article className="dashboard-info-card">
+        <article
+          className="dashboard-info-card disruption-feed-card"
+          style={{ '--feed-bg': `url(${disruptionFeedBg})` }}
+        >
           <div className="dashboard-info-header">
             <div className="dashboard-info-title">Disruption Feed</div>
           </div>
