@@ -123,10 +123,6 @@ h3,
   padding: 72px 10px 12px;
 }
 
-.sidebar-brand {
-  display: none;
-}
-
 /* ── Header navigation ── */
 .header-nav {
   display: flex;
@@ -2163,142 +2159,6 @@ textarea:focus {
   border-radius: 0;
   font-family: inherit;
   z-index: 0;
-}
-
-/* ── Network + simulation ── */
-.network-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
-  gap: 14px;
-  align-items: start;
-}
-
-.network-side {
-  display: grid;
-  gap: 14px;
-}
-
-.network-graph-card {
-  background: #fff5c7;
-  border-color: rgba(63, 55, 32, 0.08);
-  box-shadow: 0 7px 14px rgba(63, 55, 32, 0.1);
-}
-
-.force-graph-wrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: #09090b;
-  border-top: 1px solid var(--border);
-  margin-top: 12px;
-}
-
-.force-graph-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-.force-graph-wrap canvas {
-  position: relative;
-  z-index: 1;
-}
-
-.graph-legend {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-}
-
-.sim-controls {
-  display: grid;
-  gap: 12px;
-}
-
-.sim-count .mono.big {
-  color: var(--danger);
-  margin-right: 6px;
-}
-
-.sim-summary {
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-  display: grid;
-  gap: 12px;
-}
-
-.sim-metric {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-
-.sim-metric .muted {
-  font-size: 0.82rem;
-}
-
-.sim-risk-delta {
-  display: grid;
-  gap: 4px;
-}
-
-.sim-risk-delta .muted {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.delta-row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-
-.delta-row .arrow {
-  color: var(--text-dim);
-}
-
-.node-detail-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.dep-list {
-  margin-top: 12px;
-}
-
-.dep-title {
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.dep-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.85rem;
-}
-
-.dep-dir {
-  color: var(--text-dim);
-  width: 14px;
-  font-family: var(--font-mono);
 }
 
 /* ── Signals (news / fx / weather) ── */
@@ -9090,42 +8950,6 @@ input[type="range"]:active::-moz-range-thumb {
 
 
 /* =========================================================
-   REMOVE OLD NETWORK CARD STYLING
-   ========================================================= */
-
-.network-page
-.network-graph-card {
-  position: static !important;
-
-  width: auto !important;
-  height: auto !important;
-
-  margin: 0 !important;
-  padding: 0 !important;
-
-  background: transparent !important;
-
-  border: none !important;
-
-  border-radius: 0 !important;
-
-  box-shadow: none !important;
-
-  overflow: visible !important;
-}
-
-
-/* Hide the old graph header because legend
-   is now an overlay. */
-
-.network-page
-.network-graph-card
-.card-header {
-  display: none !important;
-}
-
-
-/* =========================================================
    PAGE / FOOTER
    ========================================================= */
 
@@ -10217,157 +10041,9 @@ body,
   display: none !important;
   content: none !important;
   box-shadow: none !important;
-}/* =========================
-   ALERTS PAGE
-   ========================= */
-
-.alerts-page-header {
-  margin-bottom: 24px !important;
-}
-
-.alerts-page-header h1 {
-  margin: 0 !important;
-  color: #F4C400 !important;
-  font-size: 32px !important;
-  font-weight: 800 !important;
-  line-height: 1.15 !important;
-}
-
-/* Blue page background + footer positioning */
-.main-content:has(.page-body:has(.alerts-page-header)) {
-  background: #183153 !important;
-  min-height: calc(100vh - 70px) !important;
-  height: auto !important;
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-}
-
-/* Footer */
-.main-content:has(.page-body:has(.alerts-page-header)) > .site-footer {
-  background: #0b1f3a !important;
-  position: relative !important;
-  z-index: 20 !important;
-  margin-top: 0 !important;
-}/* =========================
-   ALERTS PAGE - FINAL
-   ========================= */
-
-.main-content:has(.page-body:has(.alerts-page-header)) {
-  background: #183153 !important;
-  min-height: calc(100vh - 70px) !important;
-  height: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-}
-
-.main-content:has(.page-body:has(.alerts-page-header)) > .page-body {
-  flex: 1 0 auto !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
-/* ALERT CARDS */
-.main-content:has(.page-body:has(.alerts-page-header)) .card {
-  background: #F4C400 !important;
-  background-color: #F4C400 !important;
-  color: #183153 !important;
-  border: none !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Alert title */
-.main-content:has(.page-body:has(.alerts-page-header)) .card > div > div > div:first-child {
-  color: #183153 !important;
-}
-
-/* Alert message */
-.main-content:has(.page-body:has(.alerts-page-header)) .card > div > div > div:nth-child(2) {
-  color: #183153 !important;
-}
-
-/* Footer */
-.main-content:has(.page-body:has(.alerts-page-header)) > .site-footer {
-  flex: 0 0 auto !important;
-  width: 100% !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  background: #0b1f3a !important;
-  position: relative !important;
-  top: auto !important;
-  bottom: auto !important;
-  z-index: 20 !important;
-}/* =================================
-   ALERTS PAGE
-   ================================= */
-
-.alert-card {
-  background: #F4C400 !important;
-  background-color: #F4C400 !important;
-  color: #183153 !important;
-  border: none !important;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18) !important;
-}
-
-/* Alert title */
-.alert-card > div > div:first-child > div:first-child {
-  color: #183153 !important;
-  font-weight: 800 !important;
-}
-
-/* Alert message */
-.alert-card > div > div:first-child > div:nth-child(2) {
-  color: #183153 !important;
-}
-
-/* =================================
-   FOOTER
-   ================================= */
-
-.main-content:has(.alert-card) {
-  background: #183153 !important;
-  min-height: calc(100vh - 70px) !important;
-  height: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  padding-bottom: 0 !important;
-  overflow: visible !important;
-}
-
-.main-content:has(.alert-card) > .page-body {
-  flex: 1 0 auto !important;
-}
-
-.main-content:has(.alert-card) > .site-footer {
-  position: relative !important;
-  width: 100% !important;
-  margin: 0 !important;
-  background: #0b1f3a !important;
-  flex-shrink: 0 !important;
-  z-index: 50 !important;
-}.alert-card {
-  background: #0b1f3a !important;
-  background-color: #0b1f3a !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.10) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18) !important;
-}
-
-/* Alert title */
-.alert-card > div > div:first-child > div:first-child {
-  color: #ffffff !important;
-  font-weight: 800 !important;
-}
-
-/* Alert message */
-.alert-card > div > div:first-child > div:nth-child(2) {
-  color: #ffffff !important;
-}/* =========================================
-   ALERTS PAGE
-   ========================================= */
+}/* =========================================================
+   ALERTS PAGE — FINAL DESIGN
+   ========================================================= */
 
 .alerts-page {
   width: 100%;
@@ -10376,10 +10052,6 @@ body,
   box-sizing: border-box;
   background: #183153 !important;
 }
-
-/* =========================
-   HEADER
-   ========================= */
 
 .alerts-page-header {
   margin-bottom: 24px;
@@ -10393,10 +10065,6 @@ body,
   line-height: 1.1 !important;
 }
 
-/* =========================
-   ALERT LIST
-   ========================= */
-
 .alerts-list {
   width: 100%;
   display: flex;
@@ -10404,139 +10072,79 @@ body,
   gap: 20px;
 }
 
-/* =========================
-   ALERT CARD
-   ========================= */
-
 .alert-card {
   position: relative !important;
-
   width: 100% !important;
   min-height: 180px !important;
-
   box-sizing: border-box !important;
-
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-
   padding: 28px 30px !important;
-
   overflow: hidden !important;
-
   background: #0b1f3a !important;
   color: #ffffff !important;
-
   border: 1px solid rgba(70, 130, 190, 0.35) !important;
   border-radius: 16px !important;
-
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.20) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20) !important;
 }
-
-/* =========================
-   WARNING ICON
-   ========================= */
 
 .alert-warning-watermark {
   position: absolute !important;
-
   width: 155px !important;
   height: 155px !important;
-
   object-fit: contain !important;
-
   left: 50% !important;
   top: 50% !important;
-
   transform: translate(-50%, -50%) !important;
-
   opacity: 0.13 !important;
-
   filter: blur(5px) !important;
-
   pointer-events: none !important;
-
   z-index: 0 !important;
-
-  /*
-    Removes the black background if the PNG
-    contains one and keeps the yellow icon subtle.
-  */
   mix-blend-mode: screen !important;
 }
 
-/* =========================
-   LEFT CONTENT
-   ========================= */
-
 .alert-content {
   position: relative !important;
-
   z-index: 2 !important;
-
   max-width: 68% !important;
 }
 
 .alert-title {
-  color: #ffffff !important;
-
+  color: #F4C400 !important;
   font-size: 28px !important;
-  font-weight: 800 !important;
-
+  font-weight: 900 !important;
   line-height: 1.2 !important;
-
   margin-bottom: 12px !important;
 }
 
 .alert-message {
   color: #b9c8dc !important;
-
   font-size: 17px !important;
   font-weight: 500 !important;
-
   line-height: 1.55 !important;
 }
 
-/* =========================
-   RIGHT SIDE
-   ========================= */
-
 .alert-actions {
   position: relative !important;
-
   z-index: 3 !important;
-
   display: flex !important;
-
   flex-direction: column !important;
-
   align-items: flex-end !important;
-
   justify-content: center !important;
-
   gap: 22px !important;
-
   min-width: 150px !important;
 }
-
-/* =========================
-   SEVERITY
-   ========================= */
 
 .alert-card .risk-badge {
   font-size: 17px !important;
   font-weight: 900 !important;
-
   padding: 9px 22px !important;
-
   border-radius: 25px !important;
-
   box-shadow: none !important;
   text-shadow: none !important;
 }
 
-/* Remove severity glow/dots */
 .alert-card .risk-badge::before,
 .alert-card .risk-badge::after {
   display: none !important;
@@ -10544,81 +10152,48 @@ body,
   box-shadow: none !important;
 }
 
-/* =========================
-   MARK AS READ
-   ========================= */
-
 .alert-read-button {
   padding: 10px 24px !important;
-
   background: transparent !important;
-
   color: #ffffff !important;
-
   border: 2px solid #8ba4c2 !important;
   border-radius: 10px !important;
-
   font-size: 15px !important;
   font-weight: 700 !important;
-
   cursor: pointer !important;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease !important;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease !important;
 }
 
 .alert-read-button:hover {
   background: rgba(255, 255, 255, 0.08) !important;
-
   border-color: #ffffff !important;
-
   transform: translateY(-1px) !important;
 }
 
-/* =========================
-   FOOTER
-   ========================= */
-
 .main-content:has(.alerts-page) {
   background: #183153 !important;
-
   min-height: calc(100vh - 70px) !important;
-
   height: auto !important;
-
   padding: 0 !important;
-
   overflow-x: hidden !important;
   overflow-y: visible !important;
 }
 
 .main-content:has(.alerts-page) > .site-footer {
   background: #0b1f3a !important;
-
   position: relative !important;
-
   margin: 0 !important;
-
   width: 100% !important;
-
   z-index: 50 !important;
 }
 
-/* =========================
-   RESPONSIVE
-   ========================= */
-
 @media (max-width: 800px) {
-
   .alerts-page {
     padding: 22px 18px 35px;
   }
 
   .alert-card {
     min-height: 220px !important;
-
     padding: 24px !important;
   }
 
@@ -10645,12 +10220,9 @@ body,
 }
 
 @media (max-width: 600px) {
-
   .alert-card {
     flex-direction: column !important;
-
     align-items: flex-start !important;
-
     gap: 22px !important;
   }
 
@@ -10660,20 +10232,15 @@ body,
 
   .alert-actions {
     width: 100% !important;
-
     flex-direction: row !important;
-
     align-items: center !important;
-
     justify-content: space-between !important;
   }
-}.alert-card .alert-title {
-  color: #F4C400 !important;
-  font-weight: 900 !important;
-  font-size: 28px !important;
-}/* =================================
-   SETTINGS PAGE
-   ================================= */
+}
+
+/* =========================================================
+   SETTINGS PAGE — FINAL DESIGN
+   ========================================================= */
 
 .settings-page-title {
   margin: 0 !important;
@@ -10683,13 +10250,12 @@ body,
   line-height: 1.15 !important;
 }
 
-/* Page + footer layout */
 .main-content:has(.settings-page-title) {
-  background: #183153 !important;
   min-height: calc(100vh - 70px) !important;
   height: auto !important;
   display: flex !important;
   flex-direction: column !important;
+  background: #183153 !important;
   padding-bottom: 0 !important;
   overflow-x: hidden !important;
   overflow-y: visible !important;
@@ -10701,31 +10267,12 @@ body,
   box-sizing: border-box !important;
 }
 
-.main-content:has(.settings-page-title) > .site-footer {
-  flex: 0 0 auto !important;
-  width: 100% !important;
-  margin: 0 !important;
-  background: #0b1f3a !important;
-  position: relative !important;
-  top: auto !important;
-  bottom: auto !important;
-  z-index: 50 !important;
-}/* =================================
-   SETTINGS PAGE FINAL STYLING
-   ================================= */
-
-/* Subtitle under Settings heading */
 .main-content:has(.settings-page-title) .page-sub {
   color: #ffffff !important;
   font-weight: 600 !important;
 }
 
-
-/* =================================
-   NLP + RISK SCORING CARD
-   ================================= */
-
-.main-content:has(.settings-page-title) .page-body > .card:first-of-type {
+.main-content:has(.settings-page-title) .page-body > .card {
   background: #0b1f3a !important;
   background-color: #0b1f3a !important;
   color: #ffffff !important;
@@ -10734,50 +10281,51 @@ body,
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
 }
 
-
-/* =================================
-   LOCATE ADDRESS CARD
-   ================================= */
-
-.main-content:has(.settings-page-title) .page-body > .card:last-child {
-  background: #0b1f3a !important;
-  background-color: #0b1f3a !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.10) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
-}
-
-
-/* Card text */
-.main-content:has(.settings-page-title) .page-body .card-title {
+.main-content:has(.settings-page-title) .page-body > .card section {
+  background: transparent !important;
+  background-color: transparent !important;
   color: #ffffff !important;
 }
 
-.main-content:has(.settings-page-title) .page-body .muted {
+.main-content:has(.settings-page-title) .page-body > .card h3 {
+  color: #ffffff !important;
+}
+
+.main-content:has(.settings-page-title) .page-body > .card .muted {
   color: #d6deea !important;
 }
 
-
-/* =================================
-   FOOTER TO BOTTOM
-   ================================= */
-
-.main-content:has(.settings-page-title) {
-  min-height: calc(100vh - 70px) !important;
-  height: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  background: #183153 !important;
-  padding-bottom: 0 !important;
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
+.main-content:has(.settings-page-title) button {
+  background: #f4c400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
 }
 
-.main-content:has(.settings-page-title) > .page-body {
-  flex: 1 0 auto !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+.main-content:has(.settings-page-title) button:hover {
+  background: #f4c400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.main-content:has(.settings-page-title) button:disabled {
+  background: #f4c400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  box-shadow: none !important;
+  opacity: 0.65 !important;
+}
+
+.main-content:has(.settings-page-title) button::before,
+.main-content:has(.settings-page-title) button::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
 }
 
 .main-content:has(.settings-page-title) > .site-footer {
@@ -10790,168 +10338,191 @@ body,
   top: auto !important;
   bottom: auto !important;
   z-index: 50 !important;
-}/* =========================================
-   SETTINGS - FORCE ALL CARDS DARK BLUE
-   ========================================= */
-
-.main-content:has(.settings-page-title) .page-body > .card {
-  background: #0b1f3a !important;
-  background-color: #0b1f3a !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.10) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
-}
-
-/* NLP Monitor + Risk Scoring sections */
-.main-content:has(.settings-page-title) .page-body > .card section {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: #ffffff !important;
-}
-
-/* Card headings */
-.main-content:has(.settings-page-title) .page-body > .card h3 {
-  color: #ffffff !important;
-}
-
-/* Card descriptions */
-.main-content:has(.settings-page-title) .page-body > .card .muted {
-  color: #d6deea !important;
-}
-
-/* Settings subtitle */
-.main-content:has(.settings-page-title) .page-sub {
-  color: #ffffff !important;
-  font-weight: 600 !important;
-}/* =========================================
-   SETTINGS BUTTONS — LOGIN STYLE
-   ========================================= */
-
-/* All buttons on Settings page */
-.main-content:has(.settings-page-title) button {
-  background: #f4c400 !important;
-  background-image: none !important;
-  color: #183153 !important;
-  border: none !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-  filter: none !important;
-}
-
-/* Hover */
-.main-content:has(.settings-page-title) button:hover {
-  background: #f4c400 !important;
-  background-image: none !important;
-  color: #183153 !important;
-  box-shadow: none !important;
-  transform: none !important;
-}
-
-/* Disabled buttons */
-.main-content:has(.settings-page-title) button:disabled {
-  background: #f4c400 !important;
-  background-image: none !important;
-  color: #183153 !important;
-  box-shadow: none !important;
-  opacity: 0.65 !important;
 }
 
 
-/* =========================================
-   REMOVE BUTTON REFLECTION / GLOW
-   ========================================= */
-
-.main-content:has(.settings-page-title) button::before,
-.main-content:has(.settings-page-title) button::after {
-  display: none !important;
-  content: none !important;
-  box-shadow: none !important;
-}
-
-
-/* =========================================
-   SETTINGS FOOTER — STICK TO BOTTOM
-   ========================================= */
+/* =========================================================
+   SETTINGS PAGE — FOOTER FINAL FIX
+   ========================================================= */
 
 .main-content:has(.settings-page-title) {
-  min-height: calc(100vh - 70px) !important;
-  height: auto !important;
   display: flex !important;
   flex-direction: column !important;
-  padding-bottom: 0 !important;
+  width: 100% !important;
+  height: calc(100vh - 70px) !important;
+  min-height: calc(100vh - 70px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
   background: #183153 !important;
   overflow-x: hidden !important;
-  overflow-y: visible !important;
+  overflow-y: auto !important;
 }
 
 .main-content:has(.settings-page-title) > .page-body {
   flex: 1 0 auto !important;
+  width: 100% !important;
   min-height: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .main-content:has(.settings-page-title) > .site-footer {
-  margin-top: auto !important;
-  flex: 0 0 auto !important;
-  width: 100% !important;
-  background: #0b1f3a !important;
   position: relative !important;
-  bottom: auto !important;
   top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  min-height: 105px !important;
+  height: auto !important;
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  margin: auto 0 0 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  background: #0b1f3a !important;
+  transform: none !important;
   z-index: 50 !important;
-}/* =========================================
-   SETTINGS PAGE — FOOTER FINAL FIX
-   ========================================= */
+}
 
-/* Kill the grey area everywhere */
 html,
 body,
 #root {
   margin: 0 !important;
-  min-height: 100vh !important;
-  background: #0b1f3a !important;
+  min-height: 100% !important;
 }
+/* =========================================================
+   SETTINGS PAGE — FINAL FOOTER FIX
+   ========================================================= */
 
-/* Settings page background */
 .main-content:has(.settings-page-title) {
+  display: flex !important;
+  flex-direction: column !important;
+
+  width: 100% !important;
+  height: 100vh !important;
   min-height: 100vh !important;
-  height: auto !important;
-  box-sizing: border-box !important;
-  background: #183153 !important;
-  padding-bottom: 105px !important;
+
+  padding: 0 !important;
   margin: 0 !important;
+
+  background: #183153 !important;
+
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
 }
 
-/* Settings content */
-.main-content:has(.settings-page-title) .page-body {
-  min-height: calc(100vh - 175px) !important;
+/* Settings content takes the available space */
+.main-content:has(.settings-page-title) > .page-body {
+  flex: 1 1 auto !important;
+
+  width: 100% !important;
+  min-height: 0 !important;
+
   box-sizing: border-box !important;
 }
 
-
-/* =========================================
-   FOOTER — LOCK TO BOTTOM
-   ========================================= */
-
+/* Footer sits at the bottom of the main flex layout */
 .main-content:has(.settings-page-title) > .site-footer {
-  position: fixed !important;
+  position: relative !important;
 
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
 
-  width: 100vw !important;
-  height: 105px !important;
+  width: 100% !important;
+
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+
+  margin-top: auto !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+
+  height: auto !important;
   min-height: 105px !important;
 
-  margin: 0 !important;
-  padding: 0 !important;
+  padding: 14px 20px 16px !important;
 
   box-sizing: border-box !important;
 
   background: #0b1f3a !important;
 
-  z-index: 9999 !important;
+  z-index: 50 !important;
 
   transform: none !important;
+}
+
+/* Remove the old artificial height */
+.main-content:has(.settings-page-title) .page-body {
+  min-height: 0 !important;
+}/* =========================================================
+   SETTINGS PAGE — FINAL FOOTER FIX
+   ========================================================= */
+
+.main-content:has(.settings-page-title) {
+  display: flex !important;
+  flex-direction: column !important;
+
+  width: 100% !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  background: #183153 !important;
+
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* Settings content takes the available space */
+.main-content:has(.settings-page-title) > .page-body {
+  flex: 1 1 auto !important;
+
+  width: 100% !important;
+  min-height: 0 !important;
+
+  box-sizing: border-box !important;
+}
+
+/* Footer sits at the bottom of the main flex layout */
+.main-content:has(.settings-page-title) > .site-footer {
+  position: relative !important;
+
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  width: 100% !important;
+
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+
+  margin-top: auto !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+
+  height: auto !important;
+  min-height: 105px !important;
+
+  padding: 14px 20px 16px !important;
+
+  box-sizing: border-box !important;
+
+  background: #0b1f3a !important;
+
+  z-index: 50 !important;
+
+  transform: none !important;
+}
+
+/* Remove the old artificial height */
+.main-content:has(.settings-page-title) .page-body {
+  min-height: 0 !important;
 }
