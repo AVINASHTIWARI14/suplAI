@@ -9765,4 +9765,1193 @@ body,
   .alternatives-page {
     padding: 15px;
   }
+}/* =========================================================
+   DISRUPTION PAGE — BACKGROUND + FOOTER ONLY
+   ========================================================= */
+
+.main-content:has(.page-body) {
+  background: #183153 !important;
+}
+
+/* Disruption page background */
+.main-content:has(.feed-grid) {
+  background: #183153 !important;
+  min-height: calc(100vh - 80px) !important;
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+/* Footer */
+.main-content:has(.feed-grid) > .site-footer {
+  background: #0b1f3a !important;
+
+  position: relative !important;
+
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+
+  z-index: 20 !important;
+}/* =========================================================
+   DISRUPTION PAGE — FOOTER FIX
+   ========================================================= */
+
+.main-content:has(.feed-grid) {
+  min-height: calc(100vh - 70px) !important;
+  height: auto !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  background: #183153 !important;
+
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+
+/* Content takes available height */
+
+.main-content:has(.feed-grid) > .page-body {
+  flex: 1 0 auto !important;
+
+  width: 100% !important;
+  min-height: calc(100vh - 70px) !important;
+
+  box-sizing: border-box !important;
+
+  background: #183153 !important;
+}
+
+
+/* Footer comes AFTER the page content */
+
+.main-content:has(.feed-grid) > .site-footer {
+  flex: 0 0 auto !important;
+
+  position: relative !important;
+
+  top: auto !important;
+  bottom: auto !important;
+
+  width: 100% !important;
+
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+
+  background: #0b1f3a !important;
+
+  z-index: 50 !important;
+}/* ===== DISRUPTION FEED CARD ALIGNMENT ===== */
+
+.feed-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(280px, 1fr)) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  align-items: stretch !important;
+  box-sizing: border-box !important;
+  padding: 8px 0 24px !important;
+}
+
+/* Keep original cards, only improve positioning */
+.feed-grid > * {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .feed-grid {
+    grid-template-columns: repeat(2, minmax(280px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .feed-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}/* =========================================
+   DISRUPTION CARDS — CLEAN VERSION
+   ========================================= */
+
+.feed-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(280px, 1fr)) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  padding: 10px 0 25px !important;
+  box-sizing: border-box !important;
+}
+
+
+/* CARD */
+.feed-grid .disruption-card {
+  position: relative !important;
+
+  width: 100% !important;
+  min-height: 190px !important;
+  height: 190px !important;
+
+  box-sizing: border-box !important;
+  padding: 22px !important;
+
+  background: #0b1f3a !important;
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  border-radius: 14px !important;
+
+  color: #F4C400 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18) !important;
+
+  overflow: hidden !important;
+}
+
+
+/* TITLE */
+.feed-grid .disruption-card h1,
+.feed-grid .disruption-card h2,
+.feed-grid .disruption-card h3,
+.feed-grid .disruption-card h4 {
+  margin: 0 0 8px 0 !important;
+
+  color: #F4C400 !important;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+
+  line-height: 1.25 !important;
+}
+
+
+/* LOCATION / MAIN TEXT */
+.feed-grid .disruption-card p {
+  margin: 4px 0 !important;
+
+  color: #F4C400 !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+
+  line-height: 1.4 !important;
+}
+
+
+/* OTHER TEXT */
+.feed-grid .disruption-card span {
+  color: #F4C400 !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+}
+
+
+/* STRONG VALUES */
+.feed-grid .disruption-card strong {
+  color: #F4C400 !important;
+  font-weight: 800 !important;
+}
+
+
+/* =========================================
+   HIGH / MEDIUM / LOW
+   ========================================= */
+
+/* HIGH */
+.feed-grid .disruption-card .high,
+.feed-grid .disruption-card .severity-high {
+  color: #ff3b3b !important;
+  font-weight: 800 !important;
+}
+
+
+/* MEDIUM */
+.feed-grid .disruption-card .medium,
+.feed-grid .disruption-card .severity-medium {
+  color: #ff9f1c !important;
+  font-weight: 800 !important;
+}
+
+
+/* LOW */
+.feed-grid .disruption-card .low,
+.feed-grid .disruption-card .severity-low {
+  color: #18cd5e !important;
+  font-weight: 800 !important;
+}
+
+
+/* =========================================
+   HOVER
+   ========================================= */
+
+.feed-grid .disruption-card {
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    border-color 250ms ease !important;
+}
+
+.feed-grid .disruption-card:hover {
+  transform: translateY(-4px) !important;
+
+  border-color: rgba(244,196,0,0.45) !important;
+
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.28) !important;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1100px) {
+  .feed-grid {
+    grid-template-columns: repeat(2, minmax(280px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .feed-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .feed-grid .disruption-card {
+    min-height: 180px !important;
+    height: 180px !important;
+  }
+} .disruption-feed-page {
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  padding: 24px 28px;
+  box-sizing: border-box;
+  background: #183153;
+}
+
+.signals-panel-card {
+  width: 100%;
+  box-sizing: border-box;
+  background: #0b1f3a !important;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+}/* New Signals sub-card */
+.signals-panel-card .new-signals,
+.signals-panel-card .new-signals-card {
+  background: #ffffff !important;
+  color: #183153 !important;
+}/* NEW SIGNALS CARD — WHITE */
+.signals-panel-card * {
+  --new-signals-bg: #ffffff;
+}
+
+.signals-panel-card [class*="new-signal"],
+.signals-panel-card [class*="signal-card"],
+.signals-panel-card [class*="signal-item"] {
+  background: #ffffff !important;
+  color: #183153 !important;
+  border-color: rgba(24, 49, 83, 0.12) !important;
+}
+
+/* Text inside the white card */
+.signals-panel-card [class*="new-signal"] *,
+.signals-panel-card [class*="signal-card"] *,
+.signals-panel-card [class*="signal-item"] * {
+  color: #183153 !important;
+}/* NEWS SIGNALS CARD */
+.signals-panel > :last-child {
+  background: #ffffff !important;
+  color: #183153 !important;
+  border: 1px solid rgba(24, 49, 83, 0.12) !important;
+}
+
+/* NEWS SIGNALS heading */
+.signals-panel > :last-child h3,
+.signals-panel > :last-child h4 {
+  color: #183153 !important;
+}
+
+/* News text */
+.signals-panel > :last-child p,
+.signals-panel > :last-child span,
+.signals-panel > :last-child .news-title,
+.signals-panel > :last-child .news-meta {
+  color: #183153 !important;
+}
+
+/* Empty message */
+.signals-panel > :last-child {
+  color: #183153 !important;
+}/* Disruption card title */
+.feed-grid .disruption-card h3,
+.feed-grid .disruption-card h2,
+.feed-grid .disruption-card .title,
+.feed-grid .disruption-card .disruption-title {
+  color: #F4C400 !important;
+  font-size: 2em !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+}/* FORCE DISRUPTION TITLE */
+.feed-grid .disruption-card div:first-child div:first-child {
+  color: #F4C400 !important;
+  font-size: 2em !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+}/* =========================================
+   DISRUPTION CARDS — PURE WHITE
+   ========================================= */
+
+.feed-grid > * {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+  filter: none !important;
+  color: #183153 !important;
+}
+
+/* Force all card layers white */
+.feed-grid > *::before,
+.feed-grid > *::after {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+/* Text */
+.feed-grid > * * {
+  color: #183153 !important;
+}
+
+/* Title */
+.feed-grid > * div:first-child div:first-child {
+  color: #F4C400 !important;
+  font-weight: 800 !important;
+}
+
+/* HIGH */
+.feed-grid > * .risk-high,
+.feed-grid > * [class*="high"] {
+  color: #ef4444 !important;
+}
+
+/* MEDIUM */
+.feed-grid > * .risk-medium,
+.feed-grid > * [class*="medium"] {
+  color: #f59e0b !important;
+}/* DISRUPTION CARD TITLES */
+.feed-grid > * div:first-child div:first-child {
+  color: #F4C400 !important;
+  font-size: 1.65rem !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.2px !important;
+}/* =========================================
+   DISRUPTION CARDS
+   ========================================= */
+
+.disruption-cards-section {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.feed-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 20px !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+/* Actual DisruptionCard wrapper */
+.feed-grid > * {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================
+   DARK BLUE CARD
+   ========================================= */
+
+.feed-grid .card {
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  border-radius: 14px !important;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18) !important;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1100px) {
+  .feed-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .feed-grid {
+    grid-template-columns: 1fr !important;
+  }
+}/* Disruption cards - severity */
+.disruption-feed-card .risk-badge {
+  font-size: 1.05rem !important;
+  font-weight: 900 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Remove glowing dot */
+.disruption-feed-card .risk-badge::before,
+.disruption-feed-card .risk-badge::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}/* =========================
+   ALERTS PAGE
+   ========================= */
+
+.alerts-page-header {
+  margin-bottom: 24px !important;
+}
+
+.alerts-page-header h1 {
+  margin: 0 !important;
+  color: #F4C400 !important;
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+}
+
+/* Blue page background + footer positioning */
+.main-content:has(.page-body:has(.alerts-page-header)) {
+  background: #183153 !important;
+  min-height: calc(100vh - 70px) !important;
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+/* Footer */
+.main-content:has(.page-body:has(.alerts-page-header)) > .site-footer {
+  background: #0b1f3a !important;
+  position: relative !important;
+  z-index: 20 !important;
+  margin-top: 0 !important;
+}/* =========================
+   ALERTS PAGE - FINAL
+   ========================= */
+
+.main-content:has(.page-body:has(.alerts-page-header)) {
+  background: #183153 !important;
+  min-height: calc(100vh - 70px) !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.main-content:has(.page-body:has(.alerts-page-header)) > .page-body {
+  flex: 1 0 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* ALERT CARDS */
+.main-content:has(.page-body:has(.alerts-page-header)) .card {
+  background: #F4C400 !important;
+  background-color: #F4C400 !important;
+  color: #183153 !important;
+  border: none !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Alert title */
+.main-content:has(.page-body:has(.alerts-page-header)) .card > div > div > div:first-child {
+  color: #183153 !important;
+}
+
+/* Alert message */
+.main-content:has(.page-body:has(.alerts-page-header)) .card > div > div > div:nth-child(2) {
+  color: #183153 !important;
+}
+
+/* Footer */
+.main-content:has(.page-body:has(.alerts-page-header)) > .site-footer {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  background: #0b1f3a !important;
+  position: relative !important;
+  top: auto !important;
+  bottom: auto !important;
+  z-index: 20 !important;
+}/* =================================
+   ALERTS PAGE
+   ================================= */
+
+.alert-card {
+  background: #F4C400 !important;
+  background-color: #F4C400 !important;
+  color: #183153 !important;
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Alert title */
+.alert-card > div > div:first-child > div:first-child {
+  color: #183153 !important;
+  font-weight: 800 !important;
+}
+
+/* Alert message */
+.alert-card > div > div:first-child > div:nth-child(2) {
+  color: #183153 !important;
+}
+
+/* =================================
+   FOOTER
+   ================================= */
+
+.main-content:has(.alert-card) {
+  background: #183153 !important;
+  min-height: calc(100vh - 70px) !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding-bottom: 0 !important;
+  overflow: visible !important;
+}
+
+.main-content:has(.alert-card) > .page-body {
+  flex: 1 0 auto !important;
+}
+
+.main-content:has(.alert-card) > .site-footer {
+  position: relative !important;
+  width: 100% !important;
+  margin: 0 !important;
+  background: #0b1f3a !important;
+  flex-shrink: 0 !important;
+  z-index: 50 !important;
+}.alert-card {
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Alert title */
+.alert-card > div > div:first-child > div:first-child {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Alert message */
+.alert-card > div > div:first-child > div:nth-child(2) {
+  color: #ffffff !important;
+}/* =========================================
+   ALERTS PAGE
+   ========================================= */
+
+.alerts-page {
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  padding: 28px 32px 45px;
+  box-sizing: border-box;
+  background: #183153 !important;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.alerts-page-header {
+  margin-bottom: 24px;
+}
+
+.alerts-page-header h1 {
+  margin: 0 !important;
+  color: #F4C400 !important;
+  font-size: 34px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+}
+
+/* =========================
+   ALERT LIST
+   ========================= */
+
+.alerts-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =========================
+   ALERT CARD
+   ========================= */
+
+.alert-card {
+  position: relative !important;
+
+  width: 100% !important;
+  min-height: 180px !important;
+
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  padding: 28px 30px !important;
+
+  overflow: hidden !important;
+
+  background: #0b1f3a !important;
+  color: #ffffff !important;
+
+  border: 1px solid rgba(70, 130, 190, 0.35) !important;
+  border-radius: 16px !important;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.20) !important;
+}
+
+/* =========================
+   WARNING ICON
+   ========================= */
+
+.alert-warning-watermark {
+  position: absolute !important;
+
+  width: 155px !important;
+  height: 155px !important;
+
+  object-fit: contain !important;
+
+  left: 50% !important;
+  top: 50% !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  opacity: 0.13 !important;
+
+  filter: blur(5px) !important;
+
+  pointer-events: none !important;
+
+  z-index: 0 !important;
+
+  /*
+    Removes the black background if the PNG
+    contains one and keeps the yellow icon subtle.
+  */
+  mix-blend-mode: screen !important;
+}
+
+/* =========================
+   LEFT CONTENT
+   ========================= */
+
+.alert-content {
+  position: relative !important;
+
+  z-index: 2 !important;
+
+  max-width: 68% !important;
+}
+
+.alert-title {
+  color: #ffffff !important;
+
+  font-size: 28px !important;
+  font-weight: 800 !important;
+
+  line-height: 1.2 !important;
+
+  margin-bottom: 12px !important;
+}
+
+.alert-message {
+  color: #b9c8dc !important;
+
+  font-size: 17px !important;
+  font-weight: 500 !important;
+
+  line-height: 1.55 !important;
+}
+
+/* =========================
+   RIGHT SIDE
+   ========================= */
+
+.alert-actions {
+  position: relative !important;
+
+  z-index: 3 !important;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  align-items: flex-end !important;
+
+  justify-content: center !important;
+
+  gap: 22px !important;
+
+  min-width: 150px !important;
+}
+
+/* =========================
+   SEVERITY
+   ========================= */
+
+.alert-card .risk-badge {
+  font-size: 17px !important;
+  font-weight: 900 !important;
+
+  padding: 9px 22px !important;
+
+  border-radius: 25px !important;
+
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Remove severity glow/dots */
+.alert-card .risk-badge::before,
+.alert-card .risk-badge::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================
+   MARK AS READ
+   ========================= */
+
+.alert-read-button {
+  padding: 10px 24px !important;
+
+  background: transparent !important;
+
+  color: #ffffff !important;
+
+  border: 2px solid #8ba4c2 !important;
+  border-radius: 10px !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+
+  cursor: pointer !important;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+.alert-read-button:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+
+  border-color: #ffffff !important;
+
+  transform: translateY(-1px) !important;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.main-content:has(.alerts-page) {
+  background: #183153 !important;
+
+  min-height: calc(100vh - 70px) !important;
+
+  height: auto !important;
+
+  padding: 0 !important;
+
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.main-content:has(.alerts-page) > .site-footer {
+  background: #0b1f3a !important;
+
+  position: relative !important;
+
+  margin: 0 !important;
+
+  width: 100% !important;
+
+  z-index: 50 !important;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 800px) {
+
+  .alerts-page {
+    padding: 22px 18px 35px;
+  }
+
+  .alert-card {
+    min-height: 220px !important;
+
+    padding: 24px !important;
+  }
+
+  .alert-content {
+    max-width: 60% !important;
+  }
+
+  .alert-title {
+    font-size: 22px !important;
+  }
+
+  .alert-message {
+    font-size: 14px !important;
+  }
+
+  .alert-actions {
+    min-width: 120px !important;
+  }
+
+  .alert-warning-watermark {
+    width: 125px !important;
+    height: 125px !important;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .alert-card {
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+
+    gap: 22px !important;
+  }
+
+  .alert-content {
+    max-width: 100% !important;
+  }
+
+  .alert-actions {
+    width: 100% !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: space-between !important;
+  }
+}.alert-card .alert-title {
+  color: #F4C400 !important;
+  font-weight: 900 !important;
+  font-size: 28px !important;
+}/* =================================
+   SETTINGS PAGE
+   ================================= */
+
+.settings-page-title {
+  margin: 0 !important;
+  color: #F4C400 !important;
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+}
+
+/* Page + footer layout */
+.main-content:has(.settings-page-title) {
+  background: #183153 !important;
+  min-height: calc(100vh - 70px) !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding-bottom: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.main-content:has(.settings-page-title) > .page-body {
+  flex: 1 0 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.main-content:has(.settings-page-title) > .site-footer {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  background: #0b1f3a !important;
+  position: relative !important;
+  top: auto !important;
+  bottom: auto !important;
+  z-index: 50 !important;
+}/* =================================
+   SETTINGS PAGE FINAL STYLING
+   ================================= */
+
+/* Subtitle under Settings heading */
+.main-content:has(.settings-page-title) .page-sub {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+
+/* =================================
+   NLP + RISK SCORING CARD
+   ================================= */
+
+.main-content:has(.settings-page-title) .page-body > .card:first-of-type {
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
+}
+
+
+/* =================================
+   LOCATE ADDRESS CARD
+   ================================= */
+
+.main-content:has(.settings-page-title) .page-body > .card:last-child {
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
+}
+
+
+/* Card text */
+.main-content:has(.settings-page-title) .page-body .card-title {
+  color: #ffffff !important;
+}
+
+.main-content:has(.settings-page-title) .page-body .muted {
+  color: #d6deea !important;
+}
+
+
+/* =================================
+   FOOTER TO BOTTOM
+   ================================= */
+
+.main-content:has(.settings-page-title) {
+  min-height: calc(100vh - 70px) !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #183153 !important;
+  padding-bottom: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.main-content:has(.settings-page-title) > .page-body {
+  flex: 1 0 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.main-content:has(.settings-page-title) > .site-footer {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  background: #0b1f3a !important;
+  position: relative !important;
+  top: auto !important;
+  bottom: auto !important;
+  z-index: 50 !important;
+}/* =========================================
+   SETTINGS - FORCE ALL CARDS DARK BLUE
+   ========================================= */
+
+.main-content:has(.settings-page-title) .page-body > .card {
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* NLP Monitor + Risk Scoring sections */
+.main-content:has(.settings-page-title) .page-body > .card section {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+/* Card headings */
+.main-content:has(.settings-page-title) .page-body > .card h3 {
+  color: #ffffff !important;
+}
+
+/* Card descriptions */
+.main-content:has(.settings-page-title) .page-body > .card .muted {
+  color: #d6deea !important;
+}
+
+/* Settings subtitle */
+.main-content:has(.settings-page-title) .page-sub {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}/* =========================================
+   SETTINGS BUTTONS — LOGIN STYLE
+   ========================================= */
+
+/* All buttons on Settings page */
+.main-content:has(.settings-page-title) button {
+  background: #f4c400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* Hover */
+.main-content:has(.settings-page-title) button:hover {
+  background: #f4c400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Disabled buttons */
+.main-content:has(.settings-page-title) button:disabled {
+  background: #f4c400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  box-shadow: none !important;
+  opacity: 0.65 !important;
+}
+
+
+/* =========================================
+   REMOVE BUTTON REFLECTION / GLOW
+   ========================================= */
+
+.main-content:has(.settings-page-title) button::before,
+.main-content:has(.settings-page-title) button::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+
+
+/* =========================================
+   SETTINGS FOOTER — STICK TO BOTTOM
+   ========================================= */
+
+.main-content:has(.settings-page-title) {
+  min-height: calc(100vh - 70px) !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding-bottom: 0 !important;
+  background: #183153 !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+.main-content:has(.settings-page-title) > .page-body {
+  flex: 1 0 auto !important;
+  min-height: 0 !important;
+}
+
+.main-content:has(.settings-page-title) > .site-footer {
+  margin-top: auto !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  background: #0b1f3a !important;
+  position: relative !important;
+  bottom: auto !important;
+  top: auto !important;
+  z-index: 50 !important;
+}/* =========================================
+   SETTINGS PAGE — FOOTER FINAL FIX
+   ========================================= */
+
+/* Kill the grey area everywhere */
+html,
+body,
+#root {
+  margin: 0 !important;
+  min-height: 100vh !important;
+  background: #0b1f3a !important;
+}
+
+/* Settings page background */
+.main-content:has(.settings-page-title) {
+  min-height: 100vh !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+  background: #183153 !important;
+  padding-bottom: 105px !important;
+  margin: 0 !important;
+}
+
+/* Settings content */
+.main-content:has(.settings-page-title) .page-body {
+  min-height: calc(100vh - 175px) !important;
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================
+   FOOTER — LOCK TO BOTTOM
+   ========================================= */
+
+.main-content:has(.settings-page-title) > .site-footer {
+  position: fixed !important;
+
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+
+  width: 100vw !important;
+  height: 105px !important;
+  min-height: 105px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  box-sizing: border-box !important;
+
+  background: #0b1f3a !important;
+
+  z-index: 9999 !important;
+
+  transform: none !important;
 }
