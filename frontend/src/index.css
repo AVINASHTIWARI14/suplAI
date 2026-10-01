@@ -14128,3 +14128,175 @@ body,
 .app-shell:has(.network-loading-fullscreen) > .site-footer {
   display: none !important;
 }
+
+/* =========================================================
+   ALTERNATIVES — SUPPLIER AVATAR IMAGE
+   Use the uploaded supplier_avatar.png for every supplier row.
+   ========================================================= */
+
+.main-content:has(.alternatives-page) .alternative-avatar {
+  position: relative !important;
+  width: 45px !important;
+  height: 45px !important;
+  min-width: 45px !important;
+  min-height: 45px !important;
+  flex-shrink: 0 !important;
+
+  border-radius: 50% !important;
+  overflow: hidden !important;
+
+  background: transparent url('../assets/network/supplier_avatar.png') center / cover no-repeat !important;
+
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  text-indent: -9999px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Cover any existing initial text without changing AlternativesPage.jsx. */
+.main-content:has(.alternatives-page) .alternative-avatar::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 50% !important;
+  background: url('../assets/network/supplier_avatar.png') center / cover no-repeat !important;
+  pointer-events: none !important;
+}
+
+/* =========================================================
+   ALTERNATIVES — FOOTER SAME AS OTHER PAGES
+   Keep the standard glass footer in normal flow on this page.
+   ========================================================= */
+
+.main-content:has(.alternatives-page) {
+  min-height: calc(100vh - 80px) !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  background: #183153 !important;
+}
+
+.main-content:has(.alternatives-page) > .site-footer {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100% !important;
+  min-height: 84px !important;
+  height: auto !important;
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 14px 20px 16px !important;
+  box-sizing: border-box !important;
+
+  position: sticky !important;
+  bottom: 0 !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  z-index: 100 !important;
+
+  background: rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  background-image: none !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  color: rgba(255, 255, 255, 0.86) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(120%) !important;
+  isolation: isolate !important;
+}
+
+.main-content:has(.alternatives-page) > .site-footer::before,
+.main-content:has(.alternatives-page) > .site-footer::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 600px) {
+  .main-content:has(.alternatives-page) .alternative-avatar {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+  }
+}
+
+/* =========================================================
+   ALTERNATIVES — SUPPLIER AVATAR IMAGE OVERRIDE
+   Remove the old initial/gradient circle completely.
+   ========================================================= */
+
+.main-content:has(.alternatives-page) .alternative-avatar {
+  position: relative !important;
+  width: 45px !important;
+  height: 45px !important;
+  min-width: 45px !important;
+  min-height: 45px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  display: block !important;
+  flex: 0 0 45px !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+.main-content:has(.alternatives-page) .alternative-avatar::before,
+.main-content:has(.alternatives-page) .alternative-avatar::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.main-content:has(.alternatives-page) .alternative-avatar img {
+  display: block !important;
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  transform: none !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+
+@media (max-width: 600px) {
+  .main-content:has(.alternatives-page) .alternative-avatar {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    flex-basis: 42px !important;
+  }
+}

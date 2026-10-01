@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchAlternatives } from '../api/client.js';
+import supplierAvatar from '../assets/network/supplier_avatar.png';
 
 const getRiskLevel = (score) => {
   const value = Number(score ?? 0);
@@ -26,7 +27,6 @@ const AlternativesPage = ({ companyId }) => {
   return (
     <div className="alternatives-page">
       <div className="alternatives-table-card">
-
         <div className="alternatives-table-header">
           <div>Rank</div>
           <div>Supplier</div>
@@ -72,7 +72,11 @@ const AlternativesPage = ({ companyId }) => {
 
                 <div className="alternative-supplier">
                   <div className="alternative-avatar">
-                    {supplier.name?.charAt(0)?.toUpperCase() || 'S'}
+                    <img
+                      src={supplierAvatar}
+                      alt=""
+                      aria-hidden="true"
+                    />
                   </div>
 
                   <div className="alternative-supplier-info">
@@ -125,7 +129,6 @@ const AlternativesPage = ({ companyId }) => {
             No alternative suppliers for this company.
           </div>
         )}
-
       </div>
     </div>
   );
