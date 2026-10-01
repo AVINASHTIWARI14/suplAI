@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import SupplierCard from '../components/SupplierCard.jsx';
 import { fetchSupplierRisk } from '../api/client.js';
 import { compositeFromSupplier } from '../utils/risk.js';
@@ -11,6 +11,19 @@ const SupplierExplorerPage = ({ companyId }) => {
   const [costMax, setCostMax] = useState(100);
   const [leadMax, setLeadMax] = useState(90);
   const [loading, setLoading] = useState(true);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const countryDropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handlePointerDown = (event) => {
+      if (!countryDropdownRef.current?.contains(event.target)) {
+        setCountryOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -64,6 +77,7 @@ const SupplierExplorerPage = ({ companyId }) => {
     setRiskMax(100);
     setCostMax(100);
     setLeadMax(90);
+    setCountryOpen(false);
   };
 
   const makeTicks = (min, max, count = 10) =>
@@ -75,18 +89,20 @@ const SupplierExplorerPage = ({ companyId }) => {
   const costTicks = makeTicks(0, 100);
   const leadTicks = makeTicks(1, 90);
 
+  if (loading) {
+    return (
+      <div className="supplier-loading-fullscreen">
+        <span
+          className="dashboard-loading-spinner"
+          role="status"
+          aria-label="Loading suppliers"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="supplier-explorer-page">
-      <section className="supplier-explorer-header">
-        <div>
-          <p className="supplier-explorer-eyebrow">SUPPLIER INTELLIGENCE</p>
-          <h1>Supplier Explorer</h1>
-          <p className="supplier-explorer-subtitle">
-            Search and filter suppliers by risk, cost, and lead time.
-          </p>
-        </div>
-      </section>
-
       <section className="supplier-explorer-toolbar">
         <div className="supplier-search-wrap">
           <span className="supplier-search-icon">⌕</span>
@@ -98,19 +114,45 @@ const SupplierExplorerPage = ({ companyId }) => {
           />
         </div>
 
-        <div className="supplier-country-wrap">
-          <label htmlFor="supplier-country">Country</label>
-          <select
-            id="supplier-country"
-            value={country}
-            onChange={(event) => setCountry(event.target.value)}
+        <div
+          className={`supplier-country-wrap${countryOpen ? ' is-open' : ''}`}
+          ref={countryDropdownRef}
+        >
+          <label htmlFor="supplier-country-button">Country</label>
+
+          <button
+            id="supplier-country-button"
+            type="button"
+            className="supplier-country-select"
+            aria-haspopup="listbox"
+            aria-expanded={countryOpen}
+            onClick={() => setCountryOpen((open) => !open)}
           >
-            {countries.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
+            <span>{country}</span>
+            <span className="supplier-country-arrow" aria-hidden="true">⌄</span>
+          </button>
+
+          {countryOpen && (
+            <div className="supplier-country-options" role="listbox">
+              {countries.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  className={`supplier-country-option${
+                    country === item ? ' is-selected' : ''
+                  }`}
+                  role="option"
+                  aria-selected={country === item}
+                  onClick={() => {
+                    setCountry(item);
+                    setCountryOpen(false);
+                  }}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <button type="button" className="supplier-reset-button" onClick={resetFilters}>
@@ -122,18 +164,33 @@ const SupplierExplorerPage = ({ companyId }) => {
         <aside className="supplier-filters-panel">
           <div
             className="supplier-range"
-            style={{ '--min': 0, '--val': riskMax, '--max': 100, '--n': 10 }}
+            style={{
+              '--min': 0,
+              '--val': riskMax,
+              '--max': 100,
+              '--n': 10,
+              '--slider-percent': `${riskMax}%`,
+            }}
           >
             <label htmlFor="supplier-risk-range">Risk Score</label>
-            <input
-              id="supplier-risk-range"
-              type="range"
-              min="0"
-              max="100"
-              value={riskMax}
-              list="risk-range-list"
-              onChange={(event) => setRiskMax(Number(event.target.value))}
-            />
+            <div className="supplier-range-slider">
+              <div
+                className="supplier-range-track"
+                style={{ '--slider-percent': `${riskMax}%` }}
+                aria-hidden="true"
+              >
+                <span className="supplier-range-track-fill" />
+              </div>
+              <input
+                id="supplier-risk-range"
+                type="range"
+                min="0"
+                max="100"
+                value={riskMax}
+                list="risk-range-list"
+                onChange={(event) => setRiskMax(Number(event.target.value))}
+              />
+            </div>
             <output htmlFor="supplier-risk-range">{riskMax}</output>
             <datalist id="risk-range-list">
               {riskTicks.map((value, index) => (
@@ -144,18 +201,33 @@ const SupplierExplorerPage = ({ companyId }) => {
 
           <div
             className="supplier-range"
-            style={{ '--min': 0, '--val': costMax, '--max': 100, '--n': 10 }}
+            style={{
+              '--min': 0,
+              '--val': costMax,
+              '--max': 100,
+              '--n': 10,
+              '--slider-percent': `${costMax}%`,
+            }}
           >
             <label htmlFor="supplier-cost-range">Cost Index</label>
-            <input
-              id="supplier-cost-range"
-              type="range"
-              min="0"
-              max="100"
-              value={costMax}
-              list="cost-range-list"
-              onChange={(event) => setCostMax(Number(event.target.value))}
-            />
+            <div className="supplier-range-slider">
+              <div
+                className="supplier-range-track"
+                style={{ '--slider-percent': `${costMax}%` }}
+                aria-hidden="true"
+              >
+                <span className="supplier-range-track-fill" />
+              </div>
+              <input
+                id="supplier-cost-range"
+                type="range"
+                min="0"
+                max="100"
+                value={costMax}
+                list="cost-range-list"
+                onChange={(event) => setCostMax(Number(event.target.value))}
+              />
+            </div>
             <output htmlFor="supplier-cost-range">{costMax}</output>
             <datalist id="cost-range-list">
               {costTicks.map((value, index) => (
@@ -166,18 +238,33 @@ const SupplierExplorerPage = ({ companyId }) => {
 
           <div
             className="supplier-range"
-            style={{ '--min': 1, '--val': leadMax, '--max': 90, '--n': 10 }}
+            style={{
+              '--min': 1,
+              '--val': leadMax,
+              '--max': 90,
+              '--n': 10,
+              '--slider-percent': `${((leadMax - 1) / 89) * 100}%`,
+            }}
           >
             <label htmlFor="supplier-lead-range">Lead Time</label>
-            <input
-              id="supplier-lead-range"
-              type="range"
-              min="1"
-              max="90"
-              value={leadMax}
-              list="lead-range-list"
-              onChange={(event) => setLeadMax(Number(event.target.value))}
-            />
+            <div className="supplier-range-slider">
+              <div
+                className="supplier-range-track"
+                style={{ '--slider-percent': `${((leadMax - 1) / 89) * 100}%` }}
+                aria-hidden="true"
+              >
+                <span className="supplier-range-track-fill" />
+              </div>
+              <input
+                id="supplier-lead-range"
+                type="range"
+                min="1"
+                max="90"
+                value={leadMax}
+                list="lead-range-list"
+                onChange={(event) => setLeadMax(Number(event.target.value))}
+              />
+            </div>
             <output htmlFor="supplier-lead-range">{leadMax} days</output>
             <datalist id="lead-range-list">
               {leadTicks.map((value, index) => (
@@ -188,15 +275,7 @@ const SupplierExplorerPage = ({ companyId }) => {
         </aside>
 
         <div className="supplier-results">
-          {loading ? (
-            <div className="supplier-state-card">
-              <span
-                className="dashboard-loading-spinner"
-                role="status"
-                aria-label="Loading suppliers"
-              />
-            </div>
-          ) : filtered.length ? (
+          {filtered.length ? (
             <div className="supplier-grid">
               {filtered.map((supplier, index) => (
                 <SupplierCard

@@ -12887,3 +12887,900 @@ body,
     top: 72px !important;
   }
 }
+
+
+/* ============================================================
+   SUPPLIER EXPLORER — FINAL FILTER POLISH
+   Only affects .supplier-explorer-page.
+   ============================================================ */
+
+/* Remove the page title/subtitle block entirely. */
+.supplier-explorer-page .supplier-explorer-header {
+  display: none !important;
+}
+
+/* Give the three filter controls a clean, evenly aligned column. */
+.supplier-explorer-page .supplier-filters-panel {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: start !important;
+  gap: 28px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 8px 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.supplier-explorer-page .supplier-filters-panel::before,
+.supplier-explorer-page .supplier-filters-panel::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* The actual JSX uses .supplier-range. */
+.supplier-explorer-page .supplier-range {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+/* Filter names: bold yellow. */
+.supplier-explorer-page .supplier-range > label {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #f4c400 !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* Current values: white. */
+.supplier-explorer-page .supplier-range > output {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+}
+
+/* Slider fills the full available width. */
+.supplier-explorer-page .supplier-range input[type='range'] {
+  --slider-percent: 100%;
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  accent-color: #f4c400 !important;
+  cursor: pointer !important;
+}
+
+/* Chromium / WebKit track: yellow up to the current value, blue after it. */
+.supplier-explorer-page .supplier-range input[type='range']::-webkit-slider-runnable-track {
+  width: 100% !important;
+  height: 7px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    to right,
+    #f4c400 0%,
+    #f4c400 var(--slider-percent),
+    #183153 var(--slider-percent),
+    #183153 100%
+  ) !important;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.22) !important;
+}
+
+/* Chromium / WebKit knob: dark blue. */
+.supplier-explorer-page .supplier-range input[type='range']::-webkit-slider-thumb {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 19px !important;
+  height: 19px !important;
+  margin-top: -6px !important;
+  border: 2px solid #0b1f3a !important;
+  border-radius: 50% !important;
+  background: #0b1f3a !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,.32) !important;
+  cursor: grab !important;
+}
+
+.supplier-explorer-page .supplier-range input[type='range']:active::-webkit-slider-thumb {
+  cursor: grabbing !important;
+  transform: scale(1.06) !important;
+}
+
+/* Firefox track. */
+.supplier-explorer-page .supplier-range input[type='range']::-moz-range-track {
+  width: 100% !important;
+  height: 7px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    to right,
+    #f4c400 0%,
+    #f4c400 var(--slider-percent),
+    #183153 var(--slider-percent),
+    #183153 100%
+  ) !important;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.22) !important;
+}
+
+.supplier-explorer-page .supplier-range input[type='range']::-moz-range-thumb {
+  width: 15px !important;
+  height: 15px !important;
+  border: 2px solid #0b1f3a !important;
+  border-radius: 50% !important;
+  background: #0b1f3a !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,.32) !important;
+  cursor: grab !important;
+}
+
+.supplier-explorer-page .supplier-range input[type='range']:focus-visible {
+  outline: 2px solid rgba(244,196,0,.28) !important;
+  outline-offset: 4px !important;
+}
+
+/* Hide native datalist tick marks under the sliders. */
+.supplier-explorer-page .supplier-range datalist {
+  display: none !important;
+}
+
+/* Country dropdown: white like requested, but shaped like the navbar selector. */
+.supplier-explorer-page .supplier-country-wrap {
+  position: relative !important;
+  width: 100% !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap label {
+  display: none !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap::after {
+  content: '⌄' !important;
+  position: absolute !important;
+  top: 50% !important;
+  right: 14px !important;
+  transform: translateY(-58%) !important;
+  color: #183153 !important;
+  font-size: 1.05rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 100% !important;
+  height: 46px !important;
+  box-sizing: border-box !important;
+  padding: 0 42px 0 14px !important;
+  background: #ffffff !important;
+  color: #183153 !important;
+  border: 2px solid rgba(24,49,83,.18) !important;
+  border-radius: 10px !important;
+  outline: none !important;
+  box-shadow: 0 5px 14px rgba(0,0,0,.14) !important;
+  font-size: .9rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap select:hover {
+  border-color: rgba(244,196,0,.72) !important;
+  transform: translateY(-1px) !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap select:focus {
+  border-color: #f4c400 !important;
+  box-shadow: 0 0 0 3px rgba(244,196,0,.14) !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap select option {
+  background: #ffffff !important;
+  color: #183153 !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 1050px) {
+  .supplier-explorer-page .supplier-filters-panel {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .supplier-explorer-page .supplier-filters-panel {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+}
+
+
+/* =========================================================
+   SUPPLIER EXPLORER — FINAL DROPDOWN + CARD HOVER
+   ========================================================= */
+
+/* Custom country dropdown: same compact interaction language as the navbar,
+   but kept white to match the Supplier page. */
+.supplier-explorer-page .supplier-country-wrap {
+  position: relative !important;
+  width: 220px !important;
+  min-width: 220px !important;
+  z-index: 40 !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap > label {
+  display: none !important;
+}
+
+.supplier-explorer-page .supplier-country-select {
+  width: 100% !important;
+  min-height: 46px !important;
+  padding: 8px 12px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
+  color: #183153 !important;
+  background: #ffffff !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  outline: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition: 300ms ease !important;
+}
+
+.supplier-explorer-page .supplier-country-select:hover,
+.supplier-explorer-page .supplier-country-wrap.is-open .supplier-country-select {
+  background: #ffffff !important;
+  color: #183153 !important;
+  transform: translateY(-1px) !important;
+}
+
+.supplier-explorer-page .supplier-country-arrow {
+  position: relative !important;
+  display: inline-flex !important;
+  width: 25px !important;
+  height: 14px !important;
+  flex: 0 0 25px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: 300ms ease !important;
+  transform: rotate(-90deg) !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap.is-open .supplier-country-arrow {
+  transform: rotate(0deg) !important;
+}
+
+.supplier-explorer-page .supplier-country-arrow svg {
+  width: 16px !important;
+  height: 16px !important;
+  fill: none !important;
+  stroke: #183153 !important;
+  stroke-width: 2.4 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.supplier-explorer-page .supplier-country-options {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: calc(100% + 4px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  max-height: 260px !important;
+  overflow-y: auto !important;
+  padding: 5px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16) !important;
+  z-index: 100 !important;
+  animation: supplier-country-dropdown-in 180ms ease-out both !important;
+}
+
+@keyframes supplier-country-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.supplier-explorer-page .supplier-country-option {
+  width: 100% !important;
+  min-height: 36px !important;
+  padding: 7px 9px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+  background: #ffffff !important;
+  color: #183153 !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: 300ms ease !important;
+}
+
+.supplier-explorer-page .supplier-country-option:hover,
+.supplier-explorer-page .supplier-country-option.is-selected {
+  background: #f1f3f5 !important;
+  color: #183153 !important;
+  transform: none !important;
+}
+
+.supplier-explorer-page .supplier-country-options::-webkit-scrollbar {
+  width: 7px !important;
+}
+
+.supplier-explorer-page .supplier-country-options::-webkit-scrollbar-thumb {
+  background: rgba(24, 49, 83, 0.28) !important;
+  border-radius: 999px !important;
+}
+
+/* Keep the filter row from letting the custom dropdown get squeezed. */
+.supplier-explorer-page .supplier-explorer-toolbar {
+  grid-template-columns: minmax(0, 1fr) 220px 110px !important;
+}
+
+/* No supplier-card blur/shrink effect. Only a very small hover zoom remains. */
+.supplier-explorer-page .supplier-card,
+.supplier-explorer-page .supplier-card:hover,
+.supplier-explorer-page .supplier-grid:hover > .supplier-card,
+.supplier-explorer-page .supplier-grid:hover > .supplier-card:not(:hover),
+.supplier-explorer-page .supplier-grid:has(.supplier-card:hover) .supplier-card:not(:hover) {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.supplier-explorer-page .supplier-card {
+  transform: none !important;
+}
+
+.supplier-explorer-page .supplier-card:hover {
+  transform: scale(1.025) translateY(-2px) !important;
+  filter: none !important;
+  opacity: 1 !important;
+  z-index: 20 !important;
+}
+
+/* Reset button — red. */
+.supplier-explorer-page .supplier-reset-button,
+.supplier-explorer-page .supplier-reset-button:hover,
+.supplier-explorer-page .supplier-reset-button:active {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+.supplier-explorer-page .supplier-reset-button:hover {
+  background: #b91c1c !important;
+  transform: translateY(-1px) !important;
+}
+
+.supplier-explorer-page .supplier-reset-button:active {
+  background: #991b1b !important;
+}
+
+@media (max-width: 760px) {
+  .supplier-explorer-page .supplier-explorer-toolbar {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .supplier-explorer-page .supplier-country-wrap,
+  .supplier-explorer-page .supplier-reset-button {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+
+/* =========================================================
+   SUPPLIER PAGE — FINAL LOADER + COUNTRY ARROW FIX
+   ========================================================= */
+
+/* Loading state fills the route viewport and keeps the loader dead-center. */
+.supplier-loading-fullscreen {
+  position: relative !important;
+  width: 100% !important;
+  min-height: calc(100vh - 70px) !important;
+  height: calc(100vh - 70px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
+  justify-items: center !important;
+  align-items: center !important;
+  background: #183153 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.supplier-loading-fullscreen .dashboard-loading-spinner {
+  place-self: center !important;
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+/* Hide the footer while Supplier Explorer is loading so the loading view is
+   one uninterrupted blue screen below the fixed header. */
+.main-content:has(.supplier-loading-fullscreen) > .site-footer {
+  display: none !important;
+}
+
+/* Exactly one dropdown chevron. No native arrow, no extra pseudo-arrow. */
+.supplier-explorer-page .supplier-country-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  position: relative !important;
+}
+
+.supplier-explorer-page .supplier-country-arrow {
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  color: #183153 !important;
+  font-size: 21px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  transform: translateY(-1px) !important;
+  transition: transform 300ms ease !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap.is-open .supplier-country-arrow {
+  transform: rotate(180deg) translateY(1px) !important;
+}
+
+.supplier-explorer-page .supplier-country-arrow svg {
+  display: none !important;
+}
+
+/* Keep the custom dropdown above the surrounding controls. */
+.supplier-explorer-page .supplier-country-wrap {
+  position: relative !important;
+  z-index: 50 !important;
+}
+
+.supplier-explorer-page .supplier-country-options {
+  z-index: 200 !important;
+}
+
+
+/* =========================================================
+   SUPPLIER COUNTRY DROPDOWN — COMPLETE REBUILD V2
+   Uses unique V2 classes so no legacy arrow/select styles can leak in.
+   ========================================================= */
+.supplier-explorer-page .supplier-country-wrap {
+  position: relative !important;
+  width: 220px !important;
+  min-width: 220px !important;
+  z-index: 200 !important;
+}
+
+/* Kill every legacy pseudo-arrow on the wrapper and trigger. */
+.supplier-explorer-page .supplier-country-wrap::before,
+.supplier-explorer-page .supplier-country-wrap::after,
+.supplier-explorer-page .supplier-country-select::before,
+.supplier-explorer-page .supplier-country-select::after {
+  content: none !important;
+  display: none !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap > label {
+  display: none !important;
+}
+
+.supplier-explorer-page .supplier-country-select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 46px !important;
+  margin: 0 !important;
+  padding: 0 42px 0 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  color: #183153 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  outline: none !important;
+  box-shadow: 0 5px 14px rgba(0,0,0,.14) !important;
+  font-size: .92rem !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition: transform .2s ease, box-shadow .2s ease !important;
+}
+
+.supplier-explorer-page .supplier-country-select:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 7px 16px rgba(0,0,0,.16) !important;
+}
+
+.supplier-explorer-page .supplier-country-select:focus-visible {
+  outline: 2px solid rgba(244,196,0,.45) !important;
+  outline-offset: 2px !important;
+}
+
+/* One and only one chevron: two CSS borders, no character and no SVG. */
+.supplier-explorer-page .supplier-country-chevron-v2 {
+  position: absolute !important;
+  top: 50% !important;
+  right: 17px !important;
+  width: 8px !important;
+  height: 8px !important;
+  box-sizing: border-box !important;
+  border-right: 2.2px solid #183153 !important;
+  border-bottom: 2.2px solid #183153 !important;
+  transform: translateY(-65%) rotate(45deg) !important;
+  transform-origin: center !important;
+  pointer-events: none !important;
+  transition: transform 220ms ease !important;
+}
+
+.supplier-explorer-page .supplier-country-wrap.is-open .supplier-country-chevron-v2 {
+  transform: translateY(-25%) rotate(225deg) !important;
+}
+
+.supplier-explorer-page .supplier-country-options {
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 500 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  max-height: 260px !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
+  padding: 5px !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 22px rgba(0,0,0,.18) !important;
+}
+
+.supplier-explorer-page .supplier-country-option {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 100% !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  box-sizing: border-box !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  color: #183153 !important;
+  font-size: .9rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.supplier-explorer-page .supplier-country-option:hover,
+.supplier-explorer-page .supplier-country-option.is-selected {
+  background: #eef1f4 !important;
+  color: #183153 !important;
+}
+
+.supplier-explorer-page .supplier-country-options::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.supplier-explorer-page .supplier-country-options::-webkit-scrollbar-thumb {
+  background: rgba(24,49,83,.22) !important;
+  border-radius: 999px !important;
+}
+
+/* =========================================================
+   SUPPLIER CARD SEVERITY — DASHBOARD-LIKE BREATHING + GLOW
+   ========================================================= */
+.supplier-explorer-page .supplier-card .severity-high,
+.supplier-explorer-page .supplier-card .severity-medium,
+.supplier-explorer-page .supplier-card .severity-low,
+.supplier-explorer-page .supplier-card .high,
+.supplier-explorer-page .supplier-card .medium,
+.supplier-explorer-page .supplier-card .low {
+  display: inline-block !important;
+  transform-origin: center !important;
+  animation: supplier-severity-breathe-v2 2.6s ease-in-out infinite !important;
+}
+
+.supplier-explorer-page .supplier-card .severity-high,
+.supplier-explorer-page .supplier-card .high {
+  color: #ef4444 !important;
+  text-shadow: 0 0 7px rgba(239,68,68,.32) !important;
+}
+
+.supplier-explorer-page .supplier-card .severity-medium,
+.supplier-explorer-page .supplier-card .medium {
+  color: #f97316 !important;
+  text-shadow: 0 0 7px rgba(249,115,22,.28) !important;
+}
+
+.supplier-explorer-page .supplier-card .severity-low,
+.supplier-explorer-page .supplier-card .low {
+  color: #22c55e !important;
+  text-shadow: 0 0 7px rgba(34,197,94,.26) !important;
+}
+
+@keyframes supplier-severity-breathe-v2 {
+  0%, 100% {
+    transform: scale(1);
+    opacity: .92;
+  }
+  50% {
+    transform: scale(1.045);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .supplier-explorer-page .supplier-card .severity-high,
+  .supplier-explorer-page .supplier-card .severity-medium,
+  .supplier-explorer-page .supplier-card .severity-low,
+  .supplier-explorer-page .supplier-card .high,
+  .supplier-explorer-page .supplier-card .medium,
+  .supplier-explorer-page .supplier-card .low {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   SUPPLIER PAGE — FINAL SLIDER + MINIMAL CARD HOVER
+   ========================================================= */
+
+/* Full slider track: yellow until the knob, white after it. */
+.supplier-explorer-page .supplier-range input[type="range"]::-webkit-slider-runnable-track {
+  width: 100% !important;
+  height: 7px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    to right,
+    #f4c400 0%,
+    #f4c400 var(--slider-percent),
+    #ffffff var(--slider-percent),
+    #ffffff 100%
+  ) !important;
+  box-shadow: none !important;
+}
+
+.supplier-explorer-page .supplier-range input[type="range"]::-moz-range-track {
+  width: 100% !important;
+  height: 7px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(
+    to right,
+    #f4c400 0%,
+    #f4c400 var(--slider-percent),
+    #ffffff var(--slider-percent),
+    #ffffff 100%
+  ) !important;
+  box-shadow: none !important;
+}
+
+/* Keep the knob dark blue. */
+.supplier-explorer-page .supplier-range input[type="range"]::-webkit-slider-thumb {
+  width: 19px !important;
+  height: 19px !important;
+  margin-top: -6px !important;
+  border: 2px solid #0b1f3a !important;
+  border-radius: 50% !important;
+  background: #0b1f3a !important;
+  box-shadow: none !important;
+}
+
+.supplier-explorer-page .supplier-range input[type="range"]::-moz-range-thumb {
+  width: 15px !important;
+  height: 15px !important;
+  border: 2px solid #0b1f3a !important;
+  border-radius: 50% !important;
+  background: #0b1f3a !important;
+  box-shadow: none !important;
+}
+
+/* Only a tiny hover expansion on supplier cards. No blur/shrink. */
+.supplier-explorer-page .supplier-grid .supplier-card,
+.supplier-explorer-page .supplier-grid .supplier-card:hover,
+.supplier-explorer-page .supplier-grid:hover > .supplier-card:not(:hover) {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.supplier-explorer-page .supplier-grid .supplier-card {
+  transform: none !important;
+  transition: transform 180ms ease, box-shadow 180ms ease !important;
+}
+
+.supplier-explorer-page .supplier-grid .supplier-card:hover {
+  transform: scale(1.01) !important;
+}
+
+
+/* =========================================================
+   SUPPLIER SLIDER — ROBUST SPLIT TRACK
+   Yellow = selected portion, White = remaining portion.
+   The visual track is separate from the native input so it
+   renders consistently in Chromium/WebKit and Firefox.
+   ========================================================= */
+.supplier-explorer-page .supplier-range-slider {
+  position: relative !important;
+  width: 100% !important;
+  height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.supplier-explorer-page .supplier-range-track {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 50% !important;
+  width: 100% !important;
+  height: 7px !important;
+  transform: translateY(-50%) !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+
+.supplier-explorer-page .supplier-range-track-fill {
+  display: block !important;
+  width: var(--slider-percent) !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  background: #f4c400 !important;
+  transition: width 80ms linear !important;
+}
+
+/* Make the native track completely transparent; only the custom track above is visible. */
+.supplier-explorer-page .supplier-range-slider input[type='range'] {
+  position: relative !important;
+  z-index: 2 !important;
+  width: 100% !important;
+  height: 30px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: transparent !important;
+  color: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+}
+
+.supplier-explorer-page .supplier-range-slider input[type='range']::-webkit-slider-runnable-track {
+  height: 7px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.supplier-explorer-page .supplier-range-slider input[type='range']::-moz-range-track {
+  height: 7px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Dark-blue knob stays on top of the custom track. */
+.supplier-explorer-page .supplier-range-slider input[type='range']::-webkit-slider-thumb {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 19px !important;
+  height: 19px !important;
+  margin-top: -6px !important;
+  border: 2px solid #0b1f3a !important;
+  border-radius: 50% !important;
+  background: #0b1f3a !important;
+  box-shadow: none !important;
+  cursor: grab !important;
+}
+
+.supplier-explorer-page .supplier-range-slider input[type='range']::-moz-range-thumb {
+  width: 15px !important;
+  height: 15px !important;
+  border: 2px solid #0b1f3a !important;
+  border-radius: 50% !important;
+  background: #0b1f3a !important;
+  box-shadow: none !important;
+  cursor: grab !important;
+}
+
+.supplier-explorer-page .supplier-range-slider input[type='range']:active::-webkit-slider-thumb,
+.supplier-explorer-page .supplier-range-slider input[type='range']:active::-moz-range-thumb {
+  cursor: grabbing !important;
+  transform: scale(1.03) !important;
+}
+
+/* Absolute final guard against any older supplier-card hover rules. */
+.supplier-explorer-page .supplier-grid .supplier-card,
+.supplier-explorer-page .supplier-grid .supplier-card:hover,
+.supplier-explorer-page .supplier-grid:hover > .supplier-card:not(:hover) {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.supplier-explorer-page .supplier-grid .supplier-card {
+  transform: none !important;
+  transition: transform 320ms ease, box-shadow 320ms ease !important;
+}
+
+.supplier-explorer-page .supplier-grid .supplier-card:hover {
+  transform: translateY(-1px) scale(1.004) !important;
+}
+
+/* Restore the footer during Supplier loading. */
+.main-content:has(.supplier-loading-fullscreen) > .site-footer {
+  display: grid !important;
+}
