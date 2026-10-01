@@ -15163,6 +15163,89 @@ body,
 }
 
 /* =========================================================
+   ALERTS — LOADER + FIXED FOOTER
+   Scoped only to Alerts so other pages remain untouched.
+   ========================================================= */
+.main-content:has(.alerts-page) {
+  min-height: 100vh !important;
+  height: 100vh !important;
+  padding-bottom: 84px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  background: #183153 !important;
+}
+
+.main-content:has(.alerts-page) .route-content {
+  width: 100% !important;
+  min-height: calc(100vh - 70px - 84px) !important;
+  box-sizing: border-box !important;
+}
+
+.main-content:has(.alerts-page) .alerts-page {
+  width: 100% !important;
+  min-height: calc(100vh - 70px - 84px) !important;
+  box-sizing: border-box !important;
+  background: #183153 !important;
+}
+
+.main-content:has(.alerts-page) > .site-footer {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  width: 100% !important;
+  min-height: 84px !important;
+  height: 84px !important;
+  margin: 0 !important;
+  z-index: 5000 !important;
+  flex: none !important;
+  box-sizing: border-box !important;
+}
+
+.main-content:has(.alerts-page) .alerts-loading-state {
+  width: 100% !important;
+  min-height: calc(100vh - 70px - 84px) !important;
+  height: calc(100vh - 70px - 84px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  background: #183153 !important;
+}
+
+.main-content:has(.alerts-page) .alerts-loading-state .dashboard-loading-spinner {
+  position: relative !important;
+  inset: auto !important;
+  margin: 0 !important;
+  flex: 0 0 56px !important;
+  width: 56px !important;
+  height: 56px !important;
+}
+
+.main-content:has(.alerts-page) > .site-footer::before,
+.main-content:has(.alerts-page) > .site-footer::after {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.alerts-page) {
+    padding-bottom: 84px !important;
+  }
+
+  .main-content:has(.alerts-page) .route-content,
+  .main-content:has(.alerts-page) .alerts-page {
+    min-height: calc(100vh - 84px) !important;
+  }
+
+  .main-content:has(.alerts-page) .alerts-loading-state {
+    min-height: calc(100vh - 84px) !important;
+    height: calc(100vh - 84px) !important;
+  }
+}
+
+/* =========================================================
    DISRUPTIONS — FEED CARD SEVERITY + CONTENT VISIBILITY
    Final visual tuning: subtle breathing/glow on risk labels and
    brighter supporting text beneath the yellow disruption titles.

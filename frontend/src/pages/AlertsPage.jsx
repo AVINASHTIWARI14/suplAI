@@ -40,8 +40,14 @@ const AlertsPage = ({ companyId }) => {
 
       {/* CONTENT */}
       {loading ? (
-        <div className="card loading-state">
-          Loading alerts…
+        <div
+          className="alerts-loading-state"
+          aria-label="Loading alerts"
+        >
+          <div
+            className="dashboard-loading-spinner"
+            aria-hidden="true"
+          />
         </div>
       ) : alerts.length ? (
 
