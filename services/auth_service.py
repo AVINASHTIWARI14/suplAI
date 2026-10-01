@@ -75,6 +75,70 @@ def register_user(email: str, password: str, full_name: str, company_id: Optiona
     return _issue_tokens(user)
 
 
+def google_login_user(access_token: str) -> dict:
+    """Verify a Supabase Google session and sync the user into app_users."""
+    if not supabase:
+        raise ValueError("Supabase is not configured")
+
+    try:
+        auth_response = supabase.auth.get_user(access_token)
+        auth_user = getattr(auth_response, "user", None)
+    except Exception as exc:
+        raise ValueError("Invalid Google authentication token") from exc
+
+    if not auth_user:
+        raise ValueError("Invalid Google authentication token")
+
+    user_id = str(auth_user.id)
+    email = (auth_user.email or "").strip().lower()
+    if not email:
+        raise ValueError("Google account does not have an email address")
+
+    metadata = getattr(auth_user, "user_metadata", None) or {}
+    full_name = (
+        metadata.get("full_name")
+        or metadata.get("name")
+        or metadata.get("user_name")
+        or email.split("@", 1)[0]
+    ).strip()
+
+    existing = None
+    try:
+        result = (
+            supabase.table("app_users")
+            .select("*")
+            .eq("id", user_id)
+            .limit(1)
+            .execute()
+        )
+        rows = response_data(result) or []
+        if rows:
+            existing = rows[0]
+    except Exception as exc:
+        raise ValueError("Unable to check application user") from exc
+
+    if existing:
+        user = existing
+    else:
+        user = {
+            "id": user_id,
+            "email": email,
+            "password_hash": "",
+            "full_name": full_name,
+            "role": ROLE_VIEWER,
+            "company_id": None,
+        }
+        try:
+            result = supabase.table("app_users").insert(user).execute()
+            rows = response_data(result) or []
+            if rows:
+                user = rows[0]
+        except Exception as exc:
+            raise ValueError("Unable to create application user") from exc
+
+    return _issue_tokens(user)
+
+
 def login_user(email: str, password: str) -> dict:
     user = _find_user_by_email(email)
     if not user or not verify_password(password, user.get("password_hash", "")):

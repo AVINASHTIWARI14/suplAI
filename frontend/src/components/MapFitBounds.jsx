@@ -1,27 +1,43 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 
+const DEFAULT_CENTER = [20, 0];
+const DEFAULT_ZOOM = 3;
+
 /*
- * Keeps the dashboard map at the desired default world view.
- * The map opens at zoom 3 (the equivalent of pressing "+" once
- * from the old zoom-2 view). It does not automatically zoom
- * further when supplier data loads.
+ * Sets the dashboard map's initial world view once.
+ * Resize events only invalidate Leaflet's size; they never call setView,
+ * so the user can freely drag/pan the map without it snapping back.
  */
 const MapFitBounds = () => {
   const map = useMap();
+  const initializedRef = useRef(false);
 
   useEffect(() => {
-    const setDefaultView = () => {
+    let active = true;
+
+    map.whenReady(() => {
+      if (!active || initializedRef.current) return;
+
+      initializedRef.current = true;
       map.invalidateSize({ animate: false });
-      map.setView([20, 0], 3, { animate: false });
+      map.setView(DEFAULT_CENTER, DEFAULT_ZOOM, { animate: false });
+    });
+
+    return () => {
+      active = false;
     };
+  }, [map]);
 
-    setDefaultView();
-
+  useEffect(() => {
     const container = map.getContainer();
 
+    if (typeof ResizeObserver === 'undefined') {
+      return undefined;
+    }
+
     const observer = new ResizeObserver(() => {
-      setDefaultView();
+      map.invalidateSize({ animate: false });
     });
 
     observer.observe(container);

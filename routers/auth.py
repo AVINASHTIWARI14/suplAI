@@ -3,13 +3,19 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from core.deps import get_current_user
 from core.models import (
     LoginRequest,
+    GoogleLoginRequest,
     RefreshRequest,
     RegisterRequest,
     TokenResponse,
     UserPublic,
 )
 from core.rate_limit import limiter
-from services.auth_service import login_user, refresh_access_token, register_user
+from services.auth_service import (
+    google_login_user,
+    login_user,
+    refresh_access_token,
+    register_user,
+)
 
 router = APIRouter()
 
@@ -22,6 +28,16 @@ def register(body: RegisterRequest, request: Request) -> TokenResponse:
         return TokenResponse(**result)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.post("/google", response_model=TokenResponse)
+@limiter.limit("15/minute")
+def google_login(body: GoogleLoginRequest, request: Request) -> TokenResponse:
+    try:
+        result = google_login_user(body.access_token)
+        return TokenResponse(**result)
+    except ValueError as exc:
+        raise HTTPException(status_code=401, detail=str(exc)) from exc
 
 
 @router.post("/login", response_model=TokenResponse)

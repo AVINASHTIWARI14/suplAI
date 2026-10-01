@@ -32,12 +32,17 @@ def get_graph_data(company_id: str, max_tier: int = 4) -> GraphData:
         company_row = company_rows[0]
         dep_rows = response_data(
             supabase.table("dependencies")
-            .select("supplier_id, is_primary, is_alternate")
+            .select("supplier_id, component_id, is_primary, is_alternate")
             .eq("company_id", company_id)
             .execute()
         ) or []
 
         tier1_ids = list({row["supplier_id"] for row in dep_rows})
+        component_ids = list({
+            row["component_id"]
+            for row in dep_rows
+            if row.get("component_id")
+        })
         if not tier1_ids:
             return _demo_graph_data(company_id)
 
@@ -66,6 +71,16 @@ def get_graph_data(company_id: str, max_tier: int = 4) -> GraphData:
         ) or []
         supplier_map = {r["id"]: r for r in supplier_rows}
 
+        component_rows = []
+        if component_ids:
+            component_rows = response_data(
+                supabase.table("components")
+                .select("id, name, category, criticality_score")
+                .in_("id", component_ids)
+                .execute()
+            ) or []
+        component_map = {r["id"]: r for r in component_rows}
+
         nodes: List[GraphNode] = [
             GraphNode(
                 id=company_id,
@@ -93,6 +108,32 @@ def get_graph_data(company_id: str, max_tier: int = 4) -> GraphData:
                     break
             edges.append(GraphEdge(source=company_id, target=sid, relation=rel))
 
+            component_id = next(
+                (dep.get("component_id") for dep in dep_rows
+                 if dep.get("supplier_id") == sid and dep.get("component_id")),
+                None,
+            )
+            component = component_map.get(component_id)
+            if component and component_id not in [n.id for n in nodes]:
+                nodes.append(
+                    GraphNode(
+                        id=component_id,
+                        label=component.get("name", "Component"),
+                        type="component",
+                        risk_score=float(
+                            component.get("criticality_score") or 0.0
+                        ),
+                    )
+                )
+            if component:
+                edges.append(
+                    GraphEdge(
+                        source=sid,
+                        target=component_id,
+                        relation="component",
+                    )
+                )
+
         seen_edges = {(e.source, e.target) for e in edges}
         for link in tier_links:
             parent = link["parent_supplier_id"]
@@ -109,6 +150,34 @@ def get_graph_data(company_id: str, max_tier: int = 4) -> GraphData:
                         risk_score=float(row.get("risk_score") or 0.0),
                     )
                 )
+                child_component_id = next(
+                    (dep.get("component_id") for dep in dep_rows
+                     if dep.get("supplier_id") == child and dep.get("component_id")),
+                    None,
+                )
+                child_component = component_map.get(child_component_id)
+                if child_component and child_component_id not in [n.id for n in nodes]:
+                    nodes.append(
+                        GraphNode(
+                            id=child_component_id,
+                            label=child_component.get("name", "Component"),
+                            type="component",
+                            risk_score=float(
+                                child_component.get("criticality_score") or 0.0
+                            ),
+                        )
+                    )
+                if child_component:
+                    component_key = (child, child_component_id)
+                    if component_key not in seen_edges:
+                        edges.append(
+                            GraphEdge(
+                                source=child,
+                                target=child_component_id,
+                                relation="component",
+                            )
+                        )
+                        seen_edges.add(component_key)
             key = (parent, child)
             if key not in seen_edges:
                 tier = link.get("tier", 2)

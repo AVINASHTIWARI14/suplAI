@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Londrina+Outline&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Londrina+Outline&family=Londrina+Shadow&display=swap');
 
 :root {
   color-scheme: light;
@@ -127,7 +127,7 @@ h3,
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 }
 
 .header-nav .nav-link {
@@ -143,8 +143,8 @@ h3,
   transition: color 0.2s ease, transform 0.2s ease;
   display: inline-flex;
   align-items: center;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 800;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -161,7 +161,7 @@ h3,
 }
 
 .header-nav .nav-link.active {
-  font-weight: 700;
+  font-weight: 800;
 }
 
 /* Nav is only in the DOM when the sidebar is open (see Sidebar.jsx) */
@@ -234,8 +234,8 @@ h3,
 }
 
 .main-content > .page-body {
-  flex: 0 0 auto;
-  min-height: auto;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: visible;
 }
 
@@ -388,6 +388,19 @@ h3,
   letter-spacing: -0.075em;
   -webkit-text-stroke: 0.2px currentColor;
   white-space: nowrap;
+}
+
+/* LOGO-ONLY CHANGE: preserve the entire dashboard and style only the header wordmark. */
+.top-nav-brand .brand-logo,
+.top-nav-brand .brand-logo * {
+  font-family: 'Londrina Shadow', cursive !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Slightly larger header logo — header only. */
+.top-nav-brand .brand-logo {
+  font-size: 3.6rem;
 }
 
 .brand-logo__supl {
@@ -756,8 +769,8 @@ h3,
 
 .home-feature-card span {
   display: block;
-  margin-top: auto;
-  color: #F4C400;
+  margin-top: 0;
+  color: #ffffff;
   font-size: clamp(0.9rem, 1.1vw, 1.05rem);
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -806,7 +819,10 @@ h3,
 .home-login-form h2 {
   margin: 0 0 10px;
   color: #151717;
-  font-size: 2rem;
+  font-size: 2.55rem;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
 }
 
 .home-login-field > label {
@@ -852,22 +868,6 @@ h3,
 .home-login-input-wrap input::placeholder {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
-.home-login-options {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: 14px;
-}
-
-.home-login-options label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #151717;
-}
-
 
 
 .home-login-link {
@@ -1058,9 +1058,12 @@ h3,
 }
 
 .home-signup-card h2 {
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   color: #151717;
-  font-size: 1.65rem;
+  font-size: 2.35rem;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
 }
 
 .home-auth-switch {
@@ -9075,7 +9078,7 @@ input[type="range"]:active::-moz-range-thumb {
   background-size: cover !important;
   background-repeat: no-repeat !important;
 
-  filter: blur(1.5px) !important;
+  filter: blur(2.5px) !important;
   opacity: 0.75 !important;
 
   transform: scale(1.03) !important;
@@ -9113,7 +9116,7 @@ input[type="range"]:active::-moz-range-thumb {
   background-position: center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
-  filter: blur(1.5px) !important;
+  filter: blur(2.5px) !important;
   opacity: 0.72 !important;
   transform: scale(1.03) !important;
   z-index: -2 !important;
@@ -9148,7 +9151,7 @@ input[type="range"]:active::-moz-range-thumb {
   background-size: cover !important;
   background-repeat: no-repeat !important;
 
-  filter: blur(1.5px) !important;
+  filter: blur(2.5px) !important;
   opacity: 0.72 !important;
   transform: scale(1.03) !important;
 
@@ -10391,138 +10394,2496 @@ body,
   margin: 0 !important;
   min-height: 100% !important;
 }
+
+
+/* ── Authenticated profile menu ── */
+.profile-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profile-trigger {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 6px 11px 6px 7px;
+  border: 1px solid rgba(244, 196, 0, 0.7);
+  border-radius: 999px !important;
+  background: #f4c400;
+  color: #183153;
+  box-shadow: none !important;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.profile-trigger:hover {
+  background: #ffd52a;
+}
+
+.profile-avatar {
+  width: 29px;
+  height: 29px;
+  flex: 0 0 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #183153;
+  color: #f4c400;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.profile-avatar-large {
+  width: 42px;
+  height: 42px;
+  flex-basis: 42px;
+  font-size: 1rem;
+}
+
+.profile-trigger-text {
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-chevron {
+  font-size: 0.62rem;
+  margin-left: 1px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 270px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: #0b1f3a;
+  color: #f4efe6;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+}
+
+.profile-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 5px 4px 10px;
+}
+
+.profile-dropdown-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-dropdown-info strong {
+  color: #f4efe6;
+  font-size: 0.95rem;
+}
+
+.profile-dropdown-info span {
+  overflow: hidden;
+  color: rgba(244, 239, 230, 0.72);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-dropdown-info small {
+  width: fit-content;
+  margin-top: 3px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(244, 196, 0, 0.16);
+  color: #f4c400;
+  font-size: 0.68rem;
+  text-transform: capitalize;
+}
+
+.profile-dropdown-divider {
+  height: 1px;
+  margin: 3px 0 7px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 9px;
+  border: 0;
+  border-radius: 8px !important;
+  background: transparent;
+  color: #f4efe6;
+  box-shadow: none !important;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.profile-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.profile-dropdown-item.profile-logout {
+  color: #ffb4b4;
+}
+
+/* When logged in, Home no longer reserves space for the login card. */
+.home-page .home-login-section {
+  transition: opacity 0.2s ease;
+}
+
+@media (max-width: 900px) {
+  .profile-trigger-text {
+    display: none;
+  }
+
+  .profile-trigger {
+    padding-right: 8px;
+  }
+
+  .profile-dropdown {
+    right: -4px;
+    width: min(270px, calc(100vw - 24px));
+  }
+}
+
+
+/* Final footer alignment */
+.site-footer-demo {
+  justify-self: start;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.site-footer-privacy {
+  justify-self: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.site-footer-socials {
+  justify-self: end !important;
+}
+
+@media (max-width: 700px) {
+  .site-footer {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .site-footer-demo,
+  .site-footer-privacy,
+  .site-footer-socials {
+    justify-self: center !important;
+  }
+}
+
 /* =========================================================
-   SETTINGS PAGE — FINAL FOOTER FIX
+   FINAL FOOTER UI OVERRIDE
+   Demo badge + centered privacy link + right-aligned socials
    ========================================================= */
 
-.main-content:has(.settings-page-title) {
+.site-footer {
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+}
+
+.site-footer-demo {
+  justify-self: start !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px 16px !important;
+  min-height: 34px !important;
+  border-radius: 999px !important;
+  background: #F4C400 !important;
+  color: #0B1F3A !important;
+  font-size: 0.78rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.site-footer-privacy {
+  justify-self: center !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  transition: color 0.2s ease !important;
+}
+
+.site-footer-privacy:hover,
+.site-footer-privacy:focus-visible {
+  color: #F4C400 !important;
+}
+
+.site-footer-socials {
+  justify-self: end !important;
   display: flex !important;
-  flex-direction: column !important;
+  align-items: center !important;
+}
 
+@media (max-width: 700px) {
+  .site-footer {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 10px !important;
+  }
+
+  .site-footer-demo,
+  .site-footer-privacy,
+  .site-footer-socials {
+    justify-self: center !important;
+  }
+}
+
+
+
+/* =========================================================
+   FINAL PROFILE / USER MENU OVERRIDES
+   User avatar + yellow profile card + red logout button
+   No reflections / no shadows
+   ========================================================= */
+
+.profile-avatar-image {
+  display: block !important;
+  padding: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 0 !important;
+  color: transparent !important;
+  line-height: 0 !important;
+}
+
+.profile-trigger .profile-avatar-image {
+  width: 29px !important;
+  height: 29px !important;
+  flex: 0 0 29px !important;
+  border-radius: 50% !important;
+}
+
+.profile-dropdown .profile-avatar-image.profile-avatar-large {
+  width: 46px !important;
+  height: 46px !important;
+  flex: 0 0 46px !important;
+  border-radius: 50% !important;
+}
+
+.profile-trigger {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: #F4C400 !important;
+  color: #183153 !important;
+  border: 1px solid #F4C400 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+}
+
+.profile-trigger::before,
+.profile-trigger::after {
+  content: none !important;
+  display: none !important;
+}
+
+.profile-trigger:hover,
+.profile-trigger:active,
+.profile-trigger:focus {
+  background: #F4C400 !important;
+  color: #183153 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+}
+
+.profile-dropdown {
+  width: 304px !important;
+  padding: 14px !important;
+  border: 1px solid #183153 !important;
+  border-radius: 16px !important;
+  background: #F4C400 !important;
+  color: #183153 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+}
+
+.profile-dropdown::before,
+.profile-dropdown::after {
+  content: none !important;
+  display: none !important;
+}
+
+.profile-dropdown-header {
+  padding: 4px 4px 12px !important;
+}
+
+.profile-dropdown-info strong {
+  color: #183153 !important;
+}
+
+.profile-dropdown-info span {
+  color: rgba(24, 49, 83, 0.78) !important;
+}
+
+.profile-dropdown-info small {
+  margin-top: 3px !important;
+  background: #183153 !important;
+  color: #F4C400 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.profile-dropdown-divider {
+  background: rgba(24, 49, 83, 0.22) !important;
+}
+
+.profile-dropdown-item.profile-logout.button {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 172px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  margin: 8px auto 2px !important;
+  padding: 9px 12px !important;
+  border: none !important;
+  border-radius: 20px !important;
+  background: #FF2849 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  cursor: pointer !important;
+  font-family: sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+  text-align: center !important;
+  transition: background 0.2s ease !important;
+}
+
+.profile-dropdown-item.profile-logout.button::before,
+.profile-dropdown-item.profile-logout.button::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.profile-dropdown-item.profile-logout.button .lable {
+  line-height: 22px !important;
+  font-size: 17px !important;
+  color: #fff !important;
+  font-family: sans-serif !important;
+  letter-spacing: 1px !important;
+}
+
+.profile-dropdown-item.profile-logout.button .svg-icon {
+  width: 19px !important;
+  height: 19px !important;
+  flex: 0 0 19px !important;
+  fill: none !important;
+  color: #fff !important;
+  stroke: currentColor !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+.profile-dropdown-item.profile-logout.button:hover {
+  background: #e52441 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  transform: none !important;
+}
+
+.profile-dropdown-item.profile-logout.button:hover .svg-icon {
+  animation: profile-logout-flickering 2s linear infinite !important;
+}
+
+.profile-dropdown-item.profile-logout.button:active,
+.profile-dropdown-item.profile-logout.button:focus {
+  background: #FF2849 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+@keyframes profile-logout-flickering {
+  0% { opacity: 1; }
+  50% { opacity: 1; }
+  52% { opacity: 1; }
+  54% { opacity: 0; }
+  56% { opacity: 1; }
+  90% { opacity: 1; }
+  92% { opacity: 0; }
+  94% { opacity: 1; }
+  96% { opacity: 0; }
+  98% { opacity: 1; }
+  99% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* No reflection/glow/shadow anywhere on the profile UI. */
+.profile-menu,
+.profile-menu *,
+.profile-menu *::before,
+.profile-menu *::after {
+  text-shadow: none !important;
+}
+
+.profile-menu .profile-dropdown,
+.profile-menu .profile-trigger {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+
+/* =========================================================
+   GOOGLE LOGIN BUTTON
+   Uiverse-style white button, scoped only to the Home login card.
+   No reflection / glow / shadow.
+   ========================================================= */
+
+.google-login-button {
+  max-width: none !important;
   width: 100% !important;
-  height: 100vh !important;
-  min-height: 100vh !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  box-sizing: border-box !important;
+  margin: 0 0 4px !important;
+  display: flex !important;
+  padding: 0.5rem 1.4rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+  gap: 0.75rem !important;
+  color: rgb(65, 63, 63) !important;
+  background-color: #fff !important;
+  background-image: none !important;
+  cursor: pointer !important;
+  transition: all 0.6s ease !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  transform: none;
+}
 
+.google-login-button::before,
+.google-login-button::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.google-login-icon {
+  width: 24px !important;
+  height: 24px !important;
+  flex: 0 0 24px !important;
+  display: block !important;
+}
+
+.google-login-label {
+  line-height: 1.25rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 700 !important;
+  color: rgb(65, 63, 63) !important;
+  font-family: sans-serif !important;
+  letter-spacing: 0.02em !important;
+}
+
+.google-login-button:hover:not(:disabled) {
+  background-color: #fff !important;
+  color: rgb(65, 63, 63) !important;
+  transform: scale(1.02) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+.google-login-button:hover:not(:disabled) .google-login-label {
+  color: rgb(65, 63, 63) !important;
+}
+
+.google-login-button:active:not(:disabled) {
+  transform: scale(1) !important;
+  box-shadow: none !important;
+}
+
+.google-login-button:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+
+/* =========================================================
+   FINAL PROFILE TRIGGER — AVATAR ONLY
+   Keep the existing click/dropdown functionality, but show only the
+   circular user image inside a yellow circular button.
+   ========================================================= */
+
+.profile-trigger-avatar-only {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  padding: 4px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #F4C400 !important;
+  color: #183153 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  outline: none !important;
+}
+
+.profile-trigger-avatar-only:hover,
+.profile-trigger-avatar-only:active,
+.profile-trigger-avatar-only:focus,
+.profile-trigger-avatar-only[aria-expanded="true"] {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  padding: 4px !important;
+  background: #F4C400 !important;
+  color: #183153 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  filter: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+.profile-trigger-avatar-only .profile-avatar-image {
+  width: 40px !important;
+  height: 40px !important;
+  flex: 0 0 40px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+.profile-trigger-avatar-only .profile-trigger-text,
+.profile-trigger-avatar-only .profile-chevron {
+  display: none !important;
+}
+
+.profile-trigger-avatar-only::before,
+.profile-trigger-avatar-only::after {
+  content: none !important;
+  display: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* =========================================================
+   FINAL FEATURE CARD HEIGHT FIX
+   Trim cards to their content instead of leaving a large
+   empty area below the title/point text.
+   ========================================================= */
+.home-feature-card {
+  min-height: 0 !important;
+  height: auto !important;
+  align-self: flex-start !important;
+  box-sizing: border-box !important;
+}
+
+
+/* =========================================================
+   AUTH TRANSITION
+   Full-page cover without a loading card.
+   Uses the requested yellow spinner.
+   ========================================================= */
+
+.auth-transition-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+  background: rgba(7, 24, 44, 0.42) !important;
+  backdrop-filter: blur(2px) !important;
+  -webkit-backdrop-filter: blur(2px) !important;
+  animation: authTransitionFadeIn 180ms ease-out both !important;
+}
+
+/* Exact loader structure supplied by the user, recolored yellow. */
+.auth-transition-overlay .spinner {
+  width: 56px !important;
+  height: 56px !important;
+  display: grid !important;
+  color: #F4C400 !important;
+  background: radial-gradient(
+    farthest-side,
+    currentColor calc(100% - 7px),
+    #0000 calc(100% - 6px) 0
+  ) !important;
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  border-radius: 50% !important;
+  animation: spinner-sm4bhi 2s infinite linear !important;
+}
+
+.auth-transition-overlay .spinner::before,
+.auth-transition-overlay .spinner::after {
+  content: "" !important;
+  grid-area: 1 / 1 !important;
+  background: linear-gradient(currentColor 0 0) center,
+    linear-gradient(currentColor 0 0) center !important;
+  background-size: 100% 11px, 11px 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+.auth-transition-overlay .spinner::after {
+  transform: rotate(45deg) !important;
+}
+
+@keyframes spinner-sm4bhi {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes authTransitionFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-transition-overlay,
+  .auth-transition-overlay .spinner {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   FINAL DASHBOARD LOADING LAYOUT
+   Keep footer pinned to the bottom while the dashboard loads.
+   ========================================================= */
+
+.main-content {
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+.main-content > .page-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
+
+.main-content > .page-body.dashboard-loading-state {
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
+  min-height: 0 !important;
+  height: auto !important;
   padding: 0 !important;
   margin: 0 !important;
-
+  flex: 1 1 auto !important;
+  color: transparent !important;
   background: #183153 !important;
+}
 
+.dashboard-loading-spinner {
+  width: 56px !important;
+  height: 56px !important;
+  display: grid !important;
+  color: #F4C400 !important;
+  background: radial-gradient(
+    farthest-side,
+    currentColor calc(100% - 7px),
+    #0000 calc(100% - 6px) 0
+  ) !important;
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  border-radius: 50% !important;
+  animation: spinner-sm4bhi 2s infinite linear !important;
+}
+
+.dashboard-loading-spinner::before,
+.dashboard-loading-spinner::after {
+  content: "" !important;
+  grid-area: 1 / 1 !important;
+  background: linear-gradient(currentColor 0 0) center,
+    linear-gradient(currentColor 0 0) center !important;
+  background-size: 100% 11px, 11px 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+.dashboard-loading-spinner::after {
+  transform: rotate(45deg) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-loading-spinner {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   DASHBOARD LOADING LAYOUT FIX
+   Keep the footer at the bottom while the loader occupies
+   the available space between header and footer.
+   ========================================================= */
+
+.main-content {
+  min-height: 100vh !important;
+}
+
+.main-content > .page-body.loading-state {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 0 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.main-content > .site-footer {
+  margin-top: auto !important;
+  flex-shrink: 0 !important;
+}
+
+
+/* =========================================================
+   FINAL DASHBOARD LOADING LAYOUT FIX
+   The route area fills the space between header and footer.
+   This prevents the footer from appearing directly under the
+   loading spinner while Dashboard data is being fetched.
+   ========================================================= */
+
+.main-content {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
 
-/* Settings content takes the available space */
-.main-content:has(.settings-page-title) > .page-body {
+.route-content {
   flex: 1 1 auto !important;
-
-  width: 100% !important;
   min-height: 0 !important;
-
-  box-sizing: border-box !important;
-}
-
-/* Footer sits at the bottom of the main flex layout */
-.main-content:has(.settings-page-title) > .site-footer {
-  position: relative !important;
-
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-
   width: 100% !important;
-
-  flex: 0 0 auto !important;
-  flex-shrink: 0 !important;
-
-  margin-top: auto !important;
-  margin-right: 0 !important;
-  margin-bottom: 0 !important;
-  margin-left: 0 !important;
-
-  height: auto !important;
-  min-height: 105px !important;
-
-  padding: 14px 20px 16px !important;
-
-  box-sizing: border-box !important;
-
-  background: #0b1f3a !important;
-
-  z-index: 50 !important;
-
-  transform: none !important;
-}
-
-/* Remove the old artificial height */
-.main-content:has(.settings-page-title) .page-body {
-  min-height: 0 !important;
-}/* =========================================================
-   SETTINGS PAGE — FINAL FOOTER FIX
-   ========================================================= */
-
-.main-content:has(.settings-page-title) {
   display: flex !important;
   flex-direction: column !important;
+}
 
+.route-content > .page-body {
   width: 100% !important;
-  height: 100vh !important;
-  min-height: 100vh !important;
+  flex: 0 0 auto !important;
+}
 
-  padding: 0 !important;
+.route-content > .page-body.dashboard-loading-state {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
   margin: 0 !important;
-
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
   background: #183153 !important;
+}
 
+.main-content > .site-footer {
+  flex: 0 0 auto !important;
+  margin-top: 0 !important;
+}
+
+
+/* =========================================================
+   FINAL APP SHELL / FOOTER STRUCTURE FIX
+   Footer is a sibling of the scrolling main content so the
+   loading screen can occupy the full area above it.
+   ========================================================= */
+
+.app-shell {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.main-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  width: 100% !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
 
-/* Settings content takes the available space */
-.main-content:has(.settings-page-title) > .page-body {
+.route-content {
+  display: flex !important;
+  flex-direction: column !important;
   flex: 1 1 auto !important;
-
-  width: 100% !important;
   min-height: 0 !important;
-
-  box-sizing: border-box !important;
+  width: 100% !important;
 }
 
-/* Footer sits at the bottom of the main flex layout */
-.main-content:has(.settings-page-title) > .site-footer {
-  position: relative !important;
-
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-
+.route-content > .dashboard-loading-state {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
   width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #183153 !important;
+  color: transparent !important;
+}
 
+.dashboard-loading-spinner {
+  animation: spinner-sm4bhi 2s infinite linear !important;
+}
+
+/* The footer is outside .main-content and therefore stays below it. */
+.app-shell > .site-footer {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 700px) {
+  .app-shell {
+    height: 100vh !important;
+    min-height: 100vh !important;
+  }
+
+  .route-content > .dashboard-loading-state {
+    min-height: 0 !important;
+  }
+}
+
+/* =========================================================
+   HEADER + FOOTER — LIGHT GLASS EFFECT
+   Replaces the solid dark-blue surfaces with a subtle,
+   translucent glass treatment.
+   ========================================================= */
+
+.top-nav {
+  background: rgba(255, 255, 255, 0.10) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(12px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(115%) !important;
+  box-shadow: none !important;
+}
+
+.site-footer {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(12px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(115%) !important;
+  box-shadow: none !important;
+}
+
+.top-nav,
+.site-footer {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+
+.header-nav .nav-link:hover,
+.header-nav .nav-link.active,
+.site-footer-privacy:hover,
+.site-footer-privacy:focus-visible {
+  color: #F4C400 !important;
+}
+
+.main-content:has(.supplier-explorer-page) > .site-footer,
+.main-content:has(.network-layout) > .site-footer,
+.main-content:has(.network-page) .site-footer {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(12px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(115%) !important;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .top-nav,
+  .site-footer {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(24, 49, 83, 0.78) !important;
+  }
+}
+
+
+/* =========================================================
+   FINAL FOOTER GLASS + SCROLL LAYOUT FIX
+   - Footer lives inside the same scrolling surface as the pages.
+   - Footer is sticky at the viewport bottom.
+   - Backdrop blur can therefore sample the page behind it.
+   - All legacy page-specific solid/white footer backgrounds are
+     neutralised by the rules below.
+   ========================================================= */
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: #183153 !important;
+}
+
+.app-shell {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  background: #183153 !important;
+  overflow: hidden !important;
+}
+
+.main-content {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: #183153 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none;
+}
+
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+
+.route-content {
+  display: flex !important;
+  flex: 1 0 auto !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  background: transparent !important;
+}
+
+/* Dashboard loading still fills the area between the header and footer. */
+.route-content > .dashboard-loading-state {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #183153 !important;
+}
+
+/* Footer must be a child of .main-content for reliable backdrop sampling. */
+.main-content > .site-footer {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100% !important;
+  min-height: 84px !important;
+  height: auto !important;
   flex: 0 0 auto !important;
   flex-shrink: 0 !important;
-
-  margin-top: auto !important;
-  margin-right: 0 !important;
-  margin-bottom: 0 !important;
-  margin-left: 0 !important;
-
-  height: auto !important;
-  min-height: 105px !important;
-
+  margin: 0 !important;
   padding: 14px 20px 16px !important;
-
   box-sizing: border-box !important;
 
+  position: sticky !important;
+  bottom: 0 !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  z-index: 100 !important;
+
+  background: rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  background-image: none !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  color: rgba(255, 255, 255, 0.86) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(120%) !important;
+  isolation: isolate !important;
+}
+
+/* Remove any legacy decorative layer that could make the footer opaque. */
+.main-content > .site-footer::before,
+.main-content > .site-footer::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.main-content > .site-footer .site-footer-demo,
+.main-content > .site-footer .site-footer-privacy,
+.main-content > .site-footer .site-footer-socials {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.main-content > .site-footer .site-footer-demo {
+  justify-self: start !important;
+  color: #183153 !important;
+  background: #F4C400 !important;
+  background-color: #F4C400 !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.main-content > .site-footer .site-footer-privacy {
+  justify-self: center !important;
+  color: rgba(255, 255, 255, 0.90) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.main-content > .site-footer .site-footer-socials {
+  justify-self: end !important;
+}
+
+.main-content > .site-footer .site-footer-socials a,
+.main-content > .site-footer .site-footer-socials svg {
+  color: rgba(255, 255, 255, 0.92) !important;
+  fill: rgba(255, 255, 255, 0.92) !important;
+}
+
+.main-content > .site-footer .site-footer-socials a:hover,
+.main-content > .site-footer .site-footer-socials a:hover svg,
+.main-content > .site-footer .site-footer-privacy:hover,
+.main-content > .site-footer .site-footer-privacy:focus-visible {
+  color: #F4C400 !important;
+  fill: #F4C400 !important;
+}
+
+/* Safety net for every route: never allow a white or solid-blue footer. */
+.site-footer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  background-image: none !important;
+  backdrop-filter: blur(14px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(120%) !important;
+  box-shadow: none !important;
+}
+
+/* Legacy selectors may still match descendant footers on older route CSS. */
+.main-content:has(.network-layout) .site-footer,
+.main-content:has(.network-page) .site-footer,
+.main-content:has(.alternatives-page) .site-footer,
+.main-content:has(.feed-grid) .site-footer,
+.main-content:has(.alerts-page) .site-footer,
+.main-content:has(.settings-page-title) .site-footer,
+.main-content:has(.supplier-explorer-page) .site-footer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  background-image: none !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(120%) !important;
+}
+
+@media (max-width: 700px) {
+  .main-content > .site-footer {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+    min-height: 96px !important;
+  }
+
+  .main-content > .site-footer .site-footer-demo,
+  .main-content > .site-footer .site-footer-privacy,
+  .main-content > .site-footer .site-footer-socials {
+    justify-self: center !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .main-content > .site-footer,
+  .site-footer {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(24, 49, 83, 0.88) !important;
+    background-color: rgba(24, 49, 83, 0.88) !important;
+  }
+}
+
+/* =========================================================
+   DASHBOARD SUMMARY CARDS — VISIBLE LIGHT GLASS IMAGES
+   ========================================================= */
+
+/* Keep the three dashboard image cards translucent so their
+   background images can actually render above the card surface. */
+.active-disruption-card,
+.risky-supplier-card,
+.disruption-feed-card {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: rgba(11, 31, 58, 0.72) !important;
+}
+
+/* The image sits INSIDE the card's stacking context instead of
+   being hidden behind the card background.  A smaller percentage
+   lets the full artwork remain visible. */
+.active-disruption-card::before,
+.risky-supplier-card::before,
+.disruption-feed-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 72% auto !important;
+  filter: blur(5px) !important;
+  opacity: 0.56 !important;
+  transform: scale(1.02) !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+.active-disruption-card::before {
+  background-image: var(--disruption-bg) !important;
+}
+
+.risky-supplier-card::before {
+  background-image: var(--supplier-bg) !important;
+}
+
+.disruption-feed-card::before {
+  background-image: var(--feed-bg) !important;
+}
+
+/* Soft light tint: keeps text readable without burying the image. */
+.active-disruption-card::after,
+.risky-supplier-card::after,
+.disruption-feed-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(11, 31, 58, 0.16) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* Keep every card's actual content above both layers. */
+.active-disruption-card > *,
+.risky-supplier-card > *,
+.disruption-feed-card > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Slightly smaller on narrow screens so the full artwork still fits. */
+@media (max-width: 900px) {
+  .active-disruption-card::before,
+  .risky-supplier-card::before,
+  .disruption-feed-card::before {
+    background-size: 64% auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .active-disruption-card::before,
+  .risky-supplier-card::before,
+  .disruption-feed-card::before {
+    background-size: 58% auto !important;
+    filter: blur(4px) !important;
+    opacity: 0.52 !important;
+  }
+}
+
+
+/* =========================================================
+   DASHBOARD SUMMARY CARD IMAGE — FINAL REVERT
+   Restore full-card image sizing while keeping the lighter,
+   softer glass treatment from the previous pass.
+   ========================================================= */
+
+.active-disruption-card,
+.risky-supplier-card,
+.disruption-feed-card {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: rgba(11, 31, 58, 0.72) !important;
+}
+
+/* Put the artwork in the visible stacking layer. */
+.active-disruption-card::before,
+.risky-supplier-card::before,
+.disruption-feed-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  filter: blur(5px) !important;
+  opacity: 0.56 !important;
+  transform: scale(1.02) !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+.active-disruption-card::before {
+  background-image: var(--disruption-bg) !important;
+}
+
+.risky-supplier-card::before {
+  background-image: var(--supplier-bg) !important;
+}
+
+.disruption-feed-card::before {
+  background-image: var(--feed-bg) !important;
+}
+
+/* Light overlay keeps the image soft but visible. */
+.active-disruption-card::after,
+.risky-supplier-card::after,
+.disruption-feed-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(11, 31, 58, 0.16) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* Keep card content above the image/overlay. */
+.active-disruption-card > *,
+.risky-supplier-card > *,
+.disruption-feed-card > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* =========================================================
+   DASHBOARD SUMMARY CARDS — LIGHTER + SOFTER IMAGES
+   ========================================================= */
+.active-disruption-card::before,
+.risky-supplier-card::before,
+.disruption-feed-card::before {
+  filter: blur(7px) brightness(1.35) !important;
+  opacity: 0.56 !important;
+  transform: scale(1.04) !important;
+}
+
+.active-disruption-card::after,
+.risky-supplier-card::after,
+.disruption-feed-card::after {
+  background: rgba(11, 31, 58, 0.10) !important;
+}
+
+@media (max-width: 700px) {
+  .active-disruption-card::before,
+  .risky-supplier-card::before,
+  .disruption-feed-card::before {
+    filter: blur(6px) brightness(1.30) !important;
+    opacity: 0.52 !important;
+  }
+}
+
+/* =========================================================
+   DASHBOARD SUMMARY CARDS — REMOVE BACKGROUND IMAGES
+   ========================================================= */
+.active-disruption-card,
+.risky-supplier-card,
+.disruption-feed-card {
+  background-image: none !important;
+}
+
+.active-disruption-card::before,
+.risky-supplier-card::before,
+.disruption-feed-card::before,
+.active-disruption-card::after,
+.risky-supplier-card::after,
+.disruption-feed-card::after {
+  display: none !important;
+  content: none !important;
+  background-image: none !important;
+  background: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.active-disruption-card,
+.risky-supplier-card,
+.disruption-feed-card {
+  position: relative !important;
   background: #0b1f3a !important;
+  color: #ffffff !important;
+}
 
-  z-index: 50 !important;
+.active-disruption-card > *,
+.risky-supplier-card > *,
+.disruption-feed-card > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
 
+/* =========================================================
+   DASHBOARD CARDS — SUBTLE HOVER
+   Remove the surrounding-card blur/focus effect and keep only
+   a very small zoom on the card being hovered.
+   ========================================================= */
+
+.dashboard-info-card:hover {
+  transform: scale(1.01) !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.dashboard-info-grid:has(.dashboard-info-card:hover)
+  .dashboard-info-card:not(:hover) {
+  filter: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-info-card:hover {
+    transform: scale(1.008) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-info-card:hover {
+    transform: scale(1.005) !important;
+  }
+}
+
+
+/* =========================================================
+   DASHBOARD MAP — NO HOVER ZOOM
+   Keep the map completely stable when hovered.
+   ========================================================= */
+.dashboard-map-full .map-card:hover,
+.dashboard-map-full .map-card {
   transform: none !important;
 }
 
-/* Remove the old artificial height */
-.main-content:has(.settings-page-title) .page-body {
+.dashboard-map-full .map-card:hover {
+  box-shadow: 0 36px 28px rgba(0, 0, 0, 0.06), 0 10px 14px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* =========================================================
+   DASHBOARD SEVERITY TEXT — SUBTLE BREATHING
+   ========================================================= */
+.dashboard-info-card .dashboard-severity.severity-high,
+.dashboard-info-card .dashboard-severity.severity-medium,
+.dashboard-info-card .dashboard-severity.severity-low {
+  display: inline-block !important;
+  transform-origin: center !important;
+  animation: dashboard-severity-breathe 2.6s ease-in-out infinite !important;
+}
+
+@keyframes dashboard-severity-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.045);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-info-card .dashboard-severity.severity-high,
+  .dashboard-info-card .dashboard-severity.severity-medium,
+  .dashboard-info-card .dashboard-severity.severity-low {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   DASHBOARD SEVERITY TEXT — SUBTLE GLOW
+   ========================================================= */
+.dashboard-info-card .dashboard-severity.severity-high {
+  text-shadow: 0 0 7px rgba(239, 68, 68, 0.32) !important;
+}
+
+.dashboard-info-card .dashboard-severity.severity-medium {
+  text-shadow: 0 0 7px rgba(249, 115, 22, 0.28) !important;
+}
+
+.dashboard-info-card .dashboard-severity.severity-low {
+  text-shadow: 0 0 7px rgba(34, 197, 94, 0.26) !important;
+}
+
+/* =========================================================
+   DASHBOARD MAP — DARK BLUE TOP + BOTTOM BORDERS
+   ========================================================= */
+.dashboard-map-full .map-card,
+.dashboard-map-full .map-card:focus,
+.dashboard-map-full .map-card:active {
+  border-top: 1px solid #183153 !important;
+  border-bottom: 1px solid #183153 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* =========================================================
+   DASHBOARD MAP — DARK BLUE TOP + BOTTOM SECTIONS
+   Match the surrounding dashboard cards exactly.
+   ========================================================= */
+.dashboard-map-full .map-card-header,
+.dashboard-map-full .map-stats {
+  background: #0b1f3a !important;
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+
+.dashboard-map-full .map-card-header .card-header {
+  background: #0b1f3a !important;
+}
+
+.dashboard-map-full .map-card-header .card-title {
+  color: #ffffff !important;
+}
+
+.dashboard-map-full .map-card-header .map-legend {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.dashboard-map-full .map-stats {
+  border-top: 1px solid #0b1f3a !important;
+}
+
+.dashboard-map-full .map-card {
+  border-top-color: #0b1f3a !important;
+  border-bottom-color: #0b1f3a !important;
+}
+
+
+/* =========================================================
+   RISK SCORE TREND — LIGHT BLUE PANEL
+   ========================================================= */
+
+.dashboard-risk-trend-card {
+  background-color: #b9cfea !important;
+  --trend-grid-color: rgba(24, 49, 83, 0.10) !important;
+  border-color: rgba(24, 49, 83, 0.14) !important;
+}
+
+.dashboard-risk-trend-card .dashboard-risk-trend-subtitle {
+  color: #183153 !important;
+}
+
+.dashboard-risk-trend-card .dashboard-risk-trend-title {
+  color: #f4c400 !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-axis-tick text {
+  fill: #183153 !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-grid-horizontal line {
+  stroke: rgba(24, 49, 83, 0.12) !important;
+}
+
+
+/* =========================================================
+   RISK SCORE TREND — MATCH DASHBOARD CARDS
+   ========================================================= */
+
+.dashboard-risk-trend-card {
+  background: #0b1f3a !important;
+  background-image: none !important;
+  border: 0 !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18) !important;
+}
+
+.dashboard-risk-trend-card .dashboard-risk-trend-title {
+  color: #f4c400 !important;
+}
+
+.dashboard-risk-trend-card .dashboard-risk-trend-subtitle {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-axis-tick text {
+  fill: #ffffff !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-axis-line,
+.dashboard-risk-trend-card .recharts-cartesian-axis-tick-line {
+  stroke: rgba(255, 255, 255, 0.28) !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-grid-horizontal line,
+.dashboard-risk-trend-card .recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.28) !important;
+}
+
+.dashboard-risk-trend-card .recharts-label {
+  fill: #ffffff !important;
+}
+
+.dashboard-risk-trend-card .dashboard-risk-trend-empty {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+
+/* =========================================================
+   RISK SCORE TREND — GRID AREA ALSO DARK BLUE
+   ========================================================= */
+
+.dashboard-risk-trend-card {
+  background: #0b1f3a !important;
+}
+
+.dashboard-risk-trend-chart {
+  background: #0b1f3a !important;
+  border-radius: 10px !important;
+}
+
+.dashboard-risk-trend-chart > div,
+.dashboard-risk-trend-chart .recharts-responsive-container,
+.dashboard-risk-trend-chart .recharts-wrapper,
+.dashboard-risk-trend-chart .recharts-surface {
+  background: #0b1f3a !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-grid-horizontal line,
+.dashboard-risk-trend-card .recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.10) !important;
+}
+
+
+/* ============================================================
+   NAVBAR COMPANY DROPDOWN — YELLOW / NO REFLECTION
+   ============================================================ */
+
+.company-dropdown {
+  width: 190px;
+  position: relative;
+  color: #0b1f3a;
+  z-index: 1200;
+}
+
+.company-dropdown-selected {
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 10px;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+  background: #f4c400;
+  color: #0b1f3a;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-sizing: border-box;
+
+  transition: background-color 300ms ease;
+}
+
+.company-dropdown-selected:hover,
+.company-dropdown.is-open .company-dropdown-selected {
+  background: #ffd51a;
+}
+
+.company-dropdown-selected-text {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.company-dropdown-arrow {
+  width: 20px;
+  height: 10px;
+  flex: 0 0 auto;
+  color: #0b1f3a;
+  transition: transform 300ms ease;
+}
+
+.company-dropdown.is-open .company-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.company-dropdown-options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px;
+  box-sizing: border-box;
+
+  background: #f4c400;
+  border-radius: 5px;
+
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease,
+    visibility 300ms ease;
+}
+
+.company-dropdown.is-open .company-dropdown-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.company-dropdown-option {
+  width: 100%;
+  min-height: 34px;
+  padding: 7px 9px;
+  border: none;
+  border-radius: 5px;
+
+  background: #f4c400;
+  color: #0b1f3a;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+
+  transition: background-color 200ms ease, transform 200ms ease;
+}
+
+.company-dropdown-option:hover,
+.company-dropdown-option.selected {
+  background: #ffd51a;
+}
+
+.company-dropdown-option:hover {
+  transform: translateX(2px);
+}
+
+/* Absolutely no reflection, shine, glow or shadow on this dropdown. */
+.company-dropdown,
+.company-dropdown *,
+.company-dropdown::before,
+.company-dropdown::after,
+.company-dropdown *::before,
+.company-dropdown *::after {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  background-image: none !important;
+}
+
+.company-dropdown::before,
+.company-dropdown::after,
+.company-dropdown *::before,
+.company-dropdown *::after {
+  content: none !important;
+  display: none !important;
+}
+
+.company-dropdown-selected:focus-visible,
+.company-dropdown-option:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .company-dropdown {
+    width: 170px;
+  }
+}
+
+@media (max-width: 700px) {
+  .company-dropdown {
+    width: 150px;
+  }
+
+  .company-dropdown-selected,
+  .company-dropdown-option {
+    font-size: 13px;
+  }
+}
+
+/* ============================================================
+   FINAL RESTORE GUARD
+   Keep dashboard styling from the last known good state.
+   ============================================================ */
+
+/* Summary cards: solid dark blue, no artwork. */
+.active-disruption-card,
+.risky-supplier-card,
+.disruption-feed-card {
+  background: #0b1f3a !important;
+  background-image: none !important;
+  color: #ffffff !important;
+}
+
+.active-disruption-card::before,
+.risky-supplier-card::before,
+.disruption-feed-card::before,
+.active-disruption-card::after,
+.risky-supplier-card::after,
+.disruption-feed-card::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* Cards: tiny hover growth only; never blur the other cards. */
+.dashboard-info-card:hover {
+  transform: scale(1.01) !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.dashboard-info-grid:has(.dashboard-info-card:hover)
+  .dashboard-info-card:not(:hover) {
+  transform: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Map: zero hover growth. */
+.dashboard-map-full .map-card,
+.dashboard-map-full .map-card:hover {
+  transform: none !important;
+}
+
+/* Map header/footer sections stay dark blue. */
+.dashboard-map-full .map-card-header,
+.dashboard-map-full .map-card-header .card-header,
+.dashboard-map-full .map-stats {
+  background: #0b1f3a !important;
+}
+
+/* Risk Score Trend: dark blue everywhere + white gridlines. */
+.dashboard-risk-trend-card,
+.dashboard-risk-trend-chart,
+.dashboard-risk-trend-chart > div,
+.dashboard-risk-trend-chart .recharts-responsive-container,
+.dashboard-risk-trend-chart .recharts-wrapper,
+.dashboard-risk-trend-chart .recharts-surface {
+  background: #0b1f3a !important;
+}
+
+.dashboard-risk-trend-card {
+  background-image: none !important;
+  border: 0 !important;
+  color: #ffffff !important;
+}
+
+.dashboard-risk-trend-card .dashboard-risk-trend-title {
+  color: #f4c400 !important;
+}
+
+.dashboard-risk-trend-card .dashboard-risk-trend-subtitle,
+.dashboard-risk-trend-card .recharts-label,
+.dashboard-risk-trend-card .recharts-cartesian-axis-tick text {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-axis-line,
+.dashboard-risk-trend-card .recharts-cartesian-axis-tick-line {
+  stroke: rgba(255, 255, 255, 0.28) !important;
+}
+
+.dashboard-risk-trend-card .recharts-cartesian-grid-horizontal line,
+.dashboard-risk-trend-card .recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.28) !important;
+}
+
+/* Severity text: subtle breathe + color-matched glow. */
+.dashboard-info-card .dashboard-severity.severity-high,
+.dashboard-info-card .dashboard-severity.severity-medium,
+.dashboard-info-card .dashboard-severity.severity-low {
+  display: inline-block !important;
+  transform-origin: center !important;
+  animation: dashboard-severity-breathe 2.6s ease-in-out infinite !important;
+}
+
+.dashboard-info-card .dashboard-severity.severity-high {
+  text-shadow: 0 0 7px rgba(239, 68, 68, 0.32) !important;
+}
+
+.dashboard-info-card .dashboard-severity.severity-medium {
+  text-shadow: 0 0 7px rgba(249, 115, 22, 0.28) !important;
+}
+
+.dashboard-info-card .dashboard-severity.severity-low {
+  text-shadow: 0 0 7px rgba(34, 197, 94, 0.26) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-info-card .dashboard-severity.severity-high,
+  .dashboard-info-card .dashboard-severity.severity-medium,
+  .dashboard-info-card .dashboard-severity.severity-low {
+    animation: none !important;
+  }
+}
+
+
+/* ============================================================
+   DASHBOARD — MAP AS FULL-PAGE BACKGROUND
+   Temporary dashboard redesign:
+   only the map is shown and it fills the available dashboard
+   canvas instead of sitting inside a conventional card.
+   ============================================================ */
+
+.dashboard-map-only-fullpage {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
   min-height: 0 !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #183153 !important;
+}
+
+/* Center the existing loader in the full dashboard canvas. */
+.dashboard-map-only-fullpage.dashboard-map-loading {
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
+}
+
+.dashboard-map-only-fullpage .dashboard-loading-spinner {
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+/* Full-screen map container. */
+.dashboard-map-full.dashboard-map-fullscreen {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Remove the card appearance entirely. */
+.dashboard-map-fullscreen .map-card,
+.dashboard-map-fullscreen .map-card:hover,
+.dashboard-map-fullscreen .map-card:focus,
+.dashboard-map-fullscreen .map-card:active {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+
+  background: transparent !important;
+  background-image: none !important;
+
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: default !important;
+}
+
+/* Map itself becomes the background layer. */
+.dashboard-map-fullscreen .map-viewport {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+}
+
+/* Keep the Leaflet map fully edge-to-edge. */
+.dashboard-map-fullscreen .leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+}
+
+/* Keep title/legend visible above the map as an overlay. */
+.dashboard-map-fullscreen .map-card-header {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 5 !important;
+
+  margin: 0 !important;
+  padding: 18px 22px !important;
+
+  background: rgba(11, 31, 58, 0.88) !important;
+  color: #ffffff !important;
+  border: 0 !important;
+}
+
+/* Keep the bottom statistics as a map overlay too. */
+.dashboard-map-fullscreen .map-stats {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 5 !important;
+
+  margin: 0 !important;
+  padding: 12px 18px !important;
+
+  background: rgba(11, 31, 58, 0.88) !important;
+  color: #ffffff !important;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* No map-card hover animation whatsoever in this redesign. */
+.dashboard-map-fullscreen .map-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 700px) {
+  .dashboard-map-fullscreen .map-card-header {
+    padding: 14px 14px !important;
+  }
+
+  .dashboard-map-fullscreen .map-stats {
+    padding: 10px 12px !important;
+  }
+}
+
+/* ============================================================
+   DASHBOARD — LEAFLET ZOOM CONTROLS
+   Keep the + / − controls visible just below the map header.
+   ============================================================ */
+.dashboard-map-fullscreen .leaflet-top.leaflet-left {
+  top: 56px !important;
+  left: 12px !important;
+  z-index: 1200 !important;
+  pointer-events: none !important;
+}
+
+.dashboard-map-fullscreen .leaflet-control-zoom,
+.dashboard-map-fullscreen .leaflet-control-zoom a {
+  position: relative !important;
+  z-index: 1201 !important;
+  pointer-events: auto !important;
+}
+
+.dashboard-map-fullscreen .leaflet-control-zoom {
+  margin: 0 !important;
+}
+
+/* Remove only the stray line under the main top navigation. */
+.top-nav {
+  border-bottom: 0 !important;
+}
+/* ============================================================
+   DASHBOARD — SCROLL STORY
+   Built on the user's current index.css without changing
+   unrelated pages/components.
+   ============================================================ */
+
+.dashboard-story-page {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  min-height: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  background: #0b1f3a !important;
+  isolation: isolate;
+}
+
+.route-content > .page-body.dashboard-story-page {
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+}
+
+.main-content {
+  scroll-behavior: smooth !important;
+}
+
+.dashboard-story-loading {
+  min-height: calc(100vh - 74px) !important;
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* ------------------------------------------------------------
+   1. FULL MAP CANVAS
+   ------------------------------------------------------------ */
+
+.dashboard-story-map {
+  position: relative !important;
+  width: 100% !important;
+  height: calc(100vh - 74px) !important;
+  min-height: 560px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+  background: #183153 !important;
+  --story-overlay-opacity: 0;
+}
+
+.dashboard-story-map-canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.dashboard-story-map .dashboard-map-full.dashboard-map-fullscreen {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.dashboard-story-map .dashboard-map-fullscreen .map-card,
+.dashboard-story-map .dashboard-map-fullscreen .map-card:hover,
+.dashboard-story-map .dashboard-map-fullscreen .map-card:focus,
+.dashboard-story-map .dashboard-map-fullscreen .map-card:active {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Map is truly edge-to-edge. */
+.dashboard-story-map .dashboard-map-fullscreen .map-viewport,
+.dashboard-story-map .dashboard-map-fullscreen .leaflet-container {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+}
+
+/* The existing map title/legend and bottom stats are removed
+   from the canvas permanently. */
+.dashboard-story-map .dashboard-map-fullscreen .map-card-header,
+.dashboard-story-map .dashboard-map-fullscreen .map-stats {
+  display: none !important;
+}
+
+/* Keep Leaflet controls above the scroll overlay. */
+.dashboard-story-map .leaflet-top,
+.dashboard-story-map .leaflet-bottom,
+.dashboard-story-map .leaflet-control-container {
+  z-index: 1200 !important;
+}
+
+/* Never apply filter/transform to the actual Leaflet map.
+   This keeps supplier markers and connecting lines stable. */
+.dashboard-story-map .leaflet-container,
+.dashboard-story-map .leaflet-map-pane,
+.dashboard-story-map .leaflet-tile-pane,
+.dashboard-story-map .leaflet-overlay-pane,
+.dashboard-story-map .leaflet-marker-pane,
+.dashboard-story-map .leaflet-shadow-pane {
+  filter: none !important;
+  transform-style: flat !important;
+}
+
+/* ------------------------------------------------------------
+   2. MAP BLUR / DIM OVERLAY
+   ------------------------------------------------------------ */
+
+.dashboard-story-map-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 800 !important;
+  pointer-events: none !important;
+  background: rgba(6, 19, 38, 0.20) !important;
+  opacity: var(--story-overlay-opacity) !important;
+  backdrop-filter: blur(10px) saturate(0.68) brightness(0.66) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(0.68) brightness(0.66) !important;
+  transition: opacity 160ms ease-out !important;
+}
+
+/* ------------------------------------------------------------
+   3. CONTENT SLIDES OVER THE MAP
+   ------------------------------------------------------------ */
+
+.dashboard-story-content {
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 90px 20px 90px !important;
+  background: transparent !important;
+}
+
+.dashboard-story-content .dashboard-info-grid {
+  position: relative !important;
+  width: min(1400px, 100%) !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+.dashboard-story-content .dashboard-info-card {
+  min-width: 0 !important;
+}
+
+/* Cards reveal only when scrolled into view. */
+.dashboard-story-reveal {
+  opacity: 0 !important;
+  transform: translateY(52px) !important;
+  transition:
+    opacity 620ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1) !important;
+  will-change: opacity, transform;
+}
+
+.dashboard-story-reveal.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Preserve the existing dark-blue cards; no artwork is added. */
+.dashboard-story-content .dashboard-info-card {
+  background: #0b1f3a !important;
+  background-image: none !important;
+}
+
+/* Risk Score Trend enters after the three cards. */
+.dashboard-story-content .dashboard-risk-trend-card {
+  width: min(1400px, 100%) !important;
+  margin: 100px auto 0 !important;
+}
+
+.dashboard-story-content .dashboard-risk-trend-card.dashboard-story-reveal {
+  transition-delay: 80ms !important;
+}
+
+/* ------------------------------------------------------------
+   4. KEEP EXISTING CARD COLORS / TEXT
+   ------------------------------------------------------------ */
+
+.dashboard-story-content .dashboard-info-title,
+.dashboard-story-content .dashboard-risk-trend-title {
+  color: #F4C400 !important;
+}
+
+.dashboard-story-content .dashboard-row-title {
+  color: #ffffff !important;
+}
+
+.dashboard-story-content .dashboard-row-meta,
+.dashboard-story-content .dashboard-row-date {
+  color: rgba(255, 255, 255, 0.64) !important;
+}
+
+.dashboard-story-content .dashboard-info-link {
+  color: #f4c400 !important;
+}
+
+.dashboard-story-content .dashboard-risk-trend-subtitle {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* ------------------------------------------------------------
+   5. REDUCED MOTION
+   ------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .main-content {
+    scroll-behavior: auto !important;
+  }
+
+  .dashboard-story-reveal,
+  .dashboard-story-reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .dashboard-story-map-overlay {
+    transition: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   6. MOBILE
+   ------------------------------------------------------------ */
+
+@media (max-width: 700px) {
+  .dashboard-story-map {
+    height: calc(100vh - 64px) !important;
+    min-height: 480px !important;
+  }
+
+  .dashboard-story-content {
+    padding: 60px 12px 60px !important;
+  }
+
+  .dashboard-story-content .dashboard-risk-trend-card {
+    margin-top: 70px !important;
+  }
+}
+
+/* ============================================================
+   DASHBOARD STORY — STICKY MAP CANVAS
+   Keep the map fixed behind the scrolling dashboard UI.
+   The content rises over the map as the user scrolls.
+   ============================================================ */
+.dashboard-story-page {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.dashboard-story-map {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+.dashboard-story-content {
+  position: relative !important;
+  z-index: 20 !important;
+  isolation: isolate !important;
+}
+
+/* Keep the map visually continuous while content passes over it. */
+.dashboard-story-map-canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+}
+
+.dashboard-story-map-overlay {
+  z-index: 800 !important;
+}
+
+/* Loader: centered in the complete visible dashboard area. */
+.dashboard-story-loading {
+  width: 100% !important;
+  height: calc(100vh - 74px) !important;
+  min-height: calc(100vh - 74px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  align-content: center !important;
+  justify-items: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+.dashboard-story-loading .dashboard-loading-spinner {
+  place-self: center !important;
+  justify-self: center !important;
+  align-self: center !important;
+}
+
+/* Smooth document navigation where the browser uses programmatic scroll. */
+.main-content {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 0 !important;
+}
+
+
+/* ============================================================
+   DASHBOARD STORY — FINAL INTERACTION TUNING
+   ============================================================ */
+
+/* The three revealed cards grow only a little on hover. */
+.dashboard-story-content .dashboard-info-grid .dashboard-info-card:hover {
+  transform: translateY(0) scale(1.02) !important;
+  filter: none !important;
+  opacity: 1 !important;
+  z-index: 30 !important;
+}
+
+/* Keep map tooltips visible above the blur overlay. */
+.dashboard-story-map .leaflet-tooltip-pane {
+  z-index: 1300 !important;
+}
+
+.dashboard-story-map .leaflet-tooltip {
+  z-index: 1301 !important;
+}
+
+/* Preserve free map interaction while the story overlay is present. */
+.dashboard-story-map-overlay {
+  pointer-events: none !important;
+}
+
+/* =========================================================
+   FINAL DASHBOARD FIX — HEADER OVERLAY + TRUE GLASS
+   Dashboard only: keep the navbar over the map so the map is
+   actually visible through the translucent glass.
+   ========================================================= */
+.main-content:has(.dashboard-story-page) > .top-nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 5000 !important;
+  background: rgba(11, 31, 58, 0.54) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(14px) saturate(125%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(125%) !important;
+  box-shadow: none !important;
+}
+
+/* Put the dashboard map underneath the fixed transparent header. */
+.main-content:has(.dashboard-story-page) .dashboard-story-map {
+  height: 100vh !important;
+  min-height: 560px !important;
+  margin-top: 0 !important;
+}
+
+/* Flush the dashboard story against the viewport edges. */
+.main-content:has(.dashboard-story-page) .route-content,
+.main-content:has(.dashboard-story-page) .dashboard-story-page {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Keep Leaflet zoom controls below the overlaid header. */
+.main-content:has(.dashboard-story-page) .dashboard-story-map .leaflet-top.leaflet-left {
+  top: 92px !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.dashboard-story-page) .dashboard-story-map .leaflet-top.leaflet-left {
+    top: 72px !important;
+  }
 }

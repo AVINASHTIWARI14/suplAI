@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from core.deps import get_current_user
 from core.models import FxSignal, GeocodeResult, NewsFeed, WeatherSignal
@@ -22,11 +22,32 @@ def geocode(q: str = Query(..., min_length=2, max_length=200)) -> GeocodeResult:
 
 @router.get("/weather", response_model=WeatherSignal)
 def weather(
-    lat: float = Query(..., ge=-90, le=90),
-    lon: float = Query(..., ge=-180, le=180),
+    lat: Optional[float] = Query(default=None, ge=-90, le=90),
+    lon: Optional[float] = Query(default=None, ge=-180, le=180),
     location: Optional[str] = Query(default=None, max_length=120),
 ) -> WeatherSignal:
-    """Current weather + severity/risk contribution for a coordinate."""
+    """Current weather + severity/risk contribution.
+
+    Coordinates are preferred. If only a city/address is available,
+    geocode it first so the frontend can make a simple location-based call.
+    """
+    if lat is None or lon is None:
+        if not location or not location.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Provide either lat/lon coordinates or a location.",
+            )
+
+        geo = geocode_address(location)
+        if geo.latitude is None or geo.longitude is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Could not geocode location: {location}",
+            )
+
+        lat, lon = geo.latitude, geo.longitude
+        location = geo.display_name or location
+
     return get_weather_signal(lat, lon, location)
 
 

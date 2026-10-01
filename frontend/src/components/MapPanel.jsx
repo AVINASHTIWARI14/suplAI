@@ -21,22 +21,23 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
+const DEFAULT_ZOOM = 3;
+
+/*
+ * Keep the map inside the real-world Leaflet boundary.
+ * No blank area is reachable by dragging beyond the map's world limits.
+ */
 const WORLD_BOUNDS = [
   [-85, -180],
   [85, 180],
 ];
 
-const DEFAULT_ZOOM = 3;
-
+/** Natural map: blue oceans, green/brown terrain (OpenTopoMap) */
 const TERRAIN_TILES = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
+
 const TERRAIN_ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>';
 
-/*
- * Compact, premium circular node.
- * Smaller than the previous version so nearby suppliers stay distinguishable
- * when the map is zoomed out.
- */
 const userIcon = (color, size = 'small') =>
   L.divIcon({
     className: 'suplai-map-marker-wrap',
@@ -56,8 +57,9 @@ const userIcon = (color, size = 'small') =>
   });
 
 /*
- * Creates a smooth geographic arc instead of a straight line.
- * This makes routes visually read as logistics/flight paths.
+ * Draw a smooth curved logistics route between two coordinates.
+ * The curve is intentionally stronger and more visible than a straight
+ * connection while preserving the existing supplier-to-HQ relationships.
  */
 const createArc = (from, to) => {
   const [lat1, lng1] = from;
@@ -77,18 +79,16 @@ const createArc = (from, to) => {
 
   const distance = Math.sqrt(
     Math.pow(lat2 - lat1, 2) +
-      Math.pow(shortestLngDiff * Math.cos((midLat * Math.PI) / 180), 2),
+      Math.pow(
+        shortestLngDiff * Math.cos((midLat * Math.PI) / 180),
+        2,
+      ),
   );
 
-  // More curvature for longer routes, less for short regional routes.
   const curve = Math.min(18, Math.max(3.5, distance * 0.085));
-
   const controlLat =
-    midLat +
-    (lat1 <= lat2 ? curve : -curve);
-
-  const controlLng =
-    midLng;
+    midLat + (lat1 <= lat2 ? curve : -curve);
+  const controlLng = midLng;
 
   for (let i = 0; i <= segments; i += 1) {
     const t = i / segments;
@@ -110,7 +110,7 @@ const createArc = (from, to) => {
   return points;
 };
 
-/* Keeps "-" disabled at the default zoom */
+/* Keeps "-" disabled at the default zoom. */
 const MapZoomGuard = () => {
   const map = useMap();
 
@@ -129,14 +129,9 @@ const MapZoomGuard = () => {
         'aria-disabled',
         atDefaultZoom ? 'true' : 'false',
       );
-
-      minusButton.style.cursor = atDefaultZoom
-        ? 'not-allowed'
-        : 'pointer';
-      minusButton.style.opacity = atDefaultZoom ? '0.45' : '1';
-      minusButton.style.pointerEvents = atDefaultZoom
-        ? 'none'
-        : 'auto';
+      minusButton.style.cursor = atDefaultZoom ? 'not-allowed' : 'pointer';
+      minusButton.style.opacity = atDefaultZoom ? '0.5' : '1';
+      minusButton.style.pointerEvents = atDefaultZoom ? 'none' : 'auto';
     };
 
     updateMinusButton();
@@ -144,6 +139,29 @@ const MapZoomGuard = () => {
 
     return () => {
       map.off('zoomend', updateMinusButton);
+    };
+  }, [map]);
+
+  return null;
+};
+
+const MapBoundaryGuard = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    const keepInsideWorld = () => {
+      map.panInsideBounds(WORLD_BOUNDS, { animate: false });
+    };
+
+    keepInsideWorld();
+    map.on('drag', keepInsideWorld);
+    map.on('moveend', keepInsideWorld);
+    map.on('zoomend', keepInsideWorld);
+
+    return () => {
+      map.off('drag', keepInsideWorld);
+      map.off('moveend', keepInsideWorld);
+      map.off('zoomend', keepInsideWorld);
     };
   }, [map]);
 
@@ -160,9 +178,7 @@ const MapPanel = ({
       .map((supplier) => {
         const coords = resolveCoordinates(supplier);
 
-        if (coords?.lat == null || coords?.lng == null) {
-          return null;
-        }
+        if (coords?.lat == null || coords?.lng == null) return null;
 
         return {
           ...supplier,
@@ -175,10 +191,7 @@ const MapPanel = ({
   }, [suppliers]);
 
   const hub = useMemo(() => {
-    if (
-      companyCoords?.lat != null &&
-      companyCoords?.lng != null
-    ) {
+    if (companyCoords?.lat != null && companyCoords?.lng != null) {
       return companyCoords;
     }
 
@@ -197,9 +210,7 @@ const MapPanel = ({
   }, [companyCoords, graph]);
 
   const edges = useMemo(() => {
-    if (!graph?.edges?.length || !points.length || !hub) {
-      return [];
-    }
+    if (!graph?.edges?.length || !points.length || !hub) return [];
 
     const byId = Object.fromEntries(
       points.map((point) => [point.id, point]),
@@ -208,7 +219,6 @@ const MapPanel = ({
     return graph.edges
       .map((edge) => {
         const target = byId[edge.target];
-
         if (!target) return null;
 
         return createArc(
@@ -220,26 +230,13 @@ const MapPanel = ({
   }, [graph, points, hub]);
 
   const counts = useMemo(() => {
-    const high = points.filter(
-      (point) => (point.risk_score ?? 0) >= 60,
-    ).length;
-
+    const high = points.filter((point) => (point.risk_score ?? 0) >= 60).length;
     const medium = points.filter(
-      (point) =>
-        (point.risk_score ?? 0) >= 30 &&
-        (point.risk_score ?? 0) < 60,
+      (point) => (point.risk_score ?? 0) >= 30 && (point.risk_score ?? 0) < 60,
     ).length;
+    const low = points.filter((point) => (point.risk_score ?? 0) < 30).length;
 
-    const low = points.filter(
-      (point) => (point.risk_score ?? 0) < 30,
-    ).length;
-
-    return {
-      high,
-      medium,
-      low,
-      total: points.length,
-    };
+    return { high, medium, low, total: points.length };
   }, [points]);
 
   const mapKey = useMemo(
@@ -252,28 +249,13 @@ const MapPanel = ({
   return (
     <div className="card map-card">
       <div className="map-card-header">
-        <div
-          className="card-header"
-          style={{ marginBottom: 0 }}
-        >
-          <h3 className="card-title">
-            Global Supply Chain Risk Map
-          </h3>
+        <div className="card-header" style={{ marginBottom: 0 }}>
+          <h3 className="card-title">Global Supply Chain Risk Map</h3>
 
           <div className="map-legend">
-            <span>
-              <span className="dot high" /> High
-            </span>
-            <span>
-              <span className="dot medium" /> Medium
-            </span>
-            <span>
-              <span className="dot low" /> Low
-            </span>
-            <span className="company-legend">
-              <span className="company-legend-dot">●</span>
-              Company HQ
-            </span>
+            <span><span className="dot high" /> High</span>
+            <span><span className="dot medium" /> Medium</span>
+            <span><span className="dot low" /> Low</span>
           </div>
         </div>
       </div>
@@ -281,14 +263,17 @@ const MapPanel = ({
       <div className="map-viewport">
         <MapContainer
           key={mapKey}
-          center={[20, 0]}
+          center={[10, 0]}
           zoom={DEFAULT_ZOOM}
-          minZoom={2}
+          minZoom={3}
           maxZoom={12}
-          zoomControl
-          worldCopyJump={false}
           maxBounds={WORLD_BOUNDS}
           maxBoundsViscosity={1}
+          inertia
+          inertiaDeceleration={5000}
+          zoomControl
+          dragging
+          worldCopyJump={false}
           scrollWheelZoom={false}
           style={{
             height: '100%',
@@ -300,29 +285,23 @@ const MapPanel = ({
             url={TERRAIN_TILES}
             attribution={TERRAIN_ATTRIBUTION}
             noWrap
-            bounds={WORLD_BOUNDS}
           />
 
           <MapFitBounds />
+          <MapBoundaryGuard />
           <MapZoomGuard />
 
           {hub && (
             <Marker
               position={[hub.lat, hub.lng]}
-              icon={userIcon('#1688ff', 'large')}
-              zIndexOffset={1000}
+              icon={userIcon('#0ea5e9', 'large')}
             >
               <Tooltip
                 direction="top"
-                offset={[0, -8]}
+                permanent
                 className="suplai-map-tooltip"
               >
-                <div className="map-tooltip-title">
-                  Company HQ
-                </div>
-                <div className="map-tooltip-subtitle">
-                  {hub.location || 'Headquarters'}
-                </div>
+                <strong>Company HQ</strong>
               </Tooltip>
             </Marker>
           )}
@@ -336,24 +315,19 @@ const MapPanel = ({
               <Tooltip
                 direction="top"
                 offset={[0, -8]}
+                permanent
                 className="suplai-map-tooltip"
               >
-                <div className="map-tooltip-title">
-                  {supplier.name}
-                </div>
-                <div className="map-tooltip-subtitle">
-                  {supplier.location || supplier.country}
-                </div>
-                <div className="map-tooltip-risk">
-                  Risk {Math.round(supplier.risk_score ?? 0)}
-                </div>
+                <strong>{supplier.name}</strong>
+                <div>{supplier.location || supplier.country}</div>
+                <div>Risk {Math.round(supplier.risk_score ?? 0)}</div>
               </Tooltip>
             </Marker>
           ))}
 
           {edges.map((positions, index) => (
             <Fragment key={`edge-${index}`}>
-              {/* Wide soft glow */}
+              {/* Soft route glow */}
               <Polyline
                 positions={positions}
                 pathOptions={{
@@ -366,20 +340,20 @@ const MapPanel = ({
                 }}
               />
 
-              {/* Thin dark route for contrast */}
+              {/* Bold dark route base */}
               <Polyline
                 positions={positions}
                 pathOptions={{
                   color: '#071a31',
                   weight: 3.5,
-                  opacity: 0.7,
+                  opacity: 0.72,
                   className: 'map-route-base',
                   lineCap: 'round',
                   lineJoin: 'round',
                 }}
               />
 
-              {/* Bright moving logistics flow */}
+              {/* White moving logistics flow */}
               <Polyline
                 positions={positions}
                 pathOptions={{
@@ -398,18 +372,10 @@ const MapPanel = ({
       </div>
 
       <div className="map-stats">
-        <span className="high">
-          {counts.high} High Risk Suppliers
-        </span>
-        <span className="medium">
-          {counts.medium} Medium Risk
-        </span>
-        <span className="low">
-          {counts.low} Low Risk
-        </span>
-        <span>
-          {counts.total} Total Suppliers
-        </span>
+        <span className="high">{counts.high} High Risk Suppliers</span>
+        <span className="medium">{counts.medium} Medium Risk</span>
+        <span className="low">{counts.low} Low Risk</span>
+        <span>{counts.total} Total Suppliers</span>
       </div>
     </div>
   );

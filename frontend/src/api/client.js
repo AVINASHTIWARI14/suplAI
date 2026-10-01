@@ -1,15 +1,34 @@
 import api, { checkBackendHealth } from '../api.js';
 
 export { checkBackendHealth };
+
 import companiesFallback from '../data/companies.js';
 
 export async function login(email, password) {
-  const { data } = await api.post('/auth/login', { email, password });
+  const { data } = await api.post('/auth/login', {
+    email,
+    password,
+  });
+
+  return data;
+}
+
+export async function googleLogin(accessToken) {
+  const { data } = await api.post('/auth/google', {
+    access_token: accessToken,
+  });
+
   return data;
 }
 
 export async function register(email, password, full_name, company_id) {
-  const { data } = await api.post('/auth/register', { email, password, full_name, company_id });
+  const { data } = await api.post('/auth/register', {
+    email,
+    password,
+    full_name,
+    company_id,
+  });
+
   return data;
 }
 
@@ -21,10 +40,14 @@ export async function fetchMe() {
 export async function fetchCompanies() {
   try {
     const { data } = await api.get('/companies');
-    if (Array.isArray(data) && data.length) return data;
+
+    if (Array.isArray(data) && data.length) {
+      return data;
+    }
   } catch {
-    /* fallback */
+    // fallback
   }
+
   return companiesFallback;
 }
 
@@ -55,16 +78,23 @@ export async function fetchGraph(companyId) {
 
 export async function fetchRiskTrend(companyId, days = 30) {
   try {
-    const { data } = await api.get(`/risk/trend/${companyId}`, { params: { days } });
+    const { data } = await api.get(`/risk/trend/${companyId}`, {
+      params: { days },
+    });
+
     if (data?.length) {
       return data.map((p) => ({
-        date: new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        date: new Date(p.date).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+        }),
         score: p.score,
       }));
     }
   } catch {
-    /* fallback in UI */
+    // fallback in UI
   }
+
   return null;
 }
 
@@ -91,38 +121,63 @@ export async function recalculateRisk(companyId) {
 // ── New backend features ──────────────────────────────────────────────
 
 export async function refreshTokens(refreshToken) {
-  const { data } = await api.post('/auth/refresh', { refresh_token: refreshToken });
+  const { data } = await api.post('/auth/refresh', {
+    refresh_token: refreshToken,
+  });
+
   return data;
 }
 
-export async function simulateGraph(companyId, disruptedNodeIds, decay = 0.55) {
+export async function simulateGraph(
+  companyId,
+  disruptedNodeIds,
+  decay = 0.55,
+) {
   const { data } = await api.post('/graph/simulate', {
     company_id: companyId,
     disrupted_node_ids: disruptedNodeIds,
     decay,
   });
+
   return data;
 }
 
 export async function geocodeAddress(query) {
-  const { data } = await api.get('/external/geocode', { params: { q: query } });
+  const { data } = await api.get('/external/geocode', {
+    params: { q: query },
+  });
+
   return data;
 }
 
 export async function fetchWeather({ lat, lon, location } = {}) {
   const { data } = await api.get('/external/weather', {
-    params: { lat, lon, location },
+    params: {
+      lat,
+      lon,
+      location,
+    },
   });
+
   return data;
 }
 
 export async function fetchNews(query) {
   // Requires auth header (added automatically by the request interceptor).
-  const { data } = await api.get('/external/news', { params: { q: query } });
+  const { data } = await api.get('/external/news', {
+    params: { q: query },
+  });
+
   return data;
 }
 
 export async function fetchFx(quote = 'INR', base = 'USD') {
-  const { data } = await api.get('/external/fx', { params: { quote, base } });
+  const { data } = await api.get('/external/fx', {
+    params: {
+      quote,
+      base,
+    },
+  });
+
   return data;
 }

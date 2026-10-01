@@ -1,4 +1,5 @@
 from typing import List, Optional
+
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -101,6 +102,10 @@ class RefreshRequest(BaseModel):
     refresh_token: str = Field(min_length=10)
 
 
+class GoogleLoginRequest(BaseModel):
+    access_token: str = Field(min_length=20)
+
+
 class Alert(BaseModel):
     id: str
     company_id: str
@@ -124,9 +129,12 @@ class PipelineResult(BaseModel):
 
 
 # ---- What-If disruption simulation ------------------------------------------
+
+
 class SimulationRequest(BaseModel):
     company_id: str
     disrupted_node_ids: List[str] = Field(default_factory=list)
+
     # How strongly a disruption propagates to each downstream tier (0-1).
     decay: float = Field(default=0.55, ge=0.0, le=1.0)
 
@@ -152,6 +160,8 @@ class SimulationResult(BaseModel):
 
 
 # ---- External data signals --------------------------------------------------
+
+
 class GeocodeResult(BaseModel):
     query: str
     latitude: Optional[float] = None
@@ -168,7 +178,7 @@ class WeatherSignal(BaseModel):
     description: Optional[str] = None
     temp_c: Optional[float] = None
     wind_mps: Optional[float] = None
-    severity: str = "low"          # low | medium | high
+    severity: str = "low"  # low | medium | high
     risk_contribution: float = 0.0  # points added to a supplier's risk score
     source: str = "openweathermap"  # or "fallback"
 
@@ -202,6 +212,8 @@ class RiskThresholds(BaseModel):
 
 
 # ---- Entity CRUD ------------------------------------------------------------
+
+
 class SupplierCreate(BaseModel):
     name: str = Field(min_length=1, max_length=160)
     company_id: str = Field(min_length=1)
