@@ -26,6 +26,14 @@ const AlternativesPage = ({ companyId }) => {
 
   return (
     <div className="alternatives-page">
+      {loading ? (
+        <div
+          className="alternatives-loading-state"
+          aria-label="Loading alternatives"
+        >
+          <div className="dashboard-loading-spinner" aria-hidden="true" />
+        </div>
+      ) : (
       <div className="alternatives-table-card">
         <div className="alternatives-table-header">
           <div>Rank</div>
@@ -37,11 +45,7 @@ const AlternativesPage = ({ companyId }) => {
           <div>Composite</div>
         </div>
 
-        {loading ? (
-          <div className="alternatives-state">
-            Loading alternatives...
-          </div>
-        ) : alternatives.length ? (
+        {alternatives.length ? (
           alternatives.map((supplier, index) => {
             const riskScore = Number(supplier.risk_score ?? 0);
             const riskLevel = getRiskLevel(riskScore);
@@ -130,6 +134,7 @@ const AlternativesPage = ({ companyId }) => {
           </div>
         )}
       </div>
+      )}
     </div>
   );
 };

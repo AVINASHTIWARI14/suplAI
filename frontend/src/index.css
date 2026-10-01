@@ -14300,3 +14300,932 @@ body,
     flex-basis: 42px !important;
   }
 }
+
+/* =========================================================
+   DISRUPTIONS PAGE — FIXED FOOTER + TRUE CENTER LOADER
+   Desired behavior:
+   - Footer stays visible at the viewport bottom for the entire page.
+   - Loading spinner is centered in the usable area ABOVE the footer.
+   - The disruption page itself does not push the footer away.
+   ========================================================= */
+
+/* Lock the disruption route to the viewport and let only the page area scroll. */
+.main-content:has(.disruption-feed-page) {
+  position: relative !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  padding-bottom: 84px !important;
+  box-sizing: border-box !important;
+}
+
+.main-content:has(.disruption-feed-page) .route-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  min-height: calc(100vh - 70px - 84px) !important;
+  box-sizing: border-box !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-page {
+  width: 100% !important;
+  min-height: calc(100vh - 70px - 84px) !important;
+  box-sizing: border-box !important;
+  background: #183153 !important;
+}
+
+/* Footer is always attached to the viewport bottom on this route. */
+.main-content:has(.disruption-feed-page) > .site-footer {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  width: 100% !important;
+  min-height: 84px !important;
+  height: 84px !important;
+  margin: 0 !important;
+  z-index: 5000 !important;
+  flex: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Loading screen: exactly the usable viewport between nav and footer. */
+.main-content:has(.disruption-feed-page) .disruption-loading-state {
+  width: 100% !important;
+  min-height: calc(100vh - 70px - 84px) !important;
+  height: calc(100vh - 70px - 84px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  background: #183153 !important;
+}
+
+/* Reuse the exact existing yellow loader used elsewhere in the app. */
+.main-content:has(.disruption-feed-page) .disruption-loading-state .dashboard-loading-spinner {
+  width: 56px !important;
+  height: 56px !important;
+  display: grid !important;
+  color: #F4C400 !important;
+  background: radial-gradient(
+    farthest-side,
+    currentColor calc(100% - 7px),
+    #0000 calc(100% - 6px) 0
+  ) !important;
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  border-radius: 50% !important;
+  animation: spinner-sm4bhi 2s infinite linear !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-loading-state .dashboard-loading-spinner::before,
+.main-content:has(.disruption-feed-page) .disruption-loading-state .dashboard-loading-spinner::after {
+  content: "" !important;
+  grid-area: 1 / 1 !important;
+  background: linear-gradient(currentColor 0 0) center,
+    linear-gradient(currentColor 0 0) center !important;
+  background-size: 100% 11px, 11px 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-loading-state .dashboard-loading-spinner::after {
+  transform: rotate(45deg) !important;
+}
+
+/* Prevent the fixed footer from being visually altered on this route. */
+.main-content:has(.disruption-feed-page) > .site-footer::before,
+.main-content:has(.disruption-feed-page) > .site-footer::after {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.disruption-feed-page) {
+    padding-bottom: 84px !important;
+  }
+
+  .main-content:has(.disruption-feed-page) .route-content,
+  .main-content:has(.disruption-feed-page) .disruption-feed-page,
+  .main-content:has(.disruption-feed-page) .disruption-loading-state {
+    min-height: calc(100vh - 84px) !important;
+    height: auto !important;
+  }
+
+  .main-content:has(.disruption-feed-page) .disruption-loading-state {
+    min-height: calc(100vh - 84px) !important;
+    height: calc(100vh - 84px) !important;
+  }
+}
+
+/* =========================================================
+   ALTERNATIVES — FINAL LOADER POSITION FIX
+   Scoped ONLY to Alternatives so Disruptions is untouched.
+
+   The page is rendered inside .route-content, so the loader
+   itself is positioned against the viewport between the
+   navbar and the fixed footer. This keeps the spinner truly
+   centered regardless of route-content sizing.
+   ========================================================= */
+.main-content:has(.alternatives-page) .alternatives-loading-state {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 70px !important;
+  bottom: 84px !important;
+
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: grid !important;
+  place-items: center !important;
+  align-items: center !important;
+  justify-items: center !important;
+
+  box-sizing: border-box !important;
+  background: #183153 !important;
+  color: transparent !important;
+  z-index: 200 !important;
+}
+
+.main-content:has(.alternatives-page) .alternatives-loading-state .dashboard-loading-spinner {
+  position: relative !important;
+  inset: auto !important;
+  margin: 0 !important;
+  flex: 0 0 56px !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.alternatives-page) .alternatives-loading-state {
+    top: 70px !important;
+    bottom: 84px !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+
+/* =========================================================
+   DISRUPTIONS — SIGNALS RESTRUCTURE + HORIZONTAL NEWS TICKER
+   Scoped only to .disruption-feed-page so other pages stay intact.
+   ========================================================= */
+
+/* Remove the large outer Signals wrapper/card. */
+.main-content:has(.disruption-feed-page) .signals-panel-card {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Two signal cards on the first row, News Signals on the second row. */
+.main-content:has(.disruption-feed-page) .signals-panel {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  gap: 14px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-indicators {
+  display: contents !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card {
+  min-width: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* News Signals becomes the full-width row below FX Risk + Weather. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Horizontal scrolling news viewport. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 4px 2px 8px !important;
+  box-sizing: border-box !important;
+  scroll-behavior: auto !important;
+  overscroll-behavior-x: contain !important;
+  scrollbar-width: none !important;
+  cursor: default !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Each news item sits horizontally beside the next one. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item {
+  flex: 0 0 320px !important;
+  width: 320px !important;
+  min-width: 320px !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  border-bottom: 0 !important;
+  border-right: 1px solid rgba(24, 49, 83, 0.10) !important;
+  padding: 10px 14px !important;
+  white-space: normal !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item:last-child {
+  border-right: 0 !important;
+}
+
+/* Slight visual cue that the feed is interactive/pausable. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list:hover {
+  cursor: default !important;
+}
+
+/* Keep the two top cards side-by-side until the normal mobile breakpoint. */
+@media (max-width: 700px) {
+  .main-content:has(.disruption-feed-page) .signals-panel {
+    grid-template-columns: 1fr !important;
+  }
+
+  .main-content:has(.disruption-feed-page) .signals-panel > :last-child {
+    grid-column: 1 !important;
+  }
+
+  .main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item {
+    flex-basis: 280px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+  }
+}
+
+
+/* =========================================================
+   DISRUPTIONS — EACH NEWS ITEM GETS ITS OWN MARQUEE
+   The News Signals cards stay horizontal; the headline inside
+   every individual news card moves continuously.
+   Cursor over one news item pauses only that item's movement.
+   ========================================================= */
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item {
+  overflow: hidden !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item .marquee {
+  overflow: hidden !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  ) !important;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  ) !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item .marquee__inner {
+  display: flex !important;
+  width: max-content !important;
+  animation: disruption-news-item-marquee 15s linear infinite !important;
+  will-change: transform !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item .marquee__group {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item .marquee__text {
+  display: block !important;
+  flex: 0 0 auto !important;
+  margin: 0 3rem 0 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  width: max-content !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+/* Each news item pauses independently on hover. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item:hover .marquee__inner {
+  animation-play-state: paused !important;
+}
+
+@keyframes disruption-news-item-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-item .marquee__inner {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   DISRUPTIONS — NEWS HEADLINES AS INDIVIDUAL MOVING CARDS
+   Sequence: NEWS 1 -> NEWS 2 -> NEWS 3 -> ... -> NEWS 1
+   One continuous marquee, one card per headline.
+   Hovering the ticker pauses the whole sequence.
+   ========================================================= */
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list.news-marquee-list {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  padding: 4px 0 8px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  ) !important;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  ) !important;
+  scrollbar-width: none !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list.news-marquee-list::-webkit-scrollbar {
+  display: none !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-track {
+  display: flex !important;
+  width: max-content !important;
+  align-items: stretch !important;
+  animation: disruption-news-cards-marquee 28s linear infinite !important;
+  will-change: transform !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  flex: 0 0 auto !important;
+  width: max-content !important;
+  padding-right: 12px !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group--clone {
+  pointer-events: none !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group--clone {
+  flex: 0 0 auto !important;
+}
+
+/* Every headline is its own card. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item {
+  flex: 0 0 320px !important;
+  width: 320px !important;
+  min-width: 320px !important;
+  max-width: 320px !important;
+  height: 96px !important;
+  min-height: 96px !important;
+  margin: 0 !important;
+  padding: 14px 16px !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(24, 49, 83, 0.12) !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Keep each headline readable inside its own card. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-title {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: normal !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.35 !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-meta {
+  display: block !important;
+  margin-top: 6px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Pause the entire news-card sequence while the pointer is over it. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list.news-marquee-list:hover .news-marquee-track {
+  animation-play-state: paused !important;
+}
+
+@keyframes disruption-news-cards-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item {
+    flex-basis: 280px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+
+/* =========================================================
+   DISRUPTIONS — NEWS SIGNALS MAIN CARD REMOVED
+   Keep only the individual news headline cards visible.
+   ========================================================= */
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #183153 !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child::before,
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child::after {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Keep the News Signals heading, but remove any card treatment around it. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child h3,
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child h4 {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* The only visible white surfaces in this row should be the individual news cards. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item {
+  background: #ffffff !important;
+  border: 1px solid rgba(24, 49, 83, 0.12) !important;
+}
+
+/* =========================================================
+   DISRUPTIONS — WEATHER ILLUSTRATION + DARK TOP SIGNAL CARDS
+   Keeps the News Signals main-card removal and news marquee intact.
+   ========================================================= */
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 180px !important;
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18) !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card * ,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card * {
+  color: #ffffff !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card {
+  padding-right: 190px !important;
+}
+
+.main-content:has(.disruption-feed-page) .weather-signal-image-wrap {
+  position: absolute !important;
+  top: 50% !important;
+  right: 14px !important;
+  width: 156px !important;
+  height: 156px !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+.main-content:has(.disruption-feed-page) .weather-signal-image {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: transparent !important;
+  filter: none !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card {
+    padding-right: 150px !important;
+  }
+
+  .main-content:has(.disruption-feed-page) .weather-signal-image-wrap {
+    width: 122px !important;
+    height: 122px !important;
+    right: 10px !important;
+  }
+}
+
+
+/* =========================================================
+   DISRUPTIONS — TOP SIGNAL CARDS TYPOGRAPHY + WEATHER ICON
+   Final visual tuning requested for FX Risk + Weather.
+   ========================================================= */
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card {
+  min-height: 194px !important;
+  padding: 18px 20px !important;
+}
+
+/* FX / Weather card titles — larger, bold, yellow. */
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card .signal-head,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card .signal-head,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card h3,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card h3,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card h4,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card h4 {
+  font-size: 1.5rem !important;
+  line-height: 1.15 !important;
+  font-weight: 900 !important;
+  color: #F4C400 !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card .card-title,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card .card-title {
+  font-size: 1.5rem !important;
+  line-height: 1.15 !important;
+  font-weight: 900 !important;
+  color: #F4C400 !important;
+}
+
+/* Main numbers / values — bigger and easier to read. */
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card .mono.big,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card .mono.big,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card .big,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card .big {
+  font-size: 2.35rem !important;
+  line-height: 1.08 !important;
+  font-weight: 850 !important;
+}
+
+/* Supporting card content — larger for readability. */
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card .signal-meta,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card .signal-meta,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card p,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card p,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.fx-signal-card span,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card span {
+  font-size: 1.08rem !important;
+  line-height: 1.35 !important;
+}
+
+/* Weather card: leave a clean empty area on the right for the icon. */
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card {
+  padding-right: 168px !important;
+}
+
+/* Slightly smaller weather image. */
+.main-content:has(.disruption-feed-page) .weather-signal-image-wrap {
+  top: 50% !important;
+  right: 14px !important;
+  width: 122px !important;
+  height: 122px !important;
+  transform: translateY(-50%) !important;
+}
+
+.main-content:has(.disruption-feed-page) .weather-signal-image {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card {
+    padding-right: 136px !important;
+  }
+
+  .main-content:has(.disruption-feed-page) .weather-signal-image-wrap {
+    width: 104px !important;
+    height: 104px !important;
+    right: 10px !important;
+  }
+}
+
+
+/* =========================================================
+   DISRUPTIONS — FINAL NEWS TICKER DETAILS
+   ========================================================= */
+
+/* Demo data is text only; remove the badge/box treatment. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .demo-badge {
+  display: inline !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #F4C400 !important;
+  font-size: 0.82rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.03em !important;
+  line-height: 1.2 !important;
+  text-transform: none !important;
+}
+
+/* Yellow NEWS label at the top-left of every moving headline card. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-card-label {
+  display: block !important;
+  width: fit-content !important;
+  margin: 0 0 8px 0 !important;
+  padding: 0 !important;
+  color: #F4C400 !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+/* Larger dark-blue headline text inside each moving card. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-title {
+  color: #183153 !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+
+/* Keep the source/time text dark blue as well. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-meta {
+  color: #183153 !important;
+  font-size: 0.76rem !important;
+}
+
+/* Ensure the duplicated groups form one seamless infinite loop. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-track {
+  animation: disruption-news-cards-marquee 28s linear infinite !important;
+  width: max-content !important;
+  will-change: transform !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group {
+  flex: 0 0 auto !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-title {
+    font-size: 0.98rem !important;
+  }
+}
+
+
+/* =========================================================
+   DISRUPTIONS — FINAL NEWS HEADER + SEAMLESS TICKER
+   ========================================================= */
+
+/* NEWS sits on the same header row as the demo-data source label. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-strip-title {
+  color: #F4C400 !important;
+  font-size: 0.95rem !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+/* No NEWS/demo label inside individual moving headline cards. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-card-label {
+  display: none !important;
+}
+
+/* Keep only the headline and its source/time text inside each card. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-title {
+  color: #183153 !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* The track contains two identical groups; moving exactly one group width makes
+   the next group's first card occupy the same position as the first sequence. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list.news-marquee-list {
+  overflow: hidden !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-track {
+  display: flex !important;
+  width: max-content !important;
+  gap: 0 !important;
+  animation: disruption-news-cards-marquee 28s linear infinite !important;
+  will-change: transform !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  flex: 0 0 auto !important;
+  width: max-content !important;
+  padding-right: 12px !important;
+}
+
+@keyframes disruption-news-cards-marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+
+/* Prevent long headlines from being clipped inside the moving cards. */
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item {
+  height: auto !important;
+  min-height: 96px !important;
+  overflow: hidden !important;
+  justify-content: flex-start !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group .news-item .news-title {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+}
+
+/* =========================================================
+   DISRUPTIONS — NEWS LOOP MATCHES HOME FEATURE LOOP
+   Uses the same duplicated-group marquee pattern as the Home page.
+   ========================================================= */
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list.news-marquee-list {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: home-feature-scroll 32s linear infinite !important;
+  will-change: transform !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group {
+  display: flex !important;
+  width: max-content !important;
+  flex: 0 0 auto !important;
+  gap: 15px !important;
+  padding: 0 15px !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-group--clone {
+  flex: 0 0 auto !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-list.news-marquee-list:hover .news-marquee-track {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-content:has(.disruption-feed-page) .signals-panel > :last-child .news-marquee-track {
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   DISRUPTIONS — FEED CARD SEVERITY + CONTENT VISIBILITY
+   Final visual tuning: subtle breathing/glow on risk labels and
+   brighter supporting text beneath the yellow disruption titles.
+   ========================================================= */
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .risk-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform-origin: center !important;
+  animation: disruption-severity-breathe 2.8s ease-in-out infinite !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .risk-badge.high {
+  color: #ef4444 !important;
+  text-shadow: 0 0 6px rgba(239, 68, 68, 0.34) !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .risk-badge.medium {
+  color: #f59e0b !important;
+  text-shadow: 0 0 6px rgba(245, 158, 11, 0.30) !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .risk-badge.low {
+  color: #22c55e !important;
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.28) !important;
+}
+
+@keyframes disruption-severity-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.94;
+  }
+  50% {
+    transform: scale(1.055);
+    opacity: 1;
+  }
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .disruption-feed-location,
+.main-content:has(.disruption-feed-page) .disruption-feed-card .disruption-feed-industry,
+.main-content:has(.disruption-feed-page) .disruption-feed-card .disruption-feed-date {
+  color: #ffffff !important;
+  opacity: 0.92 !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .disruption-feed-location {
+  font-size: 0.98rem !important;
+  line-height: 1.35 !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .disruption-feed-industry {
+  font-size: 0.92rem !important;
+  line-height: 1.35 !important;
+}
+
+.main-content:has(.disruption-feed-page) .disruption-feed-card .disruption-feed-date {
+  font-size: 0.84rem !important;
+  line-height: 1.35 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-content:has(.disruption-feed-page) .disruption-feed-card .risk-badge {
+    animation: none !important;
+  }
+}

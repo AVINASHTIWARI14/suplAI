@@ -22,6 +22,13 @@ const SignalsPanel = ({ company, newsQuery }) => {
 
   const query = newsQuery || `${company?.name || ''} supply chain disruption`.trim();
   const location = company?.location || company?.country;
+  const baseHeadlines = news?.headlines?.slice(0, 6) || [];
+  const marqueeHeadlines = baseHeadlines.length
+    ? Array.from(
+        { length: Math.max(baseHeadlines.length * 2, 6) },
+        (_, i) => baseHeadlines[i % baseHeadlines.length],
+      )
+    : [];
 
   useEffect(() => {
     let alive = true;
@@ -85,27 +92,49 @@ const SignalsPanel = ({ company, newsQuery }) => {
 
       <div className="card signals-news">
         <div className="signal-head">
-          <span className="card-title">News Signals</span>
+          <span className="card-title news-strip-title">NEWS</span>
           <SourceBadge source={news?.source} />
         </div>
         {newsLoading ? (
           <div className="muted" style={{ fontSize: '0.85rem', padding: '8px 0' }}>Loading headlines…</div>
         ) : news?.headlines?.length ? (
-          <div className="news-list">
-            {news.headlines.slice(0, 6).map((h, i) => (
-              <a
-                key={`${h.link}-${i}`}
-                className="news-item"
-                href={h.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="news-title">{h.title}</div>
-                <div className="news-meta muted">
-                  {h.source}{h.published_at ? ` · ${timeAgo(h.published_at)}` : ''}
-                </div>
-              </a>
-            ))}
+          <div className="news-list news-marquee-list">
+            <div className="news-marquee-track">
+              <div className="news-marquee-group">
+                {marqueeHeadlines.map((h, i) => (
+                  <a
+                    key={`${h.link}-${i}`}
+                    className="news-item"
+                    href={h.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="news-title">{h.title}</div>
+                    <div className="news-meta muted">
+                      {h.source}{h.published_at ? ` · ${timeAgo(h.published_at)}` : ''}
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              <div className="news-marquee-group news-marquee-group--clone" aria-hidden="true">
+                {marqueeHeadlines.map((h, i) => (
+                  <a
+                    key={`${h.link}-clone-${i}`}
+                    className="news-item"
+                    href={h.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={-1}
+                  >
+                    <div className="news-title">{h.title}</div>
+                    <div className="news-meta muted">
+                      {h.source}{h.published_at ? ` · ${timeAgo(h.published_at)}` : ''}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           <div className="muted" style={{ fontSize: '0.85rem', padding: '8px 0' }}>No headlines available.</div>
