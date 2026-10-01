@@ -13784,3 +13784,347 @@ body,
 .main-content:has(.supplier-loading-fullscreen) > .site-footer {
   display: grid !important;
 }
+
+
+/* =========================================================
+   FINAL NETWORK CANVAS — SURGICAL OVERRIDES
+   Based on the existing Supplier-finished index.css.
+   Only Network-specific behaviour is changed here.
+   ========================================================= */
+
+/* Network owns the full viewport; its canvas sits behind the navbar. */
+.main-content:has(.network-page) {
+  position: relative !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  width: 100% !important;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+/* The Network route itself is the full-screen canvas surface. */
+.main-content:has(.network-page) > .page-body.network-page {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  isolation: isolate !important;
+  z-index: 0 !important;
+}
+
+/* Actual graph canvas fills the complete viewport. */
+.main-content:has(.network-page) .network-background {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #050607 !important;
+  z-index: 1 !important;
+  pointer-events: auto !important;
+}
+
+.main-content:has(.network-page) .network-background .force-graph-wrap {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.main-content:has(.network-page) .network-background .force-graph-grid {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.main-content:has(.network-page) .network-background canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Overlay content stays above the graph and does not create a separate card layout. */
+.main-content:has(.network-page) .network-overlay {
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100vh !important;
+  pointer-events: none !important;
+}
+
+.main-content:has(.network-page) .network-page-header,
+.main-content:has(.network-page) .network-legend,
+.main-content:has(.network-page) .network-side {
+  pointer-events: auto !important;
+}
+
+/* Navbar is genuinely over the graph: transparent glass, not solid blue. */
+.main-content:has(.network-page) > .top-nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  background: rgba(8, 15, 24, 0.18) !important;
+  background-color: rgba(8, 15, 24, 0.18) !important;
+  background-image: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(12px) saturate(105%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(105%) !important;
+  box-shadow: none !important;
+}
+
+.main-content:has(.network-page) > .top-nav::before,
+.main-content:has(.network-page) > .top-nav::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Network must not show the footer; canvas gets the space instead. */
+.main-content:has(.network-page) > .site-footer {
+  display: none !important;
+}
+
+/* Loading: remove text and show only the centered yellow spinner. */
+.main-content:has(.network-loading-fullscreen) > .top-nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  background: rgba(8, 15, 24, 0.18) !important;
+  background-color: rgba(8, 15, 24, 0.18) !important;
+  background-image: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
+  backdrop-filter: blur(12px) saturate(105%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(105%) !important;
+  box-shadow: none !important;
+}
+
+.main-content:has(.network-loading-fullscreen) {
+  position: relative !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  background: #183153 !important;
+  overflow: hidden !important;
+}
+
+.network-loading-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #183153 !important;
+  color: transparent !important;
+  overflow: hidden !important;
+  z-index: 0 !important;
+}
+
+.network-loading-fullscreen .dashboard-loading-spinner {
+  width: 56px !important;
+  height: 56px !important;
+  display: grid !important;
+  place-self: center !important;
+  color: #F4C400 !important;
+  background: radial-gradient(
+    farthest-side,
+    currentColor calc(100% - 7px),
+    #0000 calc(100% - 6px) 0
+  ) !important;
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  mask: radial-gradient(
+    farthest-side,
+    #0000 calc(100% - 15px),
+    #000 calc(100% - 13px)
+  ) !important;
+  border-radius: 50% !important;
+  animation: network-original-canvas-spinner 2s infinite linear !important;
+}
+
+.network-loading-fullscreen .dashboard-loading-spinner::before,
+.network-loading-fullscreen .dashboard-loading-spinner::after {
+  content: "" !important;
+  grid-area: 1 / 1 !important;
+  background:
+    linear-gradient(currentColor 0 0) center,
+    linear-gradient(currentColor 0 0) center !important;
+  background-size: 100% 11px, 11px 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+.network-loading-fullscreen .dashboard-loading-spinner::after {
+  transform: rotate(45deg) !important;
+}
+
+@keyframes network-original-canvas-spinner {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-loading-fullscreen .dashboard-loading-spinner {
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   NETWORK OVERLAY POSITION — FINAL
+   Header copy at bottom-left; colour legend moved to left.
+   ========================================================= */
+
+.main-content:has(.network-page) .network-page-header {
+  position: absolute !important;
+  left: 32px !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 32px !important;
+  z-index: 20 !important;
+  max-width: 760px !important;
+}
+
+.main-content:has(.network-page) .network-legend {
+  position: absolute !important;
+  left: 28px !important;
+  right: auto !important;
+  top: 25px !important;
+  bottom: auto !important;
+  z-index: 20 !important;
+}
+
+@media (max-width: 1000px) {
+  .main-content:has(.network-page) .network-page-header {
+    left: 22px !important;
+    bottom: 24px !important;
+    top: auto !important;
+  }
+
+  .main-content:has(.network-page) .network-legend {
+    left: 18px !important;
+    right: auto !important;
+    top: 18px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.network-page) .network-page-header {
+    left: 18px !important;
+    bottom: 18px !important;
+    top: auto !important;
+    max-width: 72% !important;
+  }
+
+  .main-content:has(.network-page) .network-legend {
+    left: 12px !important;
+    right: auto !important;
+    top: 18px !important;
+    max-width: 42% !important;
+  }
+}
+
+/* =========================================================
+   NETWORK LEGEND — BELOW NAVBAR
+   Keep the colour indication card on the left, but place it
+   clearly below the fixed top navigation so it never sits
+   behind the navbar.
+   ========================================================= */
+
+.main-content:has(.network-page) .network-legend {
+  top: 88px !important;
+  bottom: auto !important;
+  left: 28px !important;
+  right: auto !important;
+  z-index: 20 !important;
+}
+
+@media (max-width: 1000px) {
+  .main-content:has(.network-page) .network-legend {
+    top: 82px !important;
+    left: 18px !important;
+    right: auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.network-page) .network-legend {
+    top: 76px !important;
+    left: 12px !important;
+    right: auto !important;
+    max-width: 42% !important;
+  }
+}
+
+/* =========================================================
+   NETWORK LEGEND — ALIGN WITH WHAT-IF SIMULATION CARD
+   Keep the colour indicator below the navbar and aligned to
+   the same vertical level as the What-if Simulation card.
+   ========================================================= */
+
+.main-content:has(.network-page) .network-legend {
+  top: 105px !important;
+  bottom: auto !important;
+  left: 28px !important;
+  right: auto !important;
+  z-index: 30 !important;
+}
+
+@media (max-width: 1000px) {
+  .main-content:has(.network-page) .network-legend {
+    top: 105px !important;
+    left: 18px !important;
+    right: auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.network-page) .network-legend {
+    top: 105px !important;
+    left: 12px !important;
+    right: auto !important;
+  }
+}
+
+/* =========================================================
+   NETWORK — REMOVE BOTTOM FOOTER/BLACK STRIP
+   The app-shell footer sits outside .main-content, so the
+   older Network footer selector does not catch it. Hide it
+   completely so the graph remains visible edge-to-edge.
+   ========================================================= */
+
+.app-shell:has(.network-page) > .site-footer {
+  display: none !important;
+}
+
+.app-shell:has(.network-loading-fullscreen) > .site-footer {
+  display: none !important;
+}

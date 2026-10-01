@@ -3,6 +3,7 @@ import {
   useMemo,
   useState,
   useCallback,
+  useRef,
 } from 'react';
 
 import ForceGraph, {
@@ -48,6 +49,10 @@ const NetworkPage = ({
   const [selectedId, setSelectedId] =
     useState(null);
 
+  /* Prevent the same company graph from being fetched twice on
+     React StrictMode's development-only effect re-run. */
+  const graphFetchStartedForRef = useRef(null);
+
   /* =========================================================
      GRAPH HEIGHT
      ========================================================= */
@@ -57,7 +62,7 @@ const NetworkPage = ({
       typeof window !== 'undefined'
         ? Math.max(
             520,
-            window.innerHeight - 70,
+            window.innerHeight,
           )
         : 600,
     );
@@ -67,7 +72,7 @@ const NetworkPage = ({
       setGraphHeight(
         Math.max(
           520,
-          window.innerHeight - 70,
+          window.innerHeight,
         ),
       );
     };
@@ -91,6 +96,22 @@ const NetworkPage = ({
      ========================================================= */
 
   useEffect(() => {
+    if (!companyId) {
+      return;
+    }
+
+    /*
+       React 18+ may run effects twice in development under StrictMode.
+       Keep one request per company so the graph does not visibly reload
+       twice when the Network page mounts. A different company id still
+       fetches normally.
+    */
+    if (graphFetchStartedForRef.current === companyId) {
+      return;
+    }
+
+    graphFetchStartedForRef.current = companyId;
+
     setLoading(true);
     setError(null);
     setDisrupted(new Set());
@@ -428,8 +449,15 @@ const NetworkPage = ({
 
   if (loading) {
     return (
-      <div className="page-body loading-state">
-        Loading network graph…
+      <div
+        className="page-body network-page network-loading-fullscreen"
+        aria-busy="true"
+      >
+        <span
+          className="dashboard-loading-spinner"
+          role="status"
+          aria-label="Loading network"
+        />
       </div>
     );
   }

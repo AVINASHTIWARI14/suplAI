@@ -601,7 +601,6 @@ const detailSize =
 
         width={width}
 
-        height={height}
 
         graphData={graphData}
 
