@@ -1009,9 +1009,16 @@ export function LanguageProvider({ children }) {
     attributeOriginals.current.forEach((attrs, element) => {
       if (!element) return;
 
-      Object.entries(attrs).forEach(([attr, original]) => {
+      Object.entries(attrs).forEach(([attr, entry]) => {
+        const original =
+          typeof entry === 'string' ? entry : entry.original;
+
         if (element.getAttribute(attr) !== original) {
           element.setAttribute(attr, original);
+        }
+
+        if (entry && typeof entry === 'object') {
+          entry.translated = null;
         }
       });
     });
@@ -1061,10 +1068,33 @@ export function LanguageProvider({ children }) {
 
         for (const attr of attrs) {
           if (!element.hasAttribute(attr)) continue;
-          if (!store[attr]) store[attr] = element.getAttribute(attr);
 
-          const original = store[attr];
+          const currentValue = element.getAttribute(attr);
+          const stored = store[attr];
+
+          if (!stored) {
+            store[attr] = {
+              original: currentValue,
+              translated: null,
+            };
+          } else if (
+            typeof stored === 'object' &&
+            stored.translated !== null &&
+            currentValue !== stored.translated &&
+            currentValue !== stored.original
+          ) {
+            stored.original = currentValue;
+          }
+
+          const entry = store[attr];
+          const original =
+            typeof entry === 'string' ? entry : entry.original;
           const translated = translate(original);
+
+          if (typeof entry === 'object') {
+            entry.translated = translated;
+          }
+
           if (element.getAttribute(attr) !== translated) {
             element.setAttribute(attr, translated);
           }
