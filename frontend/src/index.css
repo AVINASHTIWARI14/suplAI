@@ -16258,3 +16258,48 @@ html[dir="rtl"] .settings-language-check {
     min-height: 54px;
   }
 }
+
+
+/* SETTINGS — keep the language card in the same dark-blue treatment as the other settings cards */
+.main-content:has(.settings-page-title) .settings-language-card {
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-card .card-title {
+  color: #ffffff !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-card .settings-section-copy,
+.main-content:has(.settings-page-title) .settings-language-card .settings-language-note,
+.main-content:has(.settings-page-title) .settings-language-card .settings-language-select-label > span {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-option {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-option:hover {
+  background: rgba(244, 196, 0, 0.14) !important;
+  border-color: rgba(244, 196, 0, 0.72) !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-option.is-selected {
+  background: rgba(244, 196, 0, 0.18) !important;
+  border-color: #F4C400 !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-info strong,
+.main-content:has(.settings-page-title) .settings-language-check {
+  color: #ffffff !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-info small {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
