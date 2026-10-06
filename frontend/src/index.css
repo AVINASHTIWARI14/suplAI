@@ -9012,6 +9012,11 @@ input[type="range"]:active::-moz-range-thumb {
 
 .network-supplier-directory-card {
   order: -1 !important;
+  position: absolute !important;
+  left: 28px !important;
+  right: auto !important;
+  top: 105px !important;
+  width: 330px !important;
   height: 360px !important;
   min-height: 260px !important;
   max-height: 360px !important;
