@@ -821,18 +821,14 @@ const Home = () => {
               <article className="home-how-to-step">
                 <div>
                   <h4>{t('Suppliers')}</h4>
-                  <p>
-                    {t('Open')} <strong>{t('Suppliers')}</strong> {t('to review individual suppliers and their risk scores. Check the risk level and the factors contributing to it, then focus on suppliers with higher exposure or operational importance. You can also import or manage supplier records where supported.')}
-                  </p>
+                  <p>{t('Open Suppliers to review individual suppliers and their risk scores. Check the risk level and the factors contributing to it, then focus on suppliers with higher exposure or operational importance. You can also import or manage supplier records where supported.')}</p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
                   <h4>{t('Network')}</h4>
-                  <p>
-                    {t('Open')} <strong>{t('Network')}</strong> {t('to see how suppliers and dependencies connect. Trace relationships across tiers, look for critical nodes and identify where one supplier can influence other parts of the network. This gives context to a supplier risk score.')}
-                  </p>
+                  <p>{t('Open Network to see how suppliers and dependencies connect. Trace relationships across tiers, look for critical nodes and identify where one supplier can influence other parts of the network. This gives context to a supplier risk score.')}</p>
                 </div>
               </article>
 
@@ -846,36 +842,28 @@ const Home = () => {
               <article className="home-how-to-step">
                 <div>
                   <h4>{t('Alternatives')}</h4>
-                  <p>
-                    {t('When a supplier looks vulnerable, open')} <strong>{t('Alternatives')}</strong> {t('to review potential replacement options. Compare available supplier information and risk characteristics so you can evaluate which options may help maintain supply continuity.')}
-                  </p>
+                  <p>{t('When a supplier looks vulnerable, open Alternatives to review potential replacement options. Compare available supplier information and risk characteristics so you can evaluate which options may help maintain supply continuity.')}</p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
                   <h4>{t('Disruptions')}</h4>
-                  <p>
-                    {t('Use')} <strong>{t('Disruptions')}</strong> {t('to review events that may affect suppliers or logistics, including relevant weather, market, news or operational signals available to the platform. Open an event to understand its relevance and connect the signal back to affected suppliers.')}
-                  </p>
+                  <p>{t('Use Disruptions to review events that may affect suppliers or logistics, including relevant weather, market, news or operational signals available to the platform. Open an event to understand its relevance and connect the signal back to affected suppliers.')}</p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
                   <h4>{t('Alerts')}</h4>
-                  <p>
-                    {t('Check')} <strong>{t('Alerts')}</strong> {t('for important risk changes and signals. Use alerts as a prioritization layer: investigate the supplier or disruption behind an alert, then move into Network, Simulation or Alternatives when deeper analysis is required.')}
-                  </p>
+                  <p>{t('Check Alerts for important risk changes and signals. Use alerts as a prioritization layer: investigate the supplier or disruption behind an alert, then move into Network, Simulation or Alternatives when deeper analysis is required.')}</p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
                   <h4>{t('Settings & Data')}</h4>
-                  <p>
-                    {t('Use')} <strong>{t('Settings')}</strong> {t('for available account and workspace controls. Keep supplier information organized and up to date so the risk, network and simulation views remain useful. Export available reports or data when you need to share analysis.')}
-                  </p>
+                  <p>{t('Use Settings for available account and workspace controls. Keep supplier information organized and up to date so the risk, network and simulation views remain useful. Export available reports or data when you need to share analysis.')}</p>
                 </div>
               </article>
 
