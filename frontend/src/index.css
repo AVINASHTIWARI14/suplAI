@@ -9006,6 +9006,116 @@ input[type="range"]:active::-moz-range-thumb {
   font-size: 12px !important;
 }
 
+/* =========================================================
+   SUPPLIER DIRECTORY
+   ========================================================= */
+
+.network-supplier-directory-card {
+  max-height: 390px !important;
+  overflow: hidden !important;
+}
+
+.network-supplier-directory-header {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+}
+
+.network-supplier-count {
+  display: block !important;
+  margin-top: -9px !important;
+  color: rgba(255, 255, 255, 0.52) !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+}
+
+.network-supplier-list {
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 4px !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(244, 196, 0, 0.55) transparent !important;
+}
+
+.network-supplier-list::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+.network-supplier-list::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.network-supplier-list::-webkit-scrollbar-thumb {
+  background: rgba(244, 196, 0, 0.55) !important;
+  border-radius: 99px !important;
+}
+
+.network-supplier-item {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  padding: 9px 10px !important;
+  margin: 0 0 5px !important;
+  border: 1px solid transparent !important;
+  border-radius: 9px !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  color: #ffffff !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease !important;
+}
+
+.network-supplier-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  transform: translateX(-1px) !important;
+}
+
+.network-supplier-item.selected {
+  background: rgba(244, 196, 0, 0.16) !important;
+  border-color: rgba(244, 196, 0, 0.8) !important;
+  box-shadow:
+    inset 3px 0 0 #f4c400,
+    0 0 16px rgba(244, 196, 0, 0.10) !important;
+}
+
+.network-supplier-item.disrupted {
+  box-shadow:
+    inset 3px 0 0 #ef4444 !important;
+}
+
+.network-supplier-status-dot {
+  flex: 0 0 8px !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+}
+
+.network-supplier-item-name {
+  min-width: 0 !important;
+  flex: 1 !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.network-supplier-item-risk {
+  flex: 0 0 28px !important;
+  text-align: right !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+
 
 /* =========================================================
    EMPTY GRAPH
