@@ -520,13 +520,23 @@ function AppShell() {
           </button>
 
 
-          <div
+          <div className="site-footer-right">
 
-            className="site-footer-socials"
+            <a
+              className="btn-github"
+              href="https://github.com/AVINASHTIWARI14/suplAI"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open SuplAI repository"
+              title="SuplAI Repository"
+            >
+              View Repository
+            </a>
 
-            aria-label="Social links"
-
-          >
+            <div
+              className="site-footer-socials"
+              aria-label="Social links"
+            >
 
             <a
 
@@ -619,6 +629,8 @@ function AppShell() {
               </svg>
 
             </a>
+
+            </div>
 
           </div>
 
