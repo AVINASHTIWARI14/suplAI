@@ -15779,3 +15779,79 @@ body,
     font-size: 13px !important;
   }
 }
+
+
+/* Alternatives search matches the Supplier Explorer search bar exactly. */
+.main-content:has(.alternatives-page) .alternatives-search-wrap {
+  position: relative !important;
+  width: 100% !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.14) !important;
+}
+
+.main-content:has(.alternatives-page) .alternatives-search-icon {
+  position: static !important;
+  flex: 0 0 auto !important;
+  margin: 0 9px 0 14px !important;
+  transform: none !important;
+  color: #183153 !important;
+  font-size: 1.25rem !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
+}
+
+.main-content:has(.alternatives-page) .alternatives-search-input {
+  width: 100% !important;
+  height: 46px !important;
+  flex: 1 1 auto !important;
+  box-sizing: border-box !important;
+  padding: 0 14px 0 0 !important;
+  background: transparent !important;
+  color: #183153 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-size: 0.92rem !important;
+}
+
+.main-content:has(.alternatives-page) .alternatives-search-input::placeholder {
+  color: #70839b !important;
+  opacity: 1 !important;
+}
+
+.main-content:has(.alternatives-page) .alternatives-search-input:focus {
+  box-shadow: none !important;
+}
+
+.main-content:has(.alternatives-page) .alternatives-search-clear {
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  height: 34px !important;
+  margin-right: 8px !important;
+  background: #eef1f4 !important;
+  color: #183153 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.main-content:has(.alternatives-page) .alternatives-search-clear:hover {
+  background: #dde3e9 !important;
+  color: #183153 !important;
+}
+
+@media (max-width: 600px) {
+  .main-content:has(.alternatives-page) .alternatives-search-wrap,
+  .main-content:has(.alternatives-page) .alternatives-search-input {
+    height: 46px !important;
+    min-height: 46px !important;
+  }
+}
