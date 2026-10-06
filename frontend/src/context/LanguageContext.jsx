@@ -956,7 +956,7 @@ const shouldTranslate = (node) => {
   if (element.closest('script,style,noscript,svg')) return false;
 
   const blocked = element.closest(
-    '.news-title, .news-meta, .supplier-card-name, .alternative-supplier-info strong, .network-supplier-item-name, .alert-title, .alert-message, .disruption-feed-title, .disruption-feed-location, .disruption-feed-industry, .alternative-location, .leaflet-container',
+    '.news-title, .news-meta, .supplier-card-name, .alternative-supplier-info strong, .network-supplier-item-name, .alert-title, .alert-message, .disruption-feed-title, .disruption-feed-location, .disruption-feed-industry, .alternative-location',
   );
 
   return !blocked;
