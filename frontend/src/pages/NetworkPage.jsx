@@ -179,8 +179,8 @@ const NetworkPage = ({
     return raw
       .filter(
         (e) =>
-          !removedIds.has(e.source) &&
-          !removedIds.has(e.target),
+          !removedIds.has(String(e.source)) &&
+          !removedIds.has(String(e.target)),
       )
       .map((e) => ({
         source: e.source,
@@ -349,30 +349,30 @@ const NetworkPage = ({
   const selectFromDirectory = useCallback(
     (nodeId) => {
       setPendingSupplierId(nodeId);
-      setSelectedId(nodeId);
     },
     [],
   );
 
   const selectPendingSupplier = useCallback(() => {
     const id =
-      pendingSupplierId ||
+      pendingSupplierId ??
       selectedId;
 
-    if (!id) {
+    if (id == null) {
       return;
     }
 
     const node =
       nodes.find(
-        (item) => item.id === id,
+        (item) => String(item.id) === String(id),
       );
 
     if (!node || node.type !== 'supplier') {
       return;
     }
 
-    setSelectedId(id);
+    setSelectedId(node.id);
+    setPendingSupplierId(node.id);
   }, [pendingSupplierId, selectedId, nodes]);
 
   /* =========================================================
@@ -444,10 +444,10 @@ const NetworkPage = ({
 
   const removeSelectedNode = useCallback(() => {
     const id =
-      pendingSupplierId ||
+      pendingSupplierId ??
       selectedId;
 
-    if (!id) {
+    if (id == null) {
       return;
     }
 
