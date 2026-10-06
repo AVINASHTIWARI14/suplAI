@@ -15600,3 +15600,30 @@ body,
   transform: none !important;
   filter: none !important;
 }
+
+
+/* Final supplier-card cleanup: fully opaque, flat surface with no shine. */
+.network-supplier-directory-card {
+  background: #0b1f3a !important;
+  background-color: #0b1f3a !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  isolation: isolate !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.network-supplier-directory-card::before,
+.network-supplier-directory-card::after,
+.network-supplier-directory-card > *::before,
+.network-supplier-directory-card > *::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
