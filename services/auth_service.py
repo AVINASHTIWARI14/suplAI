@@ -177,46 +177,6 @@ def get_user_by_id(user_id: str) -> Optional[dict]:
     return None
 
 
-def update_user_profile(user_id: str, full_name: str) -> dict:
-    full_name = full_name.strip()
-    if not full_name:
-        raise ValueError("Full name is required")
-
-    updated_user = None
-
-    if supabase:
-        try:
-            result = (
-                supabase.table("app_users")
-                .update({"full_name": full_name})
-                .eq("id", user_id)
-                .select("*")
-                .limit(1)
-                .execute()
-            )
-            rows = response_data(result) or []
-            if rows:
-                updated_user = rows[0]
-        except Exception as exc:
-            raise ValueError("Unable to update profile") from exc
-
-    if updated_user is None:
-        users = _load_local_users()
-        for user in users:
-            if user.get("id") == user_id:
-                user["full_name"] = full_name
-                updated_user = user
-                break
-
-        if updated_user is not None:
-            _save_local_users(users)
-
-    if not updated_user:
-        raise ValueError("User not found")
-
-    return _public_user(updated_user)
-
-
 def refresh_access_token(refresh_token: str) -> dict:
     """Exchange a valid refresh token for a fresh access token."""
     from core.security import decode_token
