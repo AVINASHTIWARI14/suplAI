@@ -999,10 +999,11 @@ export function LanguageProvider({ children }) {
   );
 
   const restoreOriginals = useCallback(() => {
-    textOriginals.current.forEach((original, node) => {
-      if (node && node.nodeValue !== original) {
-        node.nodeValue = original;
+    textOriginals.current.forEach((entry, node) => {
+      if (node && node.nodeValue !== entry.original) {
+        node.nodeValue = entry.original;
       }
+      if (entry) entry.translated = null;
     });
 
     attributeOriginals.current.forEach((attrs, element) => {
@@ -1026,11 +1027,25 @@ export function LanguageProvider({ children }) {
 
       while (node) {
         if (node.nodeValue?.trim() && shouldTranslate(node)) {
-          if (!textOriginals.current.has(node)) {
-            textOriginals.current.set(node, node.nodeValue);
+          const stored = textOriginals.current.get(node);
+
+          if (!stored) {
+            textOriginals.current.set(node, {
+              original: node.nodeValue,
+              translated: null,
+            });
+          } else if (
+            stored.translated !== null &&
+            node.nodeValue !== stored.translated &&
+            node.nodeValue !== stored.original
+          ) {
+            stored.original = node.nodeValue;
           }
-          const original = textOriginals.current.get(node);
-          const translated = translate(original);
+
+          const entry = textOriginals.current.get(node);
+          const translated = translate(entry.original);
+          entry.translated = translated;
+
           if (node.nodeValue !== translated) node.nodeValue = translated;
         }
         node = walker.nextNode();
