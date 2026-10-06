@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { fetchAlternatives } from '../api/client.js';
 import supplierAvatar from '../assets/network/supplier_avatar.png';
@@ -14,6 +14,7 @@ const getRiskLevel = (score) => {
 const AlternativesPage = ({ companyId }) => {
   const [alternatives, setAlternatives] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -23,6 +24,29 @@ const AlternativesPage = ({ companyId }) => {
       .catch(() => setAlternatives([]))
       .finally(() => setLoading(false));
   }, [companyId]);
+
+  const filteredAlternatives = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+
+    if (!query) {
+      return alternatives;
+    }
+
+    return alternatives.filter((supplier) => {
+      const searchable = [
+        supplier.name,
+        supplier.location,
+        supplier.country,
+        supplier.category,
+        supplier.industry,
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+
+      return searchable.includes(query);
+    });
+  }, [alternatives, searchTerm]);
 
   return (
     <div className="alternatives-page">
@@ -34,7 +58,30 @@ const AlternativesPage = ({ companyId }) => {
           <div className="dashboard-loading-spinner" aria-hidden="true" />
         </div>
       ) : (
-      <div className="alternatives-table-card">
+      <div className="alternatives-content">
+        <div className="alternatives-search-wrap">
+          <span className="alternatives-search-icon" aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            className="alternatives-search-input"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder="Search alternative suppliers..."
+            aria-label="Search alternative suppliers"
+          />
+          {searchTerm && (
+            <button
+              type="button"
+              className="alternatives-search-clear"
+              onClick={() => setSearchTerm('')}
+              aria-label="Clear supplier search"
+            >
+              ×
+            </button>
+          )}
+        </div>
+
+        <div className="alternatives-table-card">
         <div className="alternatives-table-header">
           <div>Rank</div>
           <div>Supplier</div>
@@ -45,8 +92,8 @@ const AlternativesPage = ({ companyId }) => {
           <div>Composite</div>
         </div>
 
-        {alternatives.length ? (
-          alternatives.map((supplier, index) => {
+        {filteredAlternatives.length ? (
+          filteredAlternatives.map((supplier, index) => {
             const riskScore = Number(supplier.risk_score ?? 0);
             const riskLevel = getRiskLevel(riskScore);
 
@@ -130,9 +177,12 @@ const AlternativesPage = ({ companyId }) => {
           })
         ) : (
           <div className="alternatives-state">
-            No alternative suppliers for this company.
+            {searchTerm
+              ? 'No alternative suppliers match your search.'
+              : 'No alternative suppliers for this company.'}
           </div>
         )}
+        </div>
       </div>
       )}
     </div>
