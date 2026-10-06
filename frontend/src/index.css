@@ -15680,3 +15680,11 @@ body,
   z-index: 31 !important;
   pointer-events: auto !important;
 }
+
+
+/* Supplier action buttons are intentionally removed. */
+.network-supplier-action-row,
+.network-supplier-select-button,
+.network-supplier-remove-button {
+  display: none !important;
+}
