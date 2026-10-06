@@ -16346,3 +16346,41 @@ html[dir="rtl"] .settings-language-check {
 .main-content:has(.settings-page-title) .settings-language-option[aria-pressed="true"] .settings-language-check {
   color: #183153 !important;
 }
+
+
+/* SETTINGS — make footer follow the same normal page flow as other pages */
+.main-content:has(.settings-page-title) .route-content {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: visible !important;
+}
+
+.main-content:has(.settings-page-title) .route-content > .page-body {
+  flex: 1 1 auto !important;
+  min-height: calc(100vh - 70px - 84px) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.main-content:has(.settings-page-title) > .site-footer {
+  flex: 0 0 84px !important;
+  min-height: 84px !important;
+  margin-top: 0 !important;
+  width: 100% !important;
+  align-self: stretch !important;
+  position: relative !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.settings-page-title) .route-content > .page-body {
+    min-height: calc(100vh - 84px) !important;
+  }
+
+  .main-content:has(.settings-page-title) > .site-footer {
+    flex-basis: 96px !important;
+    min-height: 96px !important;
+  }
+}
