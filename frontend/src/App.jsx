@@ -22,6 +22,7 @@ import AlertsPage from './pages/AlertsPage.jsx';
 import SettingsPage from './pages/SettingsPage.jsx';
 
 import TopNav from './components/TopNav.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 import companiesFallback from './data/companies.js';
 
@@ -350,17 +351,21 @@ function AppShell() {
 
             element={
 
-              <DashboardPage
+              <ProtectedRoute>
 
-                companyId={companyId}
+                <DashboardPage
 
-                company={company}
+                  companyId={companyId}
 
-                onRiskChange={setOverallRisk}
+                  company={company}
 
-                apiOnline={apiOnline}
+                  onRiskChange={setOverallRisk}
 
-              />
+                  apiOnline={apiOnline}
+
+                />
+
+              </ProtectedRoute>
 
             }
 
@@ -375,11 +380,15 @@ function AppShell() {
 
             element={
 
-              <SupplierExplorerPage
+              <ProtectedRoute>
 
-                companyId={companyId}
+                <SupplierExplorerPage
 
-              />
+                  companyId={companyId}
+
+                />
+
+              </ProtectedRoute>
 
             }
 
@@ -394,11 +403,15 @@ function AppShell() {
 
             element={
 
-              <NetworkPage
+              <ProtectedRoute>
 
-                companyId={companyId}
+                <NetworkPage
 
-              />
+                  companyId={companyId}
+
+                />
+
+              </ProtectedRoute>
 
             }
 
@@ -413,11 +426,15 @@ function AppShell() {
 
             element={
 
-              <AlternativesPage
+              <ProtectedRoute>
 
-                companyId={companyId}
+                <AlternativesPage
 
-              />
+                  companyId={companyId}
+
+                />
+
+              </ProtectedRoute>
 
             }
 
@@ -432,11 +449,15 @@ function AppShell() {
 
             element={
 
-              <DisruptionFeedPage
+              <ProtectedRoute>
 
-                company={company}
+                <DisruptionFeedPage
 
-              />
+                  company={company}
+
+                />
+
+              </ProtectedRoute>
 
             }
 
@@ -451,11 +472,15 @@ function AppShell() {
 
             element={
 
-              <AlertsPage
+              <ProtectedRoute>
 
-                companyId={companyId}
+                <AlertsPage
 
-              />
+                  companyId={companyId}
+
+                />
+
+              </ProtectedRoute>
 
             }
 
@@ -470,13 +495,17 @@ function AppShell() {
 
             element={
 
-              <SettingsPage
+              <ProtectedRoute>
 
-                companyId={companyId}
+                <SettingsPage
 
-                companyName={companyName}
+                  companyId={companyId}
 
-              />
+                  companyName={companyName}
+
+                />
+
+              </ProtectedRoute>
 
             }
 
