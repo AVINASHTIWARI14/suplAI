@@ -16303,3 +16303,22 @@ html[dir="rtl"] .settings-language-check {
 .main-content:has(.settings-page-title) .settings-language-info small {
   color: rgba(255, 255, 255, 0.62) !important;
 }
+
+
+/* LANGUAGE SELECTED STATE — always yellow, never the muted grey card state */
+.main-content:has(.settings-page-title) .settings-language-option.is-selected,
+.main-content:has(.settings-page-title) .settings-language-option.is-selected:hover,
+.main-content:has(.settings-page-title) .settings-language-option[aria-pressed="true"] {
+  background: #F4C400 !important;
+  background-color: #F4C400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  border-color: #F4C400 !important;
+  box-shadow: none !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-option.is-selected .settings-language-info strong,
+.main-content:has(.settings-page-title) .settings-language-option.is-selected .settings-language-info small,
+.main-content:has(.settings-page-title) .settings-language-option.is-selected .settings-language-check {
+  color: #183153 !important;
+}
