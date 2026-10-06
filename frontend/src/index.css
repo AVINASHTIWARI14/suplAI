@@ -15532,3 +15532,71 @@ body,
     animation: none !important;
   }
 }
+
+
+/* Supplier directory — remove the white shine/reflection completely. */
+.network-supplier-directory-card {
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: hidden !important;
+}
+
+.network-supplier-directory-card::before,
+.network-supplier-directory-card::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* Supplier actions: aligned side-by-side at the bottom of the card. */
+.network-supplier-action-row {
+  flex: 0 0 auto !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+
+.network-supplier-select-button,
+.network-supplier-remove-button {
+  min-height: 42px !important;
+  width: 100% !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.2px !important;
+  cursor: pointer !important;
+  transition:
+    transform 140ms ease,
+    filter 140ms ease,
+    opacity 140ms ease !important;
+}
+
+.network-supplier-select-button {
+  background: #f4c400 !important;
+  color: #07111f !important;
+}
+
+.network-supplier-remove-button {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+.network-supplier-select-button:hover:not(:disabled),
+.network-supplier-remove-button:hover:not(:disabled) {
+  transform: translateY(-1px) !important;
+  filter: brightness(1.05) !important;
+}
+
+.network-supplier-select-button:disabled,
+.network-supplier-remove-button:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  filter: none !important;
+}
