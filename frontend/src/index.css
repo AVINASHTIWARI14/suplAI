@@ -16384,3 +16384,14 @@ html[dir="rtl"] .settings-language-check {
     min-height: 96px !important;
   }
 }
+
+
+/* Settings footer follows the same sticky viewport behavior as other pages. */
+.main-content:has(.settings-page-title) > .site-footer {
+  position: sticky !important;
+  bottom: 0 !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  z-index: 100 !important;
+}
