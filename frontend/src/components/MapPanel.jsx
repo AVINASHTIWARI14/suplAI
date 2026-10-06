@@ -321,7 +321,11 @@ const MapPanel = ({
                 direction="top"
                 offset={[0, -8]}
                 permanent
-                className="suplai-map-tooltip"
+                className={`suplai-map-tooltip ${
+                  (supplier.risk_score ?? 0) >= 60
+                    ? 'suplai-map-tooltip-risk-high'
+                    : 'suplai-map-tooltip-risk-safe'
+                }`}
               >
                 <strong>{supplier.name}</strong>
                 <div>{supplier.location || supplier.country}</div>
