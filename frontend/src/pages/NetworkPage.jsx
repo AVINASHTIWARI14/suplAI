@@ -349,6 +349,7 @@ const NetworkPage = ({
   const selectFromDirectory = useCallback(
     (nodeId) => {
       setPendingSupplierId(nodeId);
+      setSelectedId(nodeId);
     },
     [],
   );
