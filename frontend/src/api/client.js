@@ -37,6 +37,13 @@ export async function fetchMe() {
   return data;
 }
 
+export async function updateMe({ full_name }) {
+  const { data } = await api.put('/auth/me', {
+    full_name,
+  });
+  return data;
+}
+
 export async function fetchCompanies() {
   try {
     const { data } = await api.get('/companies');
