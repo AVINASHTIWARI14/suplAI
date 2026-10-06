@@ -49,6 +49,9 @@ const NetworkPage = ({
   const [selectedId, setSelectedId] =
     useState(null);
 
+  const [pendingSupplierId, setPendingSupplierId] =
+    useState(null);
+
   const [removedIds, setRemovedIds] =
     useState(() => new Set());
 
@@ -120,6 +123,7 @@ const NetworkPage = ({
     setDisrupted(new Set());
     setSim(null);
     setSelectedId(null);
+    setPendingSupplierId(null);
     setRemovedIds(new Set());
 
     fetchGraph(companyId)
@@ -309,6 +313,13 @@ const NetworkPage = ({
 
         setSelectedId(id);
 
+        if (
+          typeof node === 'object' &&
+          node.type === 'supplier'
+        ) {
+          setPendingSupplierId(id);
+        }
+
         setDisrupted(
           (previous) => {
             const next =
@@ -337,10 +348,18 @@ const NetworkPage = ({
 
   const selectFromDirectory = useCallback(
     (nodeId) => {
-      setSelectedId(nodeId);
+      setPendingSupplierId(nodeId);
     },
     [],
   );
+
+  const selectPendingSupplier = useCallback(() => {
+    if (!pendingSupplierId) {
+      return;
+    }
+
+    setSelectedId(pendingSupplierId);
+  }, [pendingSupplierId]);
 
   /* =========================================================
      RUN SIMULATION
@@ -409,14 +428,22 @@ const NetworkPage = ({
       : null;
 
   const removeSelectedNode = useCallback(() => {
-    if (
-      !selectedNode ||
-      selectedNode.type !== 'supplier'
-    ) {
+    const id =
+      pendingSupplierId ||
+      selectedId;
+
+    if (!id) {
       return;
     }
 
-    const id = selectedNode.id;
+    const node =
+      nodes.find(
+        (item) => item.id === id,
+      );
+
+    if (!node || node.type !== 'supplier') {
+      return;
+    }
 
     setRemovedIds((previous) => {
       const next = new Set(previous);
@@ -430,8 +457,14 @@ const NetworkPage = ({
       return next;
     });
 
-    setSelectedId(null);
-  }, [selectedNode]);
+    setSelectedId((current) =>
+      current === id ? null : current,
+    );
+
+    setPendingSupplierId((current) =>
+      current === id ? null : current,
+    );
+  }, [pendingSupplierId, selectedId, nodes]);
 
   /* =========================================================
      SELECTED NODE DEPENDENCIES
@@ -941,7 +974,7 @@ const NetworkPage = ({
                   type="button"
                   className={
                     'network-supplier-item' +
-                    (supplier.id === selectedId ? ' selected' : '')
+                    (supplier.id === pendingSupplierId ? ' selected' : '')
                   }
                   onClick={() =>
                     selectFromDirectory(supplier.id)
@@ -978,12 +1011,8 @@ const NetworkPage = ({
               <button
                 type="button"
                 className="network-supplier-select-button"
-                onClick={() => {
-                  if (selectedNode?.type === 'supplier') {
-                    selectFromDirectory(selectedNode.id);
-                  }
-                }}
-                disabled={!selectedNode || selectedNode.type !== 'supplier'}
+                onClick={selectPendingSupplier}
+                disabled={!pendingSupplierId}
               >
                 Select
               </button>
@@ -992,7 +1021,7 @@ const NetworkPage = ({
                 type="button"
                 className="network-supplier-remove-button"
                 onClick={removeSelectedNode}
-                disabled={!selectedNode || selectedNode.type !== 'supplier'}
+                disabled={!pendingSupplierId && (!selectedNode || selectedNode.type !== 'supplier')}
               >
                 Remove
               </button>
