@@ -5,6 +5,7 @@ import {
   Marker,
   Polyline,
   Tooltip,
+  Pane,
   useMap,
 } from 'react-leaflet';
 import L from 'leaflet';
@@ -296,21 +297,27 @@ const MapPanel = ({
           <MapBoundaryGuard />
           <MapZoomGuard />
 
-          {hub && (
-            <Marker
-              position={[hub.lat, hub.lng]}
-              icon={userIcon('#1688ff', 'large')}
-              zIndexOffset={10000}
-            >
-              <Tooltip
-                direction="top"
-                permanent
-                className="suplai-map-tooltip suplai-map-tooltip-hq"
+          <Pane name="hq-marker-pane" style={{ zIndex: 1200 }}>
+            {hub && (
+              <Marker
+                position={[hub.lat, hub.lng]}
+                icon={userIcon('#1688ff', 'large')}
+                zIndexOffset={100000}
+                pane="hq-marker-pane"
               >
-                <strong>Company HQ</strong>
-              </Tooltip>
-            </Marker>
-          )}
+                <Tooltip
+                  direction="top"
+                  permanent
+                  pane="hq-tooltip-pane"
+                  className="suplai-map-tooltip suplai-map-tooltip-hq"
+                >
+                  <strong>Company HQ</strong>
+                </Tooltip>
+              </Marker>
+            )}
+          </Pane>
+
+          <Pane name="hq-tooltip-pane" style={{ zIndex: 1400 }} />
 
           {points.map((supplier) => (
             <Marker
