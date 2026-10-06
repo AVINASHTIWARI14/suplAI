@@ -26,8 +26,23 @@ const AlertsPage = ({ companyId }) => {
   }, [companyId]);
 
   const onMarkRead = async (id) => {
-    await markAlertRead(id);
-    load();
+    if (String(id).startsWith('computed-')) {
+      setAlerts((current) =>
+        current.map((alert) =>
+          alert.id === id
+            ? { ...alert, is_read: true }
+            : alert,
+        ),
+      );
+      return;
+    }
+
+    try {
+      await markAlertRead(id);
+      load();
+    } catch {
+      // Keep the alert visible if the persistence request fails.
+    }
   };
 
   return (
@@ -95,17 +110,14 @@ const AlertsPage = ({ companyId }) => {
                     severity={severity}
                   />
 
-                  {canEdit &&
-                    !alert.is_read &&
-                    !String(alert.id).startsWith('computed-') && (
-                      <button
-                        type="button"
-                        className="alert-read-button"
-                        onClick={() => onMarkRead(alert.id)}
-                      >
-                        Reviewed
-                      </button>
-                    )}
+                  <button
+                    type="button"
+                    className="alert-read-button"
+                    onClick={() => onMarkRead(alert.id)}
+                    disabled={alert.is_read}
+                  >
+                    {alert.is_read ? 'Reviewed' : 'Reviewed'}
+                  </button>
 
                 </div>
 
