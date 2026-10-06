@@ -116,6 +116,15 @@ _FALLBACK_HEADLINES = [
     ("Port congestion delays shipments at major Asian hub", "demo", ["port", "logistics"]),
     ("Factory fire disrupts electronics component supply", "demo", ["factory fire"]),
     ("Regional strike affects freight movement", "demo", ["strike", "labour"]),
+    ("Semiconductor lead times rise across East Asian supply routes", "demo", ["semiconductor", "lead time"]),
+    ("Container capacity tightens on major Europe-Asia corridor", "demo", ["containers", "shipping"]),
+    ("Extreme weather adds pressure to regional freight networks", "demo", ["weather", "freight"]),
+    ("Automotive component demand increases supply-chain exposure", "demo", ["automotive", "components"]),
+    ("Industrial metals route faces elevated logistics risk", "demo", ["metals", "logistics"]),
+    ("Air cargo capacity shifts affect time-sensitive components", "demo", ["air cargo", "components"]),
+    ("Manufacturing network sees higher dependency concentration", "demo", ["manufacturing", "dependency"]),
+    ("Raw material bottlenecks raise procurement lead-time risk", "demo", ["raw materials", "procurement"]),
+    ("Global sourcing networks remain sensitive to port disruptions", "demo", ["sourcing", "ports"]),
 ]
 
 
