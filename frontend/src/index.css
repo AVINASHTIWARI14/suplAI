@@ -16501,3 +16501,14 @@ html[dir="rtl"] .settings-language-check {
     justify-content: center;
   }
 }
+
+
+/* Repository button hover: yellow fill with dark-blue text. */
+.site-footer .btn-github:hover,
+.site-footer .btn-github:focus-visible {
+  background-color: #F4C400 !important;
+  color: #183153 !important;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1px rgba(244, 196, 0, 0.22);
+}
