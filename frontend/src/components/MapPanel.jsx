@@ -86,8 +86,13 @@ const createArc = (from, to) => {
   );
 
   const curve = Math.min(18, Math.max(3.5, distance * 0.085));
-  const controlLat =
-    midLat + (lat1 <= lat2 ? curve : -curve);
+  const controlLat = Math.max(
+    -78,
+    Math.min(
+      78,
+      midLat + (lat1 <= lat2 ? curve : -curve),
+    ),
+  );
   const controlLng = midLng;
 
   for (let i = 0; i <= segments; i += 1) {
@@ -209,25 +214,23 @@ const MapPanel = ({
     return null;
   }, [companyCoords, graph]);
 
+  /*
+   * Dashboard routes are drawn directly from the company hub to every
+   * supplier currently visible on the dashboard. This prevents route
+   * segments from disappearing when the graph also contains tier-2,
+   * tier-3, or component edges that are not represented by map points.
+   */
   const edges = useMemo(() => {
-    if (!graph?.edges?.length || !points.length || !hub) return [];
+    if (!points.length || !hub) return [];
 
-    const byId = Object.fromEntries(
-      points.map((point) => [point.id, point]),
-    );
-
-    return graph.edges
-      .map((edge) => {
-        const target = byId[edge.target];
-        if (!target) return null;
-
-        return createArc(
-          [hub.lat, hub.lng],
-          [target.lat, target.lng],
-        );
-      })
-      .filter(Boolean);
-  }, [graph, points, hub]);
+    return points.map((point) => ({
+      id: point.id,
+      positions: createArc(
+        [hub.lat, hub.lng],
+        [point.lat, point.lng],
+      ),
+    }));
+  }, [points, hub]);
 
   const counts = useMemo(() => {
     const high = points.filter((point) => (point.risk_score ?? 0) >= 60).length;
@@ -325,15 +328,15 @@ const MapPanel = ({
             </Marker>
           ))}
 
-          {edges.map((positions, index) => (
-            <Fragment key={`edge-${index}`}>
+          {edges.map((route) => (
+            <Fragment key={`route-${route.id}`}>
               {/* Soft route glow */}
               <Polyline
-                positions={positions}
+                positions={route.positions}
                 pathOptions={{
                   color: '#38a9ff',
                   weight: 7,
-                  opacity: 0.14,
+                  opacity: 0.18,
                   className: 'map-route-glow',
                   lineCap: 'round',
                   lineJoin: 'round',
@@ -346,7 +349,7 @@ const MapPanel = ({
                 pathOptions={{
                   color: '#071a31',
                   weight: 3.5,
-                  opacity: 0.72,
+                  opacity: 0.88,
                   className: 'map-route-base',
                   lineCap: 'round',
                   lineJoin: 'round',
@@ -359,9 +362,9 @@ const MapPanel = ({
                 pathOptions={{
                   color: '#ffffff',
                   weight: 2.2,
-                  opacity: 0.92,
+                  opacity: 0.96,
                   className: 'map-route-flow',
-                  dashArray: '4 12',
+                  dashArray: '8 14',
                   lineCap: 'round',
                   lineJoin: 'round',
                 }}
