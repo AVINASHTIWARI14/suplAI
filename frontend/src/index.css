@@ -15855,3 +15855,46 @@ body,
     min-height: 46px !important;
   }
 }
+
+
+/* Alerts — yellow Reviewed button, completely flat/no reflection. */
+.main-content:has(.alerts-page) .alert-read-button {
+  padding: 10px 24px !important;
+  min-width: 108px !important;
+  background: #F4C400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  transition: transform 180ms ease, background 180ms ease !important;
+}
+
+.main-content:has(.alerts-page) .alert-read-button:hover,
+.main-content:has(.alerts-page) .alert-read-button:focus,
+.main-content:has(.alerts-page) .alert-read-button:active {
+  background: #F4C400 !important;
+  background-image: none !important;
+  color: #183153 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+.main-content:has(.alerts-page) .alert-read-button:hover {
+  transform: translateY(-1px) !important;
+}
+
+.main-content:has(.alerts-page) .alert-read-button::before,
+.main-content:has(.alerts-page) .alert-read-button::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
