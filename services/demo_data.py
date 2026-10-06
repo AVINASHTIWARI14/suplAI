@@ -104,6 +104,103 @@ for company_index, company in enumerate(COMPANIES):
     alternatives = [ids[1], ids[4], shared_b]
     ALTERNATIVES[company["id"]] = list(dict.fromkeys(alternatives))
 
+# Keep the fallback data visually consistent with the richer Supabase demo.
+# This matters when Supabase briefly fails on a cold request: the API falls
+# back to this module, so the dashboard should not momentarily show a tiny,
+# India-only network before becoming correct on a revisit.
+_GLOBAL_LOCATIONS = {
+    "Apex Industrial Materials": ("St. Paul, MN", "USA", 44.9537, -93.09),
+    "DeltaForge Components": ("Pune", "India", 18.5204, 73.8567),
+    "Vantage Specialty Chemicals": ("Vapi", "India", 20.3893, 72.9106),
+    "Vector Motion Systems": ("Stuttgart", "Germany", 48.7758, 9.1829),
+    "NorthBridge Steelworks": ("Beijing", "China", 39.9042, 116.4074),
+    "Summit Electrical Works": ("Bengaluru", "India", 12.9716, 77.5946),
+    "Harbor Robotics Supply": ("Dallas, TX", "USA", 32.7767, -96.7970),
+    "Maple Circuit Materials": ("Toronto", "Canada", 43.6532, -79.3832),
+    "Sierra Assembly Works": ("Monterrey", "Mexico", 25.6866, -100.3161),
+    "Rio Polymer Systems": ("Sao Paulo", "Brazil", -23.5505, -46.6333),
+    "Thames Precision Ltd": ("London", "United Kingdom", 51.5074, -0.1278),
+    "Loire Industrial Components": ("Lyon", "France", 45.7640, 4.8357),
+    "Delta Port Technologies": ("Rotterdam", "Netherlands", 51.9244, 4.4777),
+    "GulfLink Components": ("Dubai", "UAE", 25.2048, 55.2708),
+    "CapeFoundry Materials": ("Johannesburg", "South Africa", -26.2041, 28.0473),
+    "Bosphorus Electromech": ("Istanbul", "Turkey", 41.0082, 28.9784),
+    "Sakura Motion Works": ("Tokyo", "Japan", 35.6762, 139.6503),
+    "Han River Electronics": ("Seoul", "South Korea", 37.5665, 126.9780),
+    "Mekong Precision Systems": ("Ho Chi Minh City", "Vietnam", 10.8231, 106.6297),
+    "Java Industrial Supply": ("Jakarta", "Indonesia", -6.2088, 106.8456),
+    "Southern Cross Components": ("Sydney", "Australia", -33.8688, 151.2093),
+    "Vistula Manufacturing": ("Warsaw", "Poland", 52.2297, 21.0122),
+    "Adriatic Thermal Works": ("Milan", "Italy", 45.4642, 9.1900),
+    "Andes Copper Inputs": ("Santiago", "Chile", -33.4489, -70.6693),
+    "Nile Industrial Logistics": ("Cairo", "Egypt", 30.0444, 31.2357),
+    "StraitLink Materials": ("Kuala Lumpur", "Malaysia", 3.1390, 101.6869),
+}
+
+supplier_by_name = {supplier["name"]: supplier for supplier in SUPPLIERS}
+for name, (location, country, latitude, longitude) in _GLOBAL_LOCATIONS.items():
+    supplier = supplier_by_name.get(name)
+    if supplier:
+        supplier["location"] = location
+        supplier["country"] = country
+        supplier["latitude"] = latitude
+        supplier["longitude"] = longitude
+
+_APEX_FALLBACK_NAMES = [
+    "Apex Industrial Materials",
+    "DeltaForge Components",
+    "Vantage Specialty Chemicals",
+    "Vector Motion Systems",
+    "NorthBridge Steelworks",
+    "Summit Electrical Works",
+    "Harbor Robotics Supply",
+    "Maple Circuit Materials",
+    "Sierra Assembly Works",
+    "Rio Polymer Systems",
+    "Thames Precision Ltd",
+    "Loire Industrial Components",
+    "Delta Port Technologies",
+    "GulfLink Components",
+    "CapeFoundry Materials",
+    "Bosphorus Electromech",
+    "Sakura Motion Works",
+    "Han River Electronics",
+    "Mekong Precision Systems",
+    "Java Industrial Supply",
+    "Southern Cross Components",
+    "Vistula Manufacturing",
+    "Adriatic Thermal Works",
+    "Andes Copper Inputs",
+    "Nile Industrial Logistics",
+    "StraitLink Materials",
+]
+_apex_lookup = {supplier["name"]: supplier["id"] for supplier in SUPPLIERS}
+_apex_id = COMPANIES[0]["id"]
+DEPENDENCIES[_apex_id] = [
+    _apex_lookup[name]
+    for name in _APEX_FALLBACK_NAMES
+    if name in _apex_lookup
+]
+ALTERNATIVES[_apex_id] = [
+    _apex_lookup[name]
+    for name in [
+        "Vantage Specialty Chemicals",
+        "NorthBridge Steelworks",
+        "Summit Electrical Works",
+        "GulfLink Components",
+        "CapeFoundry Materials",
+        "Sakura Motion Works",
+        "Han River Electronics",
+        "Mekong Precision Systems",
+        "Java Industrial Supply",
+        "Southern Cross Components",
+        "Adriatic Thermal Works",
+        "Nile Industrial Logistics",
+        "StraitLink Materials",
+    ]
+    if name in _apex_lookup
+]
+
 
 DISRUPTIONS = [
     {
