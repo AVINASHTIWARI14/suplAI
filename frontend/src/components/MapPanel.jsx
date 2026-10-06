@@ -68,19 +68,21 @@ const createArc = (from, to) => {
   const points = [];
   const segments = 36;
 
+  /*
+   * Keep the route on the same left/right side as the actual target node.
+   * Do NOT take a shortest-path longitude across the ±180° seam: that can
+   * turn a node that is visibly on the left into a route that exits on the
+   * right side of the map.
+   */
   const lngDiff = lng2 - lng1;
-  const shortestLngDiff =
-    Math.abs(lngDiff) > 180
-      ? lngDiff - Math.sign(lngDiff) * 360
-      : lngDiff;
 
   const midLat = (lat1 + lat2) / 2;
-  const midLng = lng1 + shortestLngDiff / 2;
+  const midLng = lng1 + lngDiff / 2;
 
   const distance = Math.sqrt(
     Math.pow(lat2 - lat1, 2) +
       Math.pow(
-        shortestLngDiff * Math.cos((midLat * Math.PI) / 180),
+        lngDiff * Math.cos((midLat * Math.PI) / 180),
         2,
       ),
   );
@@ -107,7 +109,7 @@ const createArc = (from, to) => {
     const lng =
       oneMinusT * oneMinusT * lng1 +
       2 * oneMinusT * t * controlLng +
-      t * t * (lng1 + shortestLngDiff);
+      t * t * lng2;
 
     points.push([lat, lng]);
   }
