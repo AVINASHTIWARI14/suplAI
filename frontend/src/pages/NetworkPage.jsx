@@ -412,6 +412,7 @@ const NetworkPage = ({
     setSimError(null);
 
     setSelectedId(null);
+    setPendingSupplierId(null);
   };
 
   /* =========================================================
