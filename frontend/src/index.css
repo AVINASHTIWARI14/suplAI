@@ -9015,7 +9015,8 @@ input[type="range"]:active::-moz-range-thumb {
   position: absolute !important;
   left: 28px !important;
   right: auto !important;
-  top: 105px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
   width: 330px !important;
   height: 360px !important;
   min-height: 260px !important;
@@ -9023,6 +9024,11 @@ input[type="range"]:active::-moz-range-thumb {
   overflow: hidden !important;
   display: flex !important;
   flex-direction: column !important;
+
+  /* Flat card — no glass reflection / blur / floating shadow. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
 }
 
 .network-supplier-directory-header {
@@ -9084,9 +9090,9 @@ input[type="range"]:active::-moz-range-thumb {
 }
 
 .network-supplier-item:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
-  transform: translateX(-1px) !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  transform: none !important;
 }
 
 .network-supplier-item.selected {
