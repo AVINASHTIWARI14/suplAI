@@ -3312,6 +3312,25 @@ button:not(.modal-close):not(.drawer-close):not(.link-btn):not(.header-login-but
 .suplai-map-tooltip .leaflet-tooltip-tip {
   background: rgba(7, 20, 36, .96) !important;
 }
+/* Risk-coded dashboard map tooltips */
+.suplai-map-tooltip-risk-high {
+  background: rgba(170, 34, 34, .94) !important;
+  border-color: rgba(255, 117, 117, .78) !important;
+}
+
+.suplai-map-tooltip-risk-high .leaflet-tooltip-tip {
+  background: rgba(170, 34, 34, .94) !important;
+}
+
+.suplai-map-tooltip-risk-safe {
+  background: rgba(34, 126, 76, .94) !important;
+  border-color: rgba(132, 244, 177, .72) !important;
+}
+
+.suplai-map-tooltip-risk-safe .leaflet-tooltip-tip {
+  background: rgba(34, 126, 76, .94) !important;
+}
+
 
 .map-tooltip-title {
   font-size: 12px;
