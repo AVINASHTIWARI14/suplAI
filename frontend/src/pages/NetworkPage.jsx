@@ -349,17 +349,31 @@ const NetworkPage = ({
   const selectFromDirectory = useCallback(
     (nodeId) => {
       setPendingSupplierId(nodeId);
+      setSelectedId(nodeId);
     },
     [],
   );
 
   const selectPendingSupplier = useCallback(() => {
-    if (!pendingSupplierId) {
+    const id =
+      pendingSupplierId ||
+      selectedId;
+
+    if (!id) {
       return;
     }
 
-    setSelectedId(pendingSupplierId);
-  }, [pendingSupplierId]);
+    const node =
+      nodes.find(
+        (item) => item.id === id,
+      );
+
+    if (!node || node.type !== 'supplier') {
+      return;
+    }
+
+    setSelectedId(id);
+  }, [pendingSupplierId, selectedId, nodes]);
 
   /* =========================================================
      RUN SIMULATION
@@ -975,7 +989,10 @@ const NetworkPage = ({
                   type="button"
                   className={
                     'network-supplier-item' +
-                    (supplier.id === pendingSupplierId ? ' selected' : '')
+                    ((supplier.id === pendingSupplierId ||
+                      supplier.id === selectedId)
+                      ? ' selected'
+                      : '')
                   }
                   onClick={() =>
                     selectFromDirectory(supplier.id)
@@ -1013,7 +1030,10 @@ const NetworkPage = ({
                 type="button"
                 className="network-supplier-select-button"
                 onClick={selectPendingSupplier}
-                disabled={!pendingSupplierId}
+                disabled={
+                  !pendingSupplierId &&
+                  !selectedId
+                }
               >
                 Select
               </button>
@@ -1022,7 +1042,11 @@ const NetworkPage = ({
                 type="button"
                 className="network-supplier-remove-button"
                 onClick={removeSelectedNode}
-                disabled={!pendingSupplierId && (!selectedNode || selectedNode.type !== 'supplier')}
+                disabled={
+                  !pendingSupplierId &&
+                  (!selectedNode ||
+                    selectedNode.type !== 'supplier')
+                }
               >
                 Remove
               </button>
