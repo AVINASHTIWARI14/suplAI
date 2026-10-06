@@ -436,7 +436,7 @@ const translateDynamicText = (text, lang) => {
     }
   }
 
-  const match = text.match(/^(\d+)\\s+(High Risk Suppliers|Medium Risk|Low Risk|Total Suppliers|suppliers?|days)$/i);
+  const match = text.match(/^(\d+)\s+(High Risk Suppliers|Medium Risk|Low Risk|Total Suppliers|suppliers?|days)$/i);
   if (!match) return text;
 
   const count = match[1];
@@ -488,8 +488,8 @@ export function LanguageProvider({ children }) {
 
       const dictionary = COMMON[language] || {};
       const trimmed = value.trim();
-      const leading = (value.match(/^\\s*/) || [''])[0];
-      const trailing = (value.match(/\\s*$/) || [''])[0];
+      const leading = (value.match(/^\s*/) || [''])[0];
+      const trailing = (value.match(/\s*$/) || [''])[0];
 
       if (dictionary[trimmed]) {
         return leading + dictionary[trimmed] + trailing;
