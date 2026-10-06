@@ -3,6 +3,39 @@ import SourceBadge from './SourceBadge.jsx';
 import { fetchNews, fetchFx, fetchWeather } from '../api/client.js';
 import { timeAgo } from '../utils/dates.js';
 
+const FALLBACK_HEADLINES = [
+  {
+    title: 'Port congestion delays shipments at major Asian hub',
+    source: 'SuplAI Demo',
+    keywords: ['port', 'logistics'],
+  },
+  {
+    title: 'Factory fire disrupts electronics component supply',
+    source: 'SuplAI Demo',
+    keywords: ['factory fire'],
+  },
+  {
+    title: 'Regional strike affects freight movement',
+    source: 'SuplAI Demo',
+    keywords: ['strike', 'labour'],
+  },
+  {
+    title: 'Semiconductor lead times rise across East Asian supply routes',
+    source: 'SuplAI Demo',
+    keywords: ['semiconductor', 'lead time'],
+  },
+  {
+    title: 'Container capacity tightens on major Europe-Asia corridor',
+    source: 'SuplAI Demo',
+    keywords: ['containers', 'shipping'],
+  },
+  {
+    title: 'Extreme weather adds pressure to regional freight networks',
+    source: 'SuplAI Demo',
+    keywords: ['weather', 'freight'],
+  },
+];
+
 const severityColor = (sev = '') => {
   const s = sev.toLowerCase();
   if (s.includes('high') || s.includes('severe') || s.includes('critical')) return '#ef4444';
@@ -22,13 +55,15 @@ const SignalsPanel = ({ company, newsQuery }) => {
 
   const query = newsQuery || `${company?.name || ''} supply chain disruption`.trim();
   const location = company?.location || company?.country;
-  const baseHeadlines = news?.headlines?.slice(0, 6) || [];
-  const marqueeHeadlines = baseHeadlines.length
-    ? Array.from(
-        { length: Math.max(baseHeadlines.length * 2, 6) },
-        (_, i) => baseHeadlines[i % baseHeadlines.length],
-      )
-    : [];
+  const baseHeadlines =
+    news?.headlines?.slice(0, 6)?.length
+      ? news.headlines.slice(0, 6)
+      : FALLBACK_HEADLINES;
+
+  const marqueeHeadlines = Array.from(
+    { length: Math.max(baseHeadlines.length * 2, 6) },
+    (_, i) => baseHeadlines[i % baseHeadlines.length],
+  );
 
   useEffect(() => {
     let alive = true;
@@ -97,7 +132,7 @@ const SignalsPanel = ({ company, newsQuery }) => {
         </div>
         {newsLoading ? (
           <div className="muted" style={{ fontSize: '0.85rem', padding: '8px 0' }}>Loading headlines…</div>
-        ) : news?.headlines?.length ? (
+        ) : (
           <div className="news-list news-marquee-list">
             <div className="news-marquee-track">
               <div className="news-marquee-group">
@@ -136,8 +171,6 @@ const SignalsPanel = ({ company, newsQuery }) => {
               </div>
             </div>
           </div>
-        ) : (
-          <div className="muted" style={{ fontSize: '0.85rem', padding: '8px 0' }}>No headlines available.</div>
         )}
       </div>
     </div>
