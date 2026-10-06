@@ -9011,8 +9011,13 @@ input[type="range"]:active::-moz-range-thumb {
    ========================================================= */
 
 .network-supplier-directory-card {
-  max-height: 390px !important;
+  order: -1 !important;
+  height: 360px !important;
+  min-height: 260px !important;
+  max-height: 360px !important;
   overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .network-supplier-directory-header {
@@ -9031,7 +9036,9 @@ input[type="range"]:active::-moz-range-thumb {
 }
 
 .network-supplier-list {
-  max-height: 300px !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   padding-right: 4px !important;
