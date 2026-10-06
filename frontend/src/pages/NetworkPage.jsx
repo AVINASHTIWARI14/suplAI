@@ -885,89 +885,57 @@ const NetworkPage = ({
 
           {/* =================================================
               SUPPLIER DIRECTORY
-              ================================================= */
+              ================================================= */}
 
           <section className="network-overlay-card network-supplier-directory-card">
-
             <div className="network-supplier-directory-header">
               <div>
-                <h3 className="network-card-title">
-                  SUPPLIERS
-                </h3>
-
+                <h3 className="network-card-title">SUPPLIERS</h3>
                 <span className="network-supplier-count">
                   {supplierNodes.length} suppliers
                 </span>
               </div>
             </div>
 
-            <div
-              className="network-supplier-list"
-              aria-label="Supplier list"
-            >
-              {supplierNodes.length ? (
-                supplierNodes.map((supplier) => {
-                  const risk = Math.round(
-                    riskFor(supplier.id),
-                  );
+            <div className="network-supplier-list" aria-label="Supplier list">
+              {supplierNodes.map((supplier) => (
+                <button
+                  key={supplier.id}
+                  type="button"
+                  className={
+                    'network-supplier-item' +
+                    (supplier.id === selectedId ? ' selected' : '')
+                  }
+                  onClick={() =>
+                    selectFromDirectory(supplier.id)
+                  }
+                >
+                  <span
+                    className="network-supplier-status-dot"
+                    style={{
+                      background: nodeColorForRisk(
+                        Math.round(riskFor(supplier.id)),
+                      ),
+                    }}
+                  />
 
-                  const selected =
-                    supplier.id === selectedId;
+                  <span className="network-supplier-item-name">
+                    {supplier.label}
+                  </span>
 
-                  const disruptedNode =
-                    disrupted.has(supplier.id);
-
-                  return (
-                    <button
-                      key={supplier.id}
-                      type="button"
-                      className={
-                        'network-supplier-item' +
-                        (selected ? ' selected' : '') +
-                        (disruptedNode ? ' disrupted' : '')
-                      }
-                      onClick={() =>
-                        selectFromDirectory(
-                          supplier.id,
-                        )
-                      }
-                      aria-pressed={selected}
-                      title={'Select ' + supplier.label}
-                    >
-                      <span
-                        className="network-supplier-status-dot"
-                        style={{
-                          background:
-                            nodeColorForRisk(risk),
-                          boxShadow:
-                            '0 0 8px ' +
-                            nodeColorForRisk(risk),
-                        }}
-                      />
-
-                      <span className="network-supplier-item-name">
-                        {supplier.label}
-                      </span>
-
-                      <span
-                        className="network-supplier-item-risk"
-                        style={{
-                          color:
-                            nodeColorForRisk(risk),
-                        }}
-                      >
-                        {risk}
-                      </span>
-                    </button>
-                  );
-                })
-              ) : (
-                <div className="network-no-dependencies">
-                  No suppliers available.
-                </div>
-              )}
+                  <span
+                    className="network-supplier-item-risk"
+                    style={{
+                      color: nodeColorForRisk(
+                        Math.round(riskFor(supplier.id)),
+                      ),
+                    }}
+                  >
+                    {Math.round(riskFor(supplier.id))}
+                  </span>
+                </button>
+              ))}
             </div>
-
           </section>
 
         </aside>
