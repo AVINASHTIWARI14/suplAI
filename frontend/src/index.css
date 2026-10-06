@@ -12627,8 +12627,13 @@ body,
   pointer-events: none !important;
   background: rgba(6, 19, 38, 0.20) !important;
   opacity: var(--story-overlay-opacity) !important;
-  backdrop-filter: blur(10px) saturate(0.68) brightness(0.66) !important;
-  -webkit-backdrop-filter: blur(10px) saturate(0.68) brightness(0.66) !important;
+  /*
+   * Keep this overlay as a light dimmer only.
+   * backdrop-filter was intermittently blurring the Leaflet SVG route layer
+   * on dashboard refreshes, making some connections appear to disappear.
+   */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   transition: opacity 160ms ease-out !important;
 }
 
