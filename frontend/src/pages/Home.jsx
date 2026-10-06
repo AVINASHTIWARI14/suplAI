@@ -6,6 +6,7 @@ import freightTruckHome from '../assets/freight-truck-home.png';
 import cargoPlaneHome from '../assets/cargo-plane-home.png';
 
 import { useAuth } from '../context/AuthContext.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 import { supabase } from '../lib/supabase.js';
 
 const backgroundSlides = [
@@ -76,6 +77,8 @@ const Home = () => {
     register,
     isAuthenticated,
   } = useAuth();
+
+  const { translate: t } = useLanguage();
 
   // Keep a stable reference so AuthContext rerenders do not
   // restart the OAuth callback effect while login is completing.
@@ -408,9 +411,9 @@ const Home = () => {
                     className="home-feature-card"
                     key={`${set}-${card.title}`}
                   >
-                    <h2>{card.title}</h2>
+                    <h2>{t(card.title)}</h2>
 
-                    <span>{card.points}</span>
+                    <span>{t(card.points)}</span>
                   </article>
                 ))}
               </div>
@@ -810,125 +813,68 @@ const Home = () => {
 
               <article className="home-how-to-step">
                 <div>
-                  <h4>Dashboard</h4>
+                  <h4>{t('Dashboard')}</h4>
+                  <p>{t('Select your company and begin from the Dashboard. Use the overview to understand the current supplier landscape, overall risk, active disruptions and the areas that need attention first. Treat this as your starting point before drilling into an individual supplier or scenario.')}</p>
+                </div>
+              </article>
+
+              <article className="home-how-to-step">
+                <div>
+                  <h4>{t('Suppliers')}</h4>
                   <p>
-                    Select your company and begin from
-                    the Dashboard. Use the overview to
-                    understand the current supplier
-                    landscape, overall risk, active
-                    disruptions and the areas that need
-                    attention first. Treat this as your
-                    starting point before drilling into an
-                    individual supplier or scenario.
+                    {t('Open')} <strong>{t('Suppliers')}</strong> {t('to review individual suppliers and their risk scores. Check the risk level and the factors contributing to it, then focus on suppliers with higher exposure or operational importance. You can also import or manage supplier records where supported.')}
                   </p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
-                  <h4>Suppliers</h4>
+                  <h4>{t('Network')}</h4>
                   <p>
-                    Open <strong>Suppliers</strong> to
-                    review individual suppliers and their
-                    risk scores. Check the risk level and
-                    the factors contributing to it, then
-                    focus on suppliers with higher
-                    exposure or operational importance.
-                    You can also import or manage supplier
-                    records where supported.
+                    {t('Open')} <strong>{t('Network')}</strong> {t('to see how suppliers and dependencies connect. Trace relationships across tiers, look for critical nodes and identify where one supplier can influence other parts of the network. This gives context to a supplier risk score.')}
                   </p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
-                  <h4>Network</h4>
+                  <h4>{t('What-If Simulation')}</h4>
+                  <p>{t('Choose a supplier and run a disruption scenario. SuplAI models how the disruption can propagate through connected dependencies and shows the affected part of the network and the resulting change in network risk. Use different scenarios to understand where a failure could create cascading impact.')}</p>
+                </div>
+              </article>
+
+              <article className="home-how-to-step">
+                <div>
+                  <h4>{t('Alternatives')}</h4>
                   <p>
-                    Open <strong>Network</strong> to see
-                    how suppliers and dependencies
-                    connect. Trace relationships across
-                    tiers, look for critical nodes and
-                    identify where one supplier can
-                    influence other parts of the network.
-                    This gives context to a supplier risk
-                    score.
+                    {t('When a supplier looks vulnerable, open')} <strong>{t('Alternatives')}</strong> {t('to review potential replacement options. Compare available supplier information and risk characteristics so you can evaluate which options may help maintain supply continuity.')}
                   </p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
-                  <h4>What-If Simulation</h4>
+                  <h4>{t('Disruptions')}</h4>
                   <p>
-                    Choose a supplier and run a disruption
-                    scenario. SuplAI models how the
-                    disruption can propagate through
-                    connected dependencies and shows the
-                    affected part of the network and the
-                    resulting change in network risk. Use
-                    different scenarios to understand where
-                    a failure could create cascading impact.
+                    {t('Use')} <strong>{t('Disruptions')}</strong> {t('to review events that may affect suppliers or logistics, including relevant weather, market, news or operational signals available to the platform. Open an event to understand its relevance and connect the signal back to affected suppliers.')}
                   </p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
-                  <h4>Alternatives</h4>
+                  <h4>{t('Alerts')}</h4>
                   <p>
-                    When a supplier looks vulnerable,
-                    open <strong>Alternatives</strong> to
-                    review potential replacement options.
-                    Compare available supplier information
-                    and risk characteristics so you can
-                    evaluate which options may help
-                    maintain supply continuity.
+                    {t('Check')} <strong>{t('Alerts')}</strong> {t('for important risk changes and signals. Use alerts as a prioritization layer: investigate the supplier or disruption behind an alert, then move into Network, Simulation or Alternatives when deeper analysis is required.')}
                   </p>
                 </div>
               </article>
 
               <article className="home-how-to-step">
                 <div>
-                  <h4>Disruptions</h4>
+                  <h4>{t('Settings & Data')}</h4>
                   <p>
-                    Use <strong>Disruptions</strong> to
-                    review events that may affect suppliers
-                    or logistics, including relevant
-                    weather, market, news or operational
-                    signals available to the platform.
-                    Open an event to understand its
-                    relevance and connect the signal back
-                    to affected suppliers.
-                  </p>
-                </div>
-              </article>
-
-              <article className="home-how-to-step">
-                <div>
-                  <h4>Alerts</h4>
-                  <p>
-                    Check <strong>Alerts</strong> for
-                    important risk changes and signals. Use
-                    alerts as a prioritization layer:
-                    investigate the supplier or disruption
-                    behind an alert, then move into
-                    Network, Simulation or Alternatives
-                    when deeper analysis is required.
-                  </p>
-                </div>
-              </article>
-
-              <article className="home-how-to-step">
-                <div>
-                  <h4>Settings &amp; Data</h4>
-                  <p>
-                    Use <strong>Settings</strong> for
-                    available account and workspace
-                    controls. Keep supplier information
-                    organized and up to date so the risk,
-                    network and simulation views remain
-                    useful. Export available reports or
-                    data when you need to share analysis.
+                    {t('Use')} <strong>{t('Settings')}</strong> {t('for available account and workspace controls. Keep supplier information organized and up to date so the risk, network and simulation views remain useful. Export available reports or data when you need to share analysis.')}
                   </p>
                 </div>
               </article>
