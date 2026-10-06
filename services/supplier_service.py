@@ -233,9 +233,9 @@ def get_supplier_risk(company_id: str) -> List[SupplierRisk]:
         if not supplier_ids:
             return []
 
-        rows = response_data(
-            _execute_with_retry(
-                lambda: supabase.table("suppliers")
+        def _read_supplier_rows():
+            return response_data(
+                supabase.table("suppliers")
                 .select(
                     "id, name, risk_score, location, country, "
                     "latitude, longitude"
@@ -243,8 +243,28 @@ def get_supplier_risk(company_id: str) -> List[SupplierRisk]:
                 .in_("id", supplier_ids)
                 .order("risk_score", desc=True)
                 .execute()
+            ) or []
+
+        rows = []
+        last_rows = []
+        for attempt in range(3):
+            last_rows = _execute_with_retry(_read_supplier_rows, attempts=1)
+            rows = last_rows
+
+            # A partial PostgREST read is just as bad as a failed read for
+            # the dashboard: it produces a small map that becomes correct
+            # only after revisiting the page. Retry when the DB returned fewer
+            # suppliers than the dependency table requested.
+            if len(rows) >= len(supplier_ids):
+                break
+
+            if attempt < 2:
+                time.sleep(0.35 * (attempt + 1))
+
+        if len(rows) < len(supplier_ids):
+            raise RuntimeError(
+                f"Partial supplier read: expected {len(supplier_ids)}, got {len(rows)}"
             )
-        ) or []
 
         dep_details = response_data(
             _execute_with_retry(
