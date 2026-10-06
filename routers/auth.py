@@ -7,6 +7,7 @@ from core.models import (
     RefreshRequest,
     RegisterRequest,
     TokenResponse,
+    UserProfileUpdate,
     UserPublic,
 )
 from core.rate_limit import limiter
@@ -15,6 +16,7 @@ from services.auth_service import (
     login_user,
     refresh_access_token,
     register_user,
+    update_user_profile,
 )
 
 router = APIRouter()
@@ -63,3 +65,17 @@ def refresh(body: RefreshRequest, request: Request) -> TokenResponse:
 @router.get("/me", response_model=UserPublic)
 def me(user: dict = Depends(get_current_user)) -> UserPublic:
     return UserPublic(**user)
+
+
+@router.put("/me", response_model=UserPublic)
+def update_me(
+    body: UserProfileUpdate,
+    user: dict = Depends(get_current_user),
+) -> UserPublic:
+    try:
+        updated = update_user_profile(user["id"], body.full_name)
+        return UserPublic(**updated)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
