@@ -342,31 +342,6 @@ const NetworkPage = ({
     [],
   );
 
-  const removeSelectedNode = useCallback(() => {
-    if (
-      !selectedNode ||
-      selectedNode.type !== 'supplier'
-    ) {
-      return;
-    }
-
-    const id = selectedNode.id;
-
-    setRemovedIds((previous) => {
-      const next = new Set(previous);
-      next.add(id);
-      return next;
-    });
-
-    setDisrupted((previous) => {
-      const next = new Set(previous);
-      next.delete(id);
-      return next;
-    });
-
-    setSelectedId(null);
-  }, [selectedNode]);
-
   /* =========================================================
      RUN SIMULATION
      ========================================================= */
@@ -432,6 +407,31 @@ const NetworkPage = ({
             selectedId,
         )
       : null;
+
+  const removeSelectedNode = useCallback(() => {
+    if (
+      !selectedNode ||
+      selectedNode.type !== 'supplier'
+    ) {
+      return;
+    }
+
+    const id = selectedNode.id;
+
+    setRemovedIds((previous) => {
+      const next = new Set(previous);
+      next.add(id);
+      return next;
+    });
+
+    setDisrupted((previous) => {
+      const next = new Set(previous);
+      next.delete(id);
+      return next;
+    });
+
+    setSelectedId(null);
+  }, [selectedNode]);
 
   /* =========================================================
      SELECTED NODE DEPENDENCIES
