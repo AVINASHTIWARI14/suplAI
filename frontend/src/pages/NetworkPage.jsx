@@ -151,7 +151,7 @@ const NetworkPage = ({
       graph?.nodes ?? [];
 
     return raw
-      .filter((n) => !removedIds.has(n.id))
+      .filter((n) => !removedIds.has(String(n.id)))
       .map((n) => ({
         id: n.id,
 
@@ -332,7 +332,7 @@ const NetworkPage = ({
             ) {
               next.delete(id);
             } else {
-              next.add(id);
+              next.add(String(id));
             }
 
             return next;
