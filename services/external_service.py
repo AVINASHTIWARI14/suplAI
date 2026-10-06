@@ -156,6 +156,20 @@ def get_news_feed(query: str = "supply chain disruption OR port strike OR factor
                     keywords=item.get("keywords") or [],
                 )
             )
+
+        # NewsData can return a successful response with zero results
+        # (for example because the free tier has no matching stories).
+        # Keep the Signals panel populated instead of showing an empty feed.
+        if not headlines:
+            return NewsFeed(
+                query=query,
+                headlines=[
+                    NewsHeadline(title=t, source=s, keywords=k)
+                    for t, s, k in _FALLBACK_HEADLINES
+                ],
+                source="fallback",
+            )
+
         return NewsFeed(query=query, headlines=headlines, source="newsdata.io")
     except Exception:
         return NewsFeed(
