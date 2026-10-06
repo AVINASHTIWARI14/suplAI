@@ -3348,6 +3348,45 @@ button:not(.modal-close):not(.drawer-close):not(.link-btn):not(.header-login-but
   background: rgba(34, 126, 76, .94) !important;
 }
 
+/* High-specificity Leaflet selectors so the card background always follows
+   the supplier node color, even when Leaflet's own tooltip rules load later. */
+.leaflet-tooltip.suplai-map-tooltip-risk-high {
+  background: #dc3b3b !important;
+  border-color: #ff7a7a !important;
+  color: #ffffff !important;
+}
+
+.leaflet-tooltip.suplai-map-tooltip-risk-high .leaflet-tooltip-tip {
+  background: #dc3b3b !important;
+  border-right-color: #dc3b3b !important;
+  border-bottom-color: #dc3b3b !important;
+}
+
+.leaflet-tooltip.suplai-map-tooltip-risk-medium {
+  background: #e1a51f !important;
+  border-color: #ffd56a !important;
+  color: #ffffff !important;
+}
+
+.leaflet-tooltip.suplai-map-tooltip-risk-medium .leaflet-tooltip-tip {
+  background: #e1a51f !important;
+  border-right-color: #e1a51f !important;
+  border-bottom-color: #e1a51f !important;
+}
+
+.leaflet-tooltip.suplai-map-tooltip-risk-low {
+  background: #2f9e5f !important;
+  border-color: #83e6ad !important;
+  color: #ffffff !important;
+}
+
+.leaflet-tooltip.suplai-map-tooltip-risk-low .leaflet-tooltip-tip {
+  background: #2f9e5f !important;
+  border-right-color: #2f9e5f !important;
+  border-bottom-color: #2f9e5f !important;
+}
+
+
 
 
 .map-tooltip-title {
