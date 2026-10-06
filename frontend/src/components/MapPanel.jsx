@@ -332,7 +332,9 @@ const MapPanel = ({
                 className={`suplai-map-tooltip ${
                   (supplier.risk_score ?? 0) >= 60
                     ? 'suplai-map-tooltip-risk-high'
-                    : 'suplai-map-tooltip-risk-safe'
+                    : (supplier.risk_score ?? 0) >= 30
+                      ? 'suplai-map-tooltip-risk-medium'
+                      : 'suplai-map-tooltip-risk-low'
                 }`}
               >
                 <strong>{supplier.name}</strong>
