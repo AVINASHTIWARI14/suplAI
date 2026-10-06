@@ -513,6 +513,30 @@ const detailSize =
     );
 
   /* =========================================================
+     FOCUS SELECTED NODE
+     ========================================================= */
+
+  useEffect(() => {
+    if (!fgRef.current || !selectedId) return;
+
+    const selectedNode = graphData.nodes.find(
+      (node) => node.id === selectedId,
+    );
+
+    if (
+      selectedNode &&
+      Number.isFinite(selectedNode.x) &&
+      Number.isFinite(selectedNode.y)
+    ) {
+      fgRef.current.centerAt(
+        selectedNode.x,
+        selectedNode.y,
+        450,
+      );
+    }
+  }, [selectedId, graphData]);
+
+  /* =========================================================
      LINK COLOR
      ========================================================= */
 
