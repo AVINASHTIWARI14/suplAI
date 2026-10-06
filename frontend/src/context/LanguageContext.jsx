@@ -975,8 +975,8 @@ export function LanguageProvider({ children }) {
   };
 
   const [language, setLanguageState] = useState(getInitialLanguage);
-  const textOriginals = useRef(new WeakMap());
-  const attributeOriginals = useRef(new WeakMap());
+  const textOriginals = useRef(new Map());
+  const attributeOriginals = useRef(new Map());
   const applying = useRef(false);
 
   const translate = useCallback(
@@ -997,6 +997,24 @@ export function LanguageProvider({ children }) {
     },
     [language],
   );
+
+  const restoreOriginals = useCallback(() => {
+    textOriginals.current.forEach((original, node) => {
+      if (node && node.nodeValue !== original) {
+        node.nodeValue = original;
+      }
+    });
+
+    attributeOriginals.current.forEach((attrs, element) => {
+      if (!element) return;
+
+      Object.entries(attrs).forEach(([attr, original]) => {
+        if (element.getAttribute(attr) !== original) {
+          element.setAttribute(attr, original);
+        }
+      });
+    });
+  }, []);
 
   const applyLanguage = useCallback(() => {
     if (typeof document === 'undefined' || applying.current) return;
@@ -1054,13 +1072,14 @@ export function LanguageProvider({ children }) {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.body.dataset.suplaiLanguage = language;
 
+    restoreOriginals();
     applyLanguage();
 
     const observer = new MutationObserver(() => applyLanguage());
     observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 
     return () => observer.disconnect();
-  }, [language, applyLanguage]);
+  }, [language, applyLanguage, restoreOriginals]);
 
   const setLanguage = (nextLanguage) => {
     if (LANGUAGES.some((item) => item.code === nextLanguage)) setLanguageState(nextLanguage);
