@@ -9012,7 +9012,7 @@ input[type="range"]:active::-moz-range-thumb {
 
 .network-supplier-directory-card {
   order: -1 !important;
-  position: absolute !important;
+  position: fixed !important;
   left: 28px !important;
   right: auto !important;
   top: 50% !important;
@@ -9220,6 +9220,17 @@ input[type="range"]:active::-moz-range-thumb {
 
   .network-page {
     min-height: calc(100vh - 60px) !important;
+  }
+
+  .network-supplier-directory-card {
+    position: fixed !important;
+    left: 15px !important;
+    right: 15px !important;
+    top: auto !important;
+    bottom: 15px !important;
+    width: auto !important;
+    height: 300px !important;
+    transform: none !important;
   }
 
   .network-page-header {
