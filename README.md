@@ -17,6 +17,38 @@ SuplAI is an AI-powered **supply-chain risk monitoring platform** that helps bus
 - **External Signals** — Weather, FX, geocoding, and news integrations.
 - **Demo Mode** — Works with synthetic data for safe demonstrations.
 
+## Screenshots
+
+### Landing Page
+![SupplAI Landing Page](./screenshots/home.jpg)
+
+### How to Use
+![How to Use](./screenshots/how-to-use.jpg)
+
+### Global Supply Network
+![Global Supply Network](./screenshots/network-map.jpg)
+
+### Suppliers
+![Supplier Risk Management](./screenshots/suppliers.jpg)
+
+### What-If Simulation
+![What-If Simulation](./screenshots/simulation.jpg)
+
+### Alternatives
+![Alternative Suppliers](./screenshots/alternatives.jpg)
+
+### Disruptions
+![Disruptions](./screenshots/disruptions.jpg)
+
+### Alerts
+![Alerts](./screenshots/alerts.jpg)
+
+### Settings
+![Settings & Integration](./screenshots/settings.jpg)
+
+### Database
+![Database Schema](./screenshots/database.jpg)
+
 ## Tech Stack
 
 **Frontend:** React, Vite, Leaflet, Recharts, React Force Graph  
