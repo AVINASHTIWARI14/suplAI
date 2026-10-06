@@ -166,8 +166,8 @@ const ForceGraph = ({
        * with the original clustered layout.
        */
       charge
-        .strength(-260)
-        .distanceMax(500);
+        .strength(-420)
+        .distanceMax(700);
     }
 
     /* -------------------------------------------------------
@@ -183,8 +183,8 @@ const ForceGraph = ({
        * breathing room.
        */
       link
-        .distance(145)
-        .strength(0.30);
+        .distance(190)
+        .strength(0.22);
     }
 
     /* -------------------------------------------------------
@@ -199,7 +199,7 @@ const ForceGraph = ({
        * Keep the network generally centered,
        * but don't pull it tightly together.
        */
-      center.strength(0.035);
+      center.strength(0.02);
     }
 
     /*
@@ -435,14 +435,14 @@ const ForceGraph = ({
 
        const fontSize =
   Math.max(
-    13 / globalScale,
-    4.5,
+    11.5 / globalScale,
+    4.25,
   );
 
 const detailSize =
   Math.max(
-    10 / globalScale,
-    3.5,
+    8.5 / globalScale,
+    3.2,
   );
 
         ctx.textAlign =
@@ -677,7 +677,7 @@ const detailSize =
         }
 
         linkDirectionalArrowLength={
-          5
+          4
         }
 
         linkDirectionalArrowRelPos={
@@ -735,11 +735,11 @@ const detailSize =
            STABLE SIMULATION
            ===================================================== */
 
-        cooldownTicks={100}
+        cooldownTicks={180}
 
-        d3VelocityDecay={0.6}
+        d3VelocityDecay={0.68}
 
-        warmupTicks={30}
+        warmupTicks={55}
 
         height={height}
       />
