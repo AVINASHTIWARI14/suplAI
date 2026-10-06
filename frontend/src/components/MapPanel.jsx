@@ -299,12 +299,13 @@ const MapPanel = ({
           {hub && (
             <Marker
               position={[hub.lat, hub.lng]}
-              icon={userIcon('#0ea5e9', 'large')}
+              icon={userIcon('#1688ff', 'large')}
+              zIndexOffset={10000}
             >
               <Tooltip
                 direction="top"
                 permanent
-                className="suplai-map-tooltip"
+                className="suplai-map-tooltip suplai-map-tooltip-hq"
               >
                 <strong>Company HQ</strong>
               </Tooltip>
