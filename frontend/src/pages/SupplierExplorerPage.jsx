@@ -53,21 +53,26 @@ const SupplierExplorerPage = ({ companyId }) => {
       }))
       .filter((supplier) => {
         const name = (supplier.name || '').toLowerCase();
-        const location = `${supplier.country || ''} ${supplier.location || ''}`.toLowerCase();
+        const location = `${supplier.country || ''} ${
+          supplier.location || ''
+        }`.toLowerCase();
         const risk = Number(supplier.risk_score ?? 0);
         const cost = Number(supplier.cost_index ?? 50);
         const lead = Number(supplier.lead_time_days ?? 30);
 
         return (
           name.includes(query) &&
-          (country === 'All' || location.includes(country.toLowerCase())) &&
+          (country === 'All' ||
+            location.includes(country.toLowerCase())) &&
           risk <= riskMax &&
           cost <= costMax &&
           lead <= leadMax
         );
       })
       .sort(
-        (a, b) => Number(b.composite_score ?? 0) - Number(a.composite_score ?? 0)
+        (a, b) =>
+          Number(b.composite_score ?? 0) -
+          Number(a.composite_score ?? 0),
       );
   }, [suppliers, search, country, riskMax, costMax, leadMax]);
 
@@ -82,12 +87,43 @@ const SupplierExplorerPage = ({ companyId }) => {
 
   const makeTicks = (min, max, count = 10) =>
     Array.from({ length: count + 1 }, (_, index) =>
-      Math.round(min + ((max - min) / count) * index)
+      Math.round(min + ((max - min) / count) * index),
     );
 
   const riskTicks = makeTicks(0, 100);
   const costTicks = makeTicks(0, 100);
   const leadTicks = makeTicks(1, 90);
+
+  const supplierInteractionStyles = `
+    /* Supplier cards — extremely subtle hover only */
+    .supplier-explorer-page .supplier-card {
+      transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease !important;
+    }
+
+    .supplier-explorer-page .supplier-card:hover {
+      transform: scale(1.012) !important;
+      filter: none !important;
+      opacity: 1 !important;
+      z-index: 10 !important;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22) !important;
+    }
+
+    /* Never change the other cards when one card is hovered */
+    .supplier-explorer-page
+      .supplier-grid:has(.supplier-card:hover)
+      .supplier-card:not(:hover) {
+      transform: none !important;
+      filter: none !important;
+      opacity: 1 !important;
+    }
+
+    .supplier-explorer-page .supplier-card:active {
+      transform: scale(1.005) !important;
+    }
+  `;
 
   if (loading) {
     return (
@@ -103,9 +139,12 @@ const SupplierExplorerPage = ({ companyId }) => {
 
   return (
     <div className="supplier-explorer-page">
+      <style>{supplierInteractionStyles}</style>
+
       <section className="supplier-explorer-toolbar">
         <div className="supplier-search-wrap">
           <span className="supplier-search-icon">⌕</span>
+
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
@@ -115,10 +154,14 @@ const SupplierExplorerPage = ({ companyId }) => {
         </div>
 
         <div
-          className={`supplier-country-wrap${countryOpen ? ' is-open' : ''}`}
+          className={`supplier-country-wrap${
+            countryOpen ? ' is-open' : ''
+          }`}
           ref={countryDropdownRef}
         >
-          <label htmlFor="supplier-country-button">Country</label>
+          <label htmlFor="supplier-country-button">
+            Country
+          </label>
 
           <button
             id="supplier-country-button"
@@ -129,11 +172,18 @@ const SupplierExplorerPage = ({ companyId }) => {
             onClick={() => setCountryOpen((open) => !open)}
           >
             <span>{country}</span>
-            <span className="supplier-country-arrow" aria-hidden="true">⌄</span>
+
+            <span
+              className="supplier-country-chevron-v2"
+              aria-hidden="true"
+            />
           </button>
 
           {countryOpen && (
-            <div className="supplier-country-options" role="listbox">
+            <div
+              className="supplier-country-options"
+              role="listbox"
+            >
               {countries.map((item) => (
                 <button
                   key={item}
@@ -155,7 +205,11 @@ const SupplierExplorerPage = ({ companyId }) => {
           )}
         </div>
 
-        <button type="button" className="supplier-reset-button" onClick={resetFilters}>
+        <button
+          type="button"
+          className="supplier-reset-button"
+          onClick={resetFilters}
+        >
           Reset
         </button>
       </section>
@@ -172,15 +226,21 @@ const SupplierExplorerPage = ({ companyId }) => {
               '--slider-percent': `${riskMax}%`,
             }}
           >
-            <label htmlFor="supplier-risk-range">Risk Score</label>
+            <label htmlFor="supplier-risk-range">
+              Risk Score
+            </label>
+
             <div className="supplier-range-slider">
               <div
                 className="supplier-range-track"
-                style={{ '--slider-percent': `${riskMax}%` }}
+                style={{
+                  '--slider-percent': `${riskMax}%`,
+                }}
                 aria-hidden="true"
               >
                 <span className="supplier-range-track-fill" />
               </div>
+
               <input
                 id="supplier-risk-range"
                 type="range"
@@ -188,13 +248,21 @@ const SupplierExplorerPage = ({ companyId }) => {
                 max="100"
                 value={riskMax}
                 list="risk-range-list"
-                onChange={(event) => setRiskMax(Number(event.target.value))}
+                onChange={(event) =>
+                  setRiskMax(Number(event.target.value))
+                }
               />
             </div>
-            <output htmlFor="supplier-risk-range">{riskMax}</output>
+
+            <output htmlFor="supplier-risk-range">
+              {riskMax}
+            </output>
+
             <datalist id="risk-range-list">
               {riskTicks.map((value, index) => (
-                <option key={index} value={value}>{value}</option>
+                <option key={index} value={value}>
+                  {value}
+                </option>
               ))}
             </datalist>
           </div>
@@ -209,15 +277,21 @@ const SupplierExplorerPage = ({ companyId }) => {
               '--slider-percent': `${costMax}%`,
             }}
           >
-            <label htmlFor="supplier-cost-range">Cost Index</label>
+            <label htmlFor="supplier-cost-range">
+              Cost Index
+            </label>
+
             <div className="supplier-range-slider">
               <div
                 className="supplier-range-track"
-                style={{ '--slider-percent': `${costMax}%` }}
+                style={{
+                  '--slider-percent': `${costMax}%`,
+                }}
                 aria-hidden="true"
               >
                 <span className="supplier-range-track-fill" />
               </div>
+
               <input
                 id="supplier-cost-range"
                 type="range"
@@ -225,13 +299,21 @@ const SupplierExplorerPage = ({ companyId }) => {
                 max="100"
                 value={costMax}
                 list="cost-range-list"
-                onChange={(event) => setCostMax(Number(event.target.value))}
+                onChange={(event) =>
+                  setCostMax(Number(event.target.value))
+                }
               />
             </div>
-            <output htmlFor="supplier-cost-range">{costMax}</output>
+
+            <output htmlFor="supplier-cost-range">
+              {costMax}
+            </output>
+
             <datalist id="cost-range-list">
               {costTicks.map((value, index) => (
-                <option key={index} value={value}>{value}</option>
+                <option key={index} value={value}>
+                  {value}
+                </option>
               ))}
             </datalist>
           </div>
@@ -243,18 +325,28 @@ const SupplierExplorerPage = ({ companyId }) => {
               '--val': leadMax,
               '--max': 90,
               '--n': 10,
-              '--slider-percent': `${((leadMax - 1) / 89) * 100}%`,
+              '--slider-percent': `${
+                ((leadMax - 1) / 89) * 100
+              }%`,
             }}
           >
-            <label htmlFor="supplier-lead-range">Lead Time</label>
+            <label htmlFor="supplier-lead-range">
+              Lead Time
+            </label>
+
             <div className="supplier-range-slider">
               <div
                 className="supplier-range-track"
-                style={{ '--slider-percent': `${((leadMax - 1) / 89) * 100}%` }}
+                style={{
+                  '--slider-percent': `${
+                    ((leadMax - 1) / 89) * 100
+                  }%`,
+                }}
                 aria-hidden="true"
               >
                 <span className="supplier-range-track-fill" />
               </div>
+
               <input
                 id="supplier-lead-range"
                 type="range"
@@ -262,13 +354,21 @@ const SupplierExplorerPage = ({ companyId }) => {
                 max="90"
                 value={leadMax}
                 list="lead-range-list"
-                onChange={(event) => setLeadMax(Number(event.target.value))}
+                onChange={(event) =>
+                  setLeadMax(Number(event.target.value))
+                }
               />
             </div>
-            <output htmlFor="supplier-lead-range">{leadMax} days</output>
+
+            <output htmlFor="supplier-lead-range">
+              {leadMax} days
+            </output>
+
             <datalist id="lead-range-list">
               {leadTicks.map((value, index) => (
-                <option key={index} value={value}>{value}</option>
+                <option key={index} value={value}>
+                  {value}
+                </option>
               ))}
             </datalist>
           </div>
@@ -279,7 +379,10 @@ const SupplierExplorerPage = ({ companyId }) => {
             <div className="supplier-grid">
               {filtered.map((supplier, index) => (
                 <SupplierCard
-                  key={supplier.id ?? `${supplier.name}-${index}`}
+                  key={
+                    supplier.id ??
+                    `${supplier.name}-${index}`
+                  }
                   supplier={supplier}
                   rank={index + 1}
                 />
@@ -287,8 +390,13 @@ const SupplierExplorerPage = ({ companyId }) => {
             </div>
           ) : (
             <div className="supplier-state-card">
-              <strong>No suppliers match your filters.</strong>
-              <span>Try widening the risk, cost, or lead-time limits.</span>
+              <strong>
+                No suppliers match your filters.
+              </strong>
+
+              <span>
+                Try widening the risk, cost, or lead-time limits.
+              </span>
             </div>
           )}
         </div>
