@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
-import { LanguageProvider, useLanguage } from './context/LanguageContext.jsx';
+import { LanguageProvider } from './context/LanguageContext.jsx';
 
 import Home from './pages/Home.jsx';
 
@@ -33,7 +33,6 @@ import { checkBackendHealth } from './api.js';
 function AppShell() {
 
   const { user, logout } = useAuth();
-  const { translate } = useLanguage();
 
   const [companies, setCompanies] = useState(companiesFallback);
 
