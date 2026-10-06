@@ -16322,3 +16322,27 @@ html[dir="rtl"] .settings-language-check {
 .main-content:has(.settings-page-title) .settings-language-option.is-selected .settings-language-check {
   color: #183153 !important;
 }
+
+
+/* Native language picker — keep the chosen option yellow where the browser allows option styling */
+.main-content:has(.settings-page-title) .settings-language-select option:checked,
+.main-content:has(.settings-page-title) .settings-language-select option:hover {
+  background: #F4C400 !important;
+  color: #183153 !important;
+}
+
+/* Settings language cards — selected language is solid yellow */
+.main-content:has(.settings-page-title) .settings-language-option[aria-pressed="true"],
+.main-content:has(.settings-page-title) .settings-language-option[aria-pressed="true"]:hover,
+.main-content:has(.settings-page-title) .settings-language-option.is-selected {
+  background: #F4C400 !important;
+  background-color: #F4C400 !important;
+  color: #183153 !important;
+  border-color: #F4C400 !important;
+}
+
+.main-content:has(.settings-page-title) .settings-language-option[aria-pressed="true"] .settings-language-info strong,
+.main-content:has(.settings-page-title) .settings-language-option[aria-pressed="true"] .settings-language-info small,
+.main-content:has(.settings-page-title) .settings-language-option[aria-pressed="true"] .settings-language-check {
+  color: #183153 !important;
+}
