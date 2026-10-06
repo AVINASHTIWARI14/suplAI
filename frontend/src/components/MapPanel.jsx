@@ -345,7 +345,7 @@ const MapPanel = ({
 
               {/* Bold dark route base */}
               <Polyline
-                positions={positions}
+                positions={route.positions}
                 pathOptions={{
                   color: '#071a31',
                   weight: 3.5,
@@ -358,7 +358,7 @@ const MapPanel = ({
 
               {/* White moving logistics flow */}
               <Polyline
-                positions={positions}
+                positions={route.positions}
                 pathOptions={{
                   color: '#ffffff',
                   weight: 2.2,
