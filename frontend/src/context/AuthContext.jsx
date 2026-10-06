@@ -11,6 +11,7 @@ import {
   googleLogin as apiGoogleLogin,
   login as apiLogin,
   register as apiRegister,
+  updateMe as apiUpdateMe,
 } from '../api/client.js';
 
 import {
@@ -119,6 +120,12 @@ export function AuthProvider({ children }) {
     return data.user;
   };
 
+  const updateProfile = async (fullName) => {
+    const data = await apiUpdateMe({ full_name: fullName });
+    setUser(data);
+    return data;
+  };
+
   const logout = () => clearSession();
 
   const value = useMemo(
@@ -130,6 +137,7 @@ export function AuthProvider({ children }) {
       login,
       loginWithGoogle,
       register,
+      updateProfile,
       logout,
 
       role: user?.role ?? null,
