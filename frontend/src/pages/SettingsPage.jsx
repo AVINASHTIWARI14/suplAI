@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   runNlpPipeline,
@@ -12,51 +12,18 @@ import { useLanguage } from '../context/LanguageContext.jsx';
 import SourceBadge from '../components/SourceBadge.jsx';
 
 const SettingsPage = ({ companyId, companyName }) => {
-  const { canEdit, user, updateProfile } = useAuth();
+  const { canEdit } = useAuth();
   const { language, setLanguage, languages } = useLanguage();
 
   const [nlpStatus, setNlpStatus] = useState('');
   const [riskStatus, setRiskStatus] = useState('');
   const [busy, setBusy] = useState(false);
 
-  const [profileName, setProfileName] = useState(user?.full_name || '');
-  const [profileStatus, setProfileStatus] = useState('');
-  const [profileBusy, setProfileBusy] = useState(false);
-
   // Geocode / "Locate" tool
   const [address, setAddress] = useState('');
   const [geo, setGeo] = useState(null);
   const [geoBusy, setGeoBusy] = useState(false);
   const [geoError, setGeoError] = useState('');
-
-  useEffect(() => {
-    setProfileName(user?.full_name || '');
-  }, [user?.full_name]);
-
-  const onSaveProfile = async (event) => {
-    event.preventDefault();
-
-    const nextName = profileName.trim();
-    if (!nextName) {
-      setProfileStatus('Profile update failed.');
-      return;
-    }
-
-    setProfileBusy(true);
-    setProfileStatus('');
-
-    try {
-      await updateProfile(nextName);
-      setProfileStatus('Profile updated successfully.');
-    } catch (err) {
-      setProfileStatus(
-        err.response?.data?.detail ||
-          'Profile update failed.',
-      );
-    } finally {
-      setProfileBusy(false);
-    }
-  };
 
   const onRunNlp = async () => {
     setBusy(true);
@@ -129,141 +96,66 @@ const SettingsPage = ({ companyId, companyName }) => {
         </p>
       </div>
 
-      {/* PROFILE + LANGUAGE */}
-      <div className="settings-preferences-grid">
-
-        <section className="card settings-profile-card">
-          <div className="settings-section-heading">
-            <div>
-              <h3 className="card-title">Profile Settings</h3>
-              <p className="muted settings-section-copy">
-                Edit your profile details.
-              </p>
-            </div>
-
-            <div className="settings-profile-avatar" aria-hidden="true">
-              {(user?.full_name || 'U').trim().charAt(0).toUpperCase()}
-            </div>
-          </div>
-
-          <form className="settings-profile-form" onSubmit={onSaveProfile}>
-            <label>
-              <span>Name</span>
-              <input
-                type="text"
-                value={profileName}
-                onChange={(event) => {
-                  setProfileName(event.target.value);
-                  setProfileStatus('');
-                }}
-                maxLength={120}
-                autoComplete="name"
-              />
-            </label>
-
-            <label>
-              <span>Email</span>
-              <input
-                type="email"
-                value={user?.email || ''}
-                disabled
-                readOnly
-              />
-            </label>
-
-            <div className="settings-profile-readonly-grid">
-              <div>
-                <span>Role</span>
-                <strong>{user?.role || 'viewer'}</strong>
-              </div>
-
-              <div>
-                <span>Company</span>
-                <strong>{companyName}</strong>
-              </div>
-            </div>
-
-            <p className="muted settings-profile-note">
-              Email and role are managed by the account system.
-            </p>
-
-            <button
-              type="submit"
-              className="btn-primary"
-              disabled={profileBusy || !profileName.trim()}
-            >
-              {profileBusy ? 'Saving…' : 'Save Profile'}
-            </button>
-
-            {profileStatus && (
-              <p className="status-ok settings-profile-status">
-                {profileStatus}
-              </p>
-            )}
-          </form>
-        </section>
-
-        <section className="card settings-language-card">
-          <div>
-            <h3 className="card-title">Language &amp; Region</h3>
-            <p className="muted settings-section-copy">
-              Choose the interface language for the entire SuplAI workspace.
-            </p>
-          </div>
-
-          <label className="settings-language-select-label">
-            <span>Language</span>
-
-            <select
-              value={language}
-              onChange={(event) => setLanguage(event.target.value)}
-              className="settings-language-select"
-            >
-              {languages.map((item) => (
-                <option key={item.code} value={item.code}>
-                  {item.flag} {item.label} — {item.country}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <div className="settings-language-grid">
-            {languages.map((item) => (
-              <button
-                key={item.code}
-                type="button"
-                className={
-                  `settings-language-option${
-                    language === item.code ? ' is-selected' : ''
-                  }`
-                }
-                onClick={() => setLanguage(item.code)}
-                aria-pressed={language === item.code}
-              >
-                <span className="settings-language-flag" aria-hidden="true">
-                  {item.flag}
-                </span>
-
-                <span className="settings-language-info">
-                  <strong>{item.label}</strong>
-                  <small>{item.country}</small>
-                </span>
-
-                {language === item.code && (
-                  <span className="settings-language-check" aria-hidden="true">
-                    ✓
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-
-          <p className="settings-language-note">
-            Changes apply instantly across the interface.
+      {/* LANGUAGE & REGION */}
+      <section className="card settings-language-card">
+        <div>
+          <h3 className="card-title">Language &amp; Region</h3>
+          <p className="muted settings-section-copy">
+            Choose the interface language for the entire SuplAI workspace.
           </p>
-        </section>
+        </div>
 
-      </div>
+        <label className="settings-language-select-label">
+          <span>Language</span>
+
+          <select
+            value={language}
+            onChange={(event) => setLanguage(event.target.value)}
+            className="settings-language-select"
+          >
+            {languages.map((item) => (
+              <option key={item.code} value={item.code}>
+                {item.flag} {item.label} — {item.country}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <div className="settings-language-grid">
+          {languages.map((item) => (
+            <button
+              key={item.code}
+              type="button"
+              className={
+                `settings-language-option${
+                  language === item.code ? ' is-selected' : ''
+                }`
+              }
+              onClick={() => setLanguage(item.code)}
+              aria-pressed={language === item.code}
+            >
+              <span className="settings-language-flag" aria-hidden="true">
+                {item.flag}
+              </span>
+
+              <span className="settings-language-info">
+                <strong>{item.label}</strong>
+                <small>{item.country}</small>
+              </span>
+
+              {language === item.code && (
+                <span className="settings-language-check" aria-hidden="true">
+                  ✓
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <p className="settings-language-note">
+          Changes apply instantly across the interface.
+        </p>
+      </section>
 
       {/* READ ONLY NOTICE */}
       {!canEdit && (
