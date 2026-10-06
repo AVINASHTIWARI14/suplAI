@@ -1,5 +1,6 @@
 from typing import List, Optional
 from uuid import uuid4
+import time
 
 from core.database import supabase
 from core.models import SupplierAlternative, SupplierCreate, SupplierRisk, SupplierUpdate
@@ -13,6 +14,21 @@ from services.demo_data import (
     suppliers_for_company,
 )
 
+
+
+def _execute_with_retry(operation, attempts: int = 3):
+    """Retry transient Supabase reads before falling back to demo data."""
+    last_error = None
+
+    for attempt in range(attempts):
+        try:
+            return operation()
+        except Exception as exc:
+            last_error = exc
+            if attempt < attempts - 1:
+                time.sleep(0.35 * (attempt + 1))
+
+    raise last_error
 
 def _demo_supplier_to_risk(row: dict) -> SupplierRisk:
     return SupplierRisk(
@@ -206,28 +222,37 @@ def get_supplier_risk(company_id: str) -> List[SupplierRisk]:
 
     try:
         dep_rows = response_data(
-            supabase.table("dependencies")
-            .select("supplier_id")
-            .eq("company_id", company_id)
-            .execute()
+            _execute_with_retry(
+                lambda: supabase.table("dependencies")
+                .select("supplier_id")
+                .eq("company_id", company_id)
+                .execute()
+            )
         ) or []
         supplier_ids = list({row.get("supplier_id") for row in dep_rows if row.get("supplier_id")})
         if not supplier_ids:
             return []
 
         rows = response_data(
-            supabase.table("suppliers")
-            .select("id, name, risk_score, location, country")
-            .in_("id", supplier_ids)
-            .order("risk_score", desc=True)
-            .execute()
+            _execute_with_retry(
+                lambda: supabase.table("suppliers")
+                .select(
+                    "id, name, risk_score, location, country, "
+                    "latitude, longitude"
+                )
+                .in_("id", supplier_ids)
+                .order("risk_score", desc=True)
+                .execute()
+            )
         ) or []
 
         dep_details = response_data(
-            supabase.table("dependencies")
-            .select("supplier_id, lead_time_days")
-            .eq("company_id", company_id)
-            .execute()
+            _execute_with_retry(
+                lambda: supabase.table("dependencies")
+                .select("supplier_id, lead_time_days")
+                .eq("company_id", company_id)
+                .execute()
+            )
         ) or []
         lead_map = {d["supplier_id"]: d.get("lead_time_days") for d in dep_details}
 
@@ -239,6 +264,8 @@ def get_supplier_risk(company_id: str) -> List[SupplierRisk]:
                 location=row.get("location"),
                 country=row.get("country"),
                 lead_time_days=lead_map.get(row["id"]),
+                latitude=row.get("latitude"),
+                longitude=row.get("longitude"),
             )
             for row in rows
         ]
