@@ -49,6 +49,9 @@ const NetworkPage = ({
   const [selectedId, setSelectedId] =
     useState(null);
 
+  const [removedIds, setRemovedIds] =
+    useState(() => new Set());
+
   /* Prevent the same company graph from being fetched twice on
      React StrictMode's development-only effect re-run. */
   const graphFetchStartedForRef = useRef(null);
@@ -117,6 +120,7 @@ const NetworkPage = ({
     setDisrupted(new Set());
     setSim(null);
     setSelectedId(null);
+    setRemovedIds(new Set());
 
     fetchGraph(companyId)
       .then((data) => {
@@ -142,19 +146,21 @@ const NetworkPage = ({
     const raw =
       graph?.nodes ?? [];
 
-    return raw.map((n) => ({
-      id: n.id,
+    return raw
+      .filter((n) => !removedIds.has(n.id))
+      .map((n) => ({
+        id: n.id,
 
-      label:
-        n.label ||
-        n.name ||
-        n.id,
+        label:
+          n.label ||
+          n.name ||
+          n.id,
 
-      type: n.type,
+        type: n.type,
 
-      risk: nodeRisk(n),
-    }));
-  }, [graph]);
+        risk: nodeRisk(n),
+      }));
+  }, [graph, removedIds]);
 
   /* =========================================================
      LINKS
@@ -166,12 +172,18 @@ const NetworkPage = ({
       graph?.links ??
       [];
 
-    return raw.map((e) => ({
-      source: e.source,
-      target: e.target,
-      relation: e.relation,
-    }));
-  }, [graph]);
+    return raw
+      .filter(
+        (e) =>
+          !removedIds.has(e.source) &&
+          !removedIds.has(e.target),
+      )
+      .map((e) => ({
+        source: e.source,
+        target: e.target,
+        relation: e.relation,
+      }));
+  }, [graph, removedIds]);
 
   /* =========================================================
      COMPANY NODE
@@ -329,6 +341,31 @@ const NetworkPage = ({
     },
     [],
   );
+
+  const removeSelectedNode = useCallback(() => {
+    if (
+      !selectedNode ||
+      selectedNode.type !== 'supplier'
+    ) {
+      return;
+    }
+
+    const id = selectedNode.id;
+
+    setRemovedIds((previous) => {
+      const next = new Set(previous);
+      next.add(id);
+      return next;
+    });
+
+    setDisrupted((previous) => {
+      const next = new Set(previous);
+      next.delete(id);
+      return next;
+    });
+
+    setSelectedId(null);
+  }, [selectedNode]);
 
   /* =========================================================
      RUN SIMULATION
@@ -935,6 +972,30 @@ const NetworkPage = ({
                   </span>
                 </button>
               ))}
+            </div>
+
+            <div className="network-supplier-action-row">
+              <button
+                type="button"
+                className="network-supplier-select-button"
+                onClick={() => {
+                  if (selectedNode?.type === 'supplier') {
+                    selectFromDirectory(selectedNode.id);
+                  }
+                }}
+                disabled={!selectedNode || selectedNode.type !== 'supplier'}
+              >
+                Select
+              </button>
+
+              <button
+                type="button"
+                className="network-supplier-remove-button"
+                onClick={removeSelectedNode}
+                disabled={!selectedNode || selectedNode.type !== 'supplier'}
+              >
+                Remove
+              </button>
             </div>
           </section>
 
