@@ -103,7 +103,7 @@ const AlertsPage = ({ companyId }) => {
                         className="alert-read-button"
                         onClick={() => onMarkRead(alert.id)}
                       >
-                        Mark as read
+                        Reviewed
                       </button>
                     )}
 
