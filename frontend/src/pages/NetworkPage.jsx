@@ -1025,32 +1025,6 @@ const NetworkPage = ({
               ))}
             </div>
 
-            <div className="network-supplier-action-row">
-              <button
-                type="button"
-                className="network-supplier-select-button"
-                onClick={selectPendingSupplier}
-                disabled={
-                  !pendingSupplierId &&
-                  !selectedId
-                }
-              >
-                Select
-              </button>
-
-              <button
-                type="button"
-                className="network-supplier-remove-button"
-                onClick={removeSelectedNode}
-                disabled={
-                  !pendingSupplierId &&
-                  (!selectedNode ||
-                    selectedNode.type !== 'supplier')
-                }
-              >
-                Remove
-              </button>
-            </div>
           </section>
 
         </aside>
