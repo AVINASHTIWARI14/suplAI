@@ -90,6 +90,7 @@ const Home = () => {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [howToUseOpen, setHowToUseOpen] = useState(false);
@@ -98,6 +99,7 @@ const Home = () => {
   const switchMode = (next) => {
     setMode(next);
     setError('');
+    setPasswordError('');
     setEmail('');
     setPassword('');
     setFullName('');
@@ -305,6 +307,13 @@ const Home = () => {
   const handleRegister = async (event) => {
     event.preventDefault();
 
+    if (password.length < 8) {
+      setPasswordError('Enter 8 or more characters.');
+      setAuthTransition(false);
+      return;
+    }
+
+    setPasswordError('');
     setError('');
     setAuthTransition(true);
     setLoading(true);
@@ -317,10 +326,15 @@ const Home = () => {
       });
     } catch (regError) {
       setAuthTransition(false);
-      setError(
-        regError.response?.data?.detail ||
-          'Registration failed. Please try again.',
-      );
+
+      const detail = regError.response?.data?.detail;
+      const message = Array.isArray(detail)
+        ? detail
+            .map((item) => item?.msg || 'Invalid input')
+            .join(', ')
+        : detail || 'Registration failed. Please try again.';
+
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -685,14 +699,38 @@ const Home = () => {
                   id="hr-password"
                   type="password"
                   value={password}
-                  onChange={(e) =>
-                    setPassword(e.target.value)
-                  }
-                  placeholder="Min 6 characters"
-                  minLength={6}
+                  onChange={(e) => {
+                    const nextPassword = e.target.value;
+                    setPassword(nextPassword);
+                    setPasswordError(
+                      nextPassword.length > 0 && nextPassword.length < 8
+                        ? 'Enter 8 or more characters.'
+                        : '',
+                    );
+                  }}
+                  placeholder="Min 8 characters"
+                  minLength={8}
                   required
+                  aria-describedby="hr-password-error"
+                  aria-invalid={Boolean(passwordError)}
                 />
               </div>
+
+              {passwordError && (
+                <p
+                  id="hr-password-error"
+                  className="home-password-error"
+                  style={{
+                    margin: '6px 0 0',
+                    color: '#e53935',
+                    fontSize: '0.82rem',
+                    fontWeight: 700,
+                    lineHeight: 1.35,
+                  }}
+                >
+                  {passwordError}
+                </p>
+              )}
             </div>
 
             {error && (
