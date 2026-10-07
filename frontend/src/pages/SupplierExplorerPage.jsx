@@ -9,7 +9,7 @@ const SupplierExplorerPage = ({ companyId }) => {
   const [country, setCountry] = useState('All');
   const [riskMax, setRiskMax] = useState(100);
   const [costMax, setCostMax] = useState(100);
-  const [leadMax, setLeadMax] = useState(90);
+  const [leadMax, setLeadMax] = useState(120);
   const [loading, setLoading] = useState(true);
   const [countryOpen, setCountryOpen] = useState(false);
   const countryDropdownRef = useRef(null);
@@ -81,7 +81,7 @@ const SupplierExplorerPage = ({ companyId }) => {
     setCountry('All');
     setRiskMax(100);
     setCostMax(100);
-    setLeadMax(90);
+    setLeadMax(120);
     setCountryOpen(false);
   };
 
@@ -92,7 +92,7 @@ const SupplierExplorerPage = ({ companyId }) => {
 
   const riskTicks = makeTicks(0, 100);
   const costTicks = makeTicks(0, 100);
-  const leadTicks = makeTicks(1, 90);
+  const leadTicks = makeTicks(1, 120);
 
   const supplierInteractionStyles = `
     /* Supplier cards — extremely subtle hover only */
@@ -323,10 +323,10 @@ const SupplierExplorerPage = ({ companyId }) => {
             style={{
               '--min': 1,
               '--val': leadMax,
-              '--max': 90,
+              '--max': 120,
               '--n': 10,
               '--slider-percent': `${
-                ((leadMax - 1) / 89) * 100
+                ((leadMax - 1) / 119) * 100
               }%`,
             }}
           >
@@ -351,7 +351,7 @@ const SupplierExplorerPage = ({ companyId }) => {
                 id="supplier-lead-range"
                 type="range"
                 min="1"
-                max="90"
+                max="120"
                 value={leadMax}
                 list="lead-range-list"
                 onChange={(event) =>
