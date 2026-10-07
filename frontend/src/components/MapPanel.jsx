@@ -245,13 +245,6 @@ const MapPanel = ({
     return { high, medium, low, total: points.length };
   }, [points]);
 
-  const mapKey = useMemo(
-    () =>
-      points.map((point) => point.id).join('-') +
-      (hub ? `${hub.lat}-${hub.lng}` : ''),
-    [points, hub],
-  );
-
   return (
     <div className="card map-card">
       <div className="map-card-header">
@@ -268,7 +261,6 @@ const MapPanel = ({
 
       <div className="map-viewport">
         <MapContainer
-          key={mapKey}
           center={[10, 0]}
           zoom={DEFAULT_ZOOM}
           minZoom={3}
