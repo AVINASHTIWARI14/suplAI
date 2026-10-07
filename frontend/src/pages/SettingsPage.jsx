@@ -11,6 +11,106 @@ import { useLanguage } from '../context/LanguageContext.jsx';
 
 import SourceBadge from '../components/SourceBadge.jsx';
 
+const CountryFlag = ({ code, label }) => {
+  const common = {
+    viewBox: '0 0 36 24',
+    role: 'img',
+    'aria-label': label,
+  };
+
+  switch (code) {
+    case 'en':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="24" fill="#b22234" />
+          {[2, 6, 10, 14, 18, 22].map((y) => (
+            <rect key={y} y={y} width="36" height="2" fill="#fff" />
+          ))}
+          <rect width="16" height="13" fill="#3c3b6e" />
+          <g fill="#fff">
+            {[
+              [2, 2], [6, 2], [10, 2], [14, 2],
+              [4, 5], [8, 5], [12, 5],
+              [2, 8], [6, 8], [10, 8], [14, 8],
+            ].map(([x, y], i) => (
+              <circle key={i} cx={x} cy={y} r="0.7" />
+            ))}
+          </g>
+        </svg>
+      );
+    case 'hi':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="8" fill="#ff9933" />
+          <rect y="8" width="36" height="8" fill="#fff" />
+          <rect y="16" width="36" height="8" fill="#138808" />
+          <circle cx="18" cy="12" r="3" fill="none" stroke="#000080" strokeWidth="1" />
+          <circle cx="18" cy="12" r="0.8" fill="#000080" />
+        </svg>
+      );
+    case 'es':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="24" fill="#c60b1e" />
+          <rect y="6" width="36" height="12" fill="#ffc400" />
+        </svg>
+      );
+    case 'fr':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="12" height="24" fill="#0055a4" />
+          <rect x="12" width="12" height="24" fill="#fff" />
+          <rect x="24" width="12" height="24" fill="#ef4135" />
+        </svg>
+      );
+    case 'de':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="8" fill="#000" />
+          <rect y="8" width="36" height="8" fill="#dd0000" />
+          <rect y="16" width="36" height="8" fill="#ffce00" />
+        </svg>
+      );
+    case 'pt':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="24" fill="#009739" />
+          <polygon points="18,3 33,12 18,21 3,12" fill="#ffdf00" />
+          <circle cx="18" cy="12" r="5" fill="#002776" />
+        </svg>
+      );
+    case 'ja':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="24" fill="#fff" />
+          <circle cx="18" cy="12" r="6" fill="#bc002d" />
+        </svg>
+      );
+    case 'zh':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="24" fill="#de2910" />
+          <polygon points="7,3 8.2,6.4 11.8,6.4 8.9,8.4 10,11.7 7,9.7 4,11.7 5.1,8.4 2.2,6.4 5.8,6.4" fill="#ffde00" />
+        </svg>
+      );
+    case 'ar':
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="24" fill="#000" />
+          <rect y="8" width="36" height="8" fill="#fff" />
+          <rect y="16" width="36" height="8" fill="#00732f" />
+          <rect width="8" height="24" fill="#ce1126" />
+        </svg>
+      );
+    default:
+      return (
+        <svg {...common} className="settings-language-flag-svg">
+          <rect width="36" height="24" rx="2" fill="#94a3b8" />
+        </svg>
+      );
+  }
+};
+
 const SettingsPage = ({ companyId, companyName }) => {
   const { canEdit } = useAuth();
   const { language, setLanguage, languages } = useLanguage();
@@ -137,17 +237,11 @@ const SettingsPage = ({ companyId, companyName }) => {
               <span
                 className="settings-language-flag"
                 aria-hidden="true"
-                style={{
-                  fontFamily:
-                    '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif',
-                  fontSize: '1.35rem',
-                  lineHeight: 1,
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  textShadow: 'none',
-                }}
               >
-                {item.flag}
+                <CountryFlag
+                  code={item.code}
+                  label={`${item.label} — ${item.country}`}
+                />
               </span>
 
               <span className="settings-language-info">
