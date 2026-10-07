@@ -19,6 +19,22 @@ const TopNav = ({
   const isHome = location.pathname === '/';
   const isAuthenticated = Boolean(user);
 
+  const handleProtectedNav = (event, path) => {
+    if (isAuthenticated) return;
+
+    event.preventDefault();
+
+    // Already sitting on the signup card: do not navigate or scroll again.
+    if (
+      location.pathname === '/' &&
+      location.hash === '#signup'
+    ) {
+      return;
+    }
+
+    navigate('/#signup');
+  };
+
   const displayName =
     user?.full_name ||
     user?.name ||
@@ -53,6 +69,7 @@ const TopNav = ({
       <nav className="header-nav" aria-label="Primary navigation">
         <NavLink
           to="/dashboard"
+          onClick={(event) => handleProtectedNav(event, '/dashboard')}
           className={({ isActive }) =>
             `nav-link${isActive ? ' active' : ''}`
           }
@@ -62,6 +79,7 @@ const TopNav = ({
 
         <NavLink
           to="/suppliers"
+          onClick={(event) => handleProtectedNav(event, '/suppliers')}
           className={({ isActive }) =>
             `nav-link${isActive ? ' active' : ''}`
           }
@@ -71,6 +89,7 @@ const TopNav = ({
 
         <NavLink
           to="/network"
+          onClick={(event) => handleProtectedNav(event, '/network')}
           className={({ isActive }) =>
             `nav-link${isActive ? ' active' : ''}`
           }
@@ -80,6 +99,7 @@ const TopNav = ({
 
         <NavLink
           to="/alternatives"
+          onClick={(event) => handleProtectedNav(event, '/alternatives')}
           className={({ isActive }) =>
             `nav-link${isActive ? ' active' : ''}`
           }
@@ -89,6 +109,7 @@ const TopNav = ({
 
         <NavLink
           to="/disruptions"
+          onClick={(event) => handleProtectedNav(event, '/disruptions')}
           className={({ isActive }) =>
             `nav-link${isActive ? ' active' : ''}`
           }
@@ -98,6 +119,7 @@ const TopNav = ({
 
         <NavLink
           to="/alerts"
+          onClick={(event) => handleProtectedNav(event, '/alerts')}
           className={({ isActive }) =>
             `nav-link${isActive ? ' active' : ''}`
           }
@@ -107,6 +129,7 @@ const TopNav = ({
 
         <NavLink
           to="/settings"
+          onClick={(event) => handleProtectedNav(event, '/settings')}
           className={({ isActive }) =>
             `nav-link${isActive ? ' active' : ''}`
           }
