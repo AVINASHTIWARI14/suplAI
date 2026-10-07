@@ -16721,3 +16721,12 @@ html[dir="rtl"] .settings-language-check {
     transition: none !important;
   }
 }
+
+
+/* FINAL DASHBOARD FIX — keep supplier nodes above the scroll dim/blur layer.
+   Leaflet's default marker pane is z-index 600, so the story overlay must
+   stay below it; otherwise supplier nodes look like they disappear as you
+   scroll into the cards. */
+.main-content:has(.dashboard-story-page) .dashboard-story-map-overlay {
+  z-index: 500 !important;
+}
