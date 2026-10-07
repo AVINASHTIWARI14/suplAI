@@ -16172,14 +16172,21 @@ body,
 
 .settings-language-flag {
   flex: 0 0 auto;
-  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif !important;
-  font-size: 1.22rem !important;
-  line-height: 1 !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  text-shadow: none !important;
-  letter-spacing: normal !important;
-  -webkit-text-stroke: 0 !important;
+  width: 36px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-language-flag-svg {
+  display: block;
+  width: 36px;
+  height: 24px;
+  flex: 0 0 36px;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
 .settings-language-info {
