@@ -172,6 +172,11 @@ const DashboardPage = ({
           String(revealProgress * 0.82),
         );
 
+        mapStage.style.setProperty(
+          '--story-map-blur',
+          String((revealProgress * 8).toFixed(2)) + 'px',
+        );
+
         frame = null;
       });
     };
