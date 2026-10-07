@@ -4,18 +4,11 @@ import { useAuth } from '../context/AuthContext.jsx';
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
+  // Do not block the whole page with a loading overlay while the
+  // session is being restored. Each page can render its own content
+  // loading state without replacing the entire app viewport.
   if (loading) {
-    return (
-      <div className="route-auth-loading">
-        <div className="route-auth-loading__card">
-          <div
-            className="route-auth-loading__spinner"
-            aria-hidden="true"
-          />
-          <span>Loading SuplAI…</span>
-        </div>
-      </div>
-    );
+    return children;
   }
 
   if (!isAuthenticated) {
