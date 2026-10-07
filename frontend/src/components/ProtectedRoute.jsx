@@ -6,8 +6,14 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="auth-page">
-        <div className="auth-card">Loading…</div>
+      <div className="route-auth-loading">
+        <div className="route-auth-loading__card">
+          <div
+            className="route-auth-loading__spinner"
+            aria-hidden="true"
+          />
+          <span>Loading SuplAI…</span>
+        </div>
       </div>
     );
   }
