@@ -101,8 +101,16 @@ const DisruptionFeedPage = ({ company }) => {
         return /fx|forex|currency|exchange|rate|volatility/.test(text);
       }) || cards[0] || null;
 
-      if (fxCard) fxCard.classList.add('fx-signal-card');
+      if (fxCard) {
+        fxCard.classList.add('fx-signal-card');
+        fxCard.style.setProperty('--signal-bg-image', "url('/src/assets/signals/fx-background.jpg')");
+      }
+
       weatherCard.classList.add('weather-signal-card');
+      weatherCard.style.setProperty(
+        '--signal-bg-image',
+        "url('/src/assets/signals/weather-background.jpg')",
+      );
 
       let imageWrap = weatherCard.querySelector('.weather-signal-image-wrap');
       if (!imageWrap) {
