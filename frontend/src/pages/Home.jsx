@@ -125,13 +125,27 @@ const Home = () => {
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        loginRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
+        const loginCard = loginRef.current;
 
-        loginRef.current
-          ?.querySelector('input[type="email"]')
+        if (!loginCard) return;
+
+        const rect = loginCard.getBoundingClientRect();
+        const viewportHeight =
+          window.innerHeight || document.documentElement.clientHeight;
+
+        const isAlreadyVisible =
+          rect.top < viewportHeight * 0.85 &&
+          rect.bottom > viewportHeight * 0.15;
+
+        if (!isAlreadyVisible) {
+          loginCard.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }
+
+        loginCard
+          .querySelector('input[type="email"]')
           ?.focus({ preventScroll: true });
       });
     });
