@@ -16670,3 +16670,37 @@ html[dir="rtl"] .settings-language-check {
     height: 104px !important;
   }
 }
+
+
+/* FINAL OVERRIDE — weather card content stays on the left, artwork stays on the right */
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .signal-head,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .mono.big,
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .signal-meta {
+  position: relative !important;
+  z-index: 12 !important;
+  margin-right: 150px !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .mono.big {
+  width: max-content !important;
+  max-width: 100% !important;
+  text-align: left !important;
+}
+
+.main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .signal-meta {
+  width: calc(100% - 150px) !important;
+  justify-content: flex-start !important;
+  gap: 18px !important;
+}
+
+@media (max-width: 700px) {
+  .main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .signal-head,
+  .main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .mono.big,
+  .main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .signal-meta {
+    margin-right: 118px !important;
+  }
+
+  .main-content:has(.disruption-feed-page) .signals-indicators > .signal-card.weather-signal-card > .signal-meta {
+    width: calc(100% - 118px) !important;
+  }
+}
