@@ -109,17 +109,31 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (location.hash !== '#login') return;
+    if (location.hash !== '#login' && location.hash !== '#signup') {
+      return;
+    }
+
+    if (location.hash === '#signup') {
+      setMode('register');
+      setError('');
+      setPasswordError('');
+    } else {
+      setMode('login');
+      setError('');
+      setPasswordError('');
+    }
 
     requestAnimationFrame(() => {
-      loginRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
+      requestAnimationFrame(() => {
+        loginRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
 
-      loginRef.current
-        ?.querySelector('input[type="email"]')
-        ?.focus({ preventScroll: true });
+        loginRef.current
+          ?.querySelector('input[type="email"]')
+          ?.focus({ preventScroll: true });
+      });
     });
   }, [location.hash]);
 
