@@ -134,7 +134,19 @@ const SettingsPage = ({ companyId, companyName }) => {
               onClick={() => setLanguage(item.code)}
               aria-pressed={language === item.code}
             >
-              <span className="settings-language-flag" aria-hidden="true">
+              <span
+                className="settings-language-flag"
+                aria-hidden="true"
+                style={{
+                  fontFamily:
+                    '"Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif',
+                  fontSize: '1.35rem',
+                  lineHeight: 1,
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  textShadow: 'none',
+                }}
+              >
                 {item.flag}
               </span>
 
