@@ -17,8 +17,8 @@ import tornadoWeather from '../assets/weather/tornado.png';
 import fogWeather from '../assets/weather/fog.png';
 import windyWeather from '../assets/weather/windy.png';
 import hazeWeather from '../assets/weather/haze.png';
-import fxBackground from '../assets/signals/fx-background.jpg';
-import weatherBackground from '../assets/signals/weather-background.jpg';
+import fxBackground from '../assets/signals/fx-bg.jpg';
+import weatherBackground from '../assets/signals/weather-bg.jpg';
 
 const DisruptionFeedPage = ({ company }) => {
   const [events, setEvents] = useState([]);
