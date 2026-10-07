@@ -2,6 +2,18 @@ import { useEffect, useState } from 'react';
 import SourceBadge from './SourceBadge.jsx';
 import { fetchNews, fetchFx, fetchWeather } from '../api/client.js';
 import { timeAgo } from '../utils/dates.js';
+import clearWeather from '../assets/weather/clear.png';
+import partlyCloudyWeather from '../assets/weather/partly-cloudy.png';
+import cloudyWeather from '../assets/weather/cloudy.png';
+import lightRainWeather from '../assets/weather/light-rain.png';
+import rainWeather from '../assets/weather/rain.png';
+import thunderstormWeather from '../assets/weather/thunderstorm.png';
+import snowWeather from '../assets/weather/snow.png';
+import sleetWeather from '../assets/weather/sleet.png';
+import tornadoWeather from '../assets/weather/tornado.png';
+import fogWeather from '../assets/weather/fog.png';
+import windyWeather from '../assets/weather/windy.png';
+import hazeWeather from '../assets/weather/haze.png';
 
 const FALLBACK_HEADLINES = [
   {
@@ -35,6 +47,27 @@ const FALLBACK_HEADLINES = [
     keywords: ['weather', 'freight'],
   },
 ];
+
+const getWeatherImage = (text = '') => {
+  const t = text.toLowerCase();
+
+  if (/tornado|funnel|waterspout/.test(t)) return tornadoWeather;
+  if (/thunder|lightning|storm/.test(t)) return thunderstormWeather;
+  if (/sleet|freezing rain|wintry mix|ice pellets/.test(t)) return sleetWeather;
+  if (/snow|blizzard|snowfall/.test(t)) return snowWeather;
+  if (/fog|mist/.test(t)) return fogWeather;
+  if (/haze|dust|smoke|sand/.test(t)) return hazeWeather;
+  if (/wind|gale|strong breeze/.test(t)) return windyWeather;
+  if (/drizzle/.test(t)) return lightRainWeather;
+  if (/heavy rain|downpour|pouring|shower/.test(t)) return rainWeather;
+  if (/light rain/.test(t)) return lightRainWeather;
+  if (/rain/.test(t)) return rainWeather;
+  if (/partly cloudy|partly cloud|few clouds|scattered clouds/.test(t)) return partlyCloudyWeather;
+  if (/overcast|mostly cloudy|cloudy|broken clouds/.test(t)) return cloudyWeather;
+  if (/clear|sunny/.test(t)) return clearWeather;
+
+  return cloudyWeather;
+};
 
 const severityColor = (sev = '') => {
   const s = sev.toLowerCase();
@@ -117,6 +150,13 @@ const SignalsPanel = ({ company, newsQuery }) => {
               <div className="signal-meta">
                 <span className="muted">{weather.description || weather.condition}</span>
                 <span style={{ color: severityColor(weather.severity) }}>{weather.severity || 'calm'}</span>
+              </div>
+              <div className="weather-signal-image-wrap" aria-hidden="true">
+                <img
+                  className="weather-signal-image"
+                  src={getWeatherImage(weather.description || weather.condition || '')}
+                  alt=""
+                />
               </div>
             </>
           ) : (
