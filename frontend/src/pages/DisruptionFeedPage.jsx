@@ -17,6 +17,8 @@ import tornadoWeather from '../assets/weather/tornado.png';
 import fogWeather from '../assets/weather/fog.png';
 import windyWeather from '../assets/weather/windy.png';
 import hazeWeather from '../assets/weather/haze.png';
+import fxBackground from '../assets/signals/fx-background.jpg';
+import weatherBackground from '../assets/signals/weather-background.jpg';
 
 const DisruptionFeedPage = ({ company }) => {
   const [events, setEvents] = useState([]);
@@ -103,13 +105,13 @@ const DisruptionFeedPage = ({ company }) => {
 
       if (fxCard) {
         fxCard.classList.add('fx-signal-card');
-        fxCard.style.setProperty('--signal-bg-image', "url('/src/assets/signals/fx-background.jpg')");
+        fxCard.style.setProperty('--signal-bg-image', `url("${fxBackground}")`);
       }
 
       weatherCard.classList.add('weather-signal-card');
       weatherCard.style.setProperty(
         '--signal-bg-image',
-        "url('/src/assets/signals/weather-background.jpg')",
+        `url("${weatherBackground}")`,
       );
 
       let imageWrap = weatherCard.querySelector('.weather-signal-image-wrap');
