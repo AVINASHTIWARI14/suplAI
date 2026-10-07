@@ -16562,3 +16562,65 @@ html[dir="rtl"] .settings-language-check {
 @keyframes route-auth-spin {
   to { transform: rotate(360deg); }
 }
+
+
+/* ── Disruption signal cards: image-backed frosted glass ── */
+.main-content:has(.disruption-feed-page) .signal-card.fx-signal-card,
+.main-content:has(.disruption-feed-page) .signal-card.weather-signal-card {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 116px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background: rgba(11, 31, 58, 0.58) !important;
+  background-color: rgba(11, 31, 58, 0.58) !important;
+  backdrop-filter: blur(9px) saturate(115%) !important;
+  -webkit-backdrop-filter: blur(9px) saturate(115%) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18) !important;
+}
+
+.main-content:has(.disruption-feed-page) .signal-card.fx-signal-card::before,
+.main-content:has(.disruption-feed-page) .signal-card.weather-signal-card::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -12px !important;
+  z-index: -2 !important;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(7, 24, 44, 0.78) 0%,
+      rgba(7, 24, 44, 0.48) 52%,
+      rgba(7, 24, 44, 0.58) 100%
+    ),
+    var(--signal-bg-image) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  filter: blur(3px) saturate(0.95) !important;
+  transform: scale(1.06) !important;
+}
+
+.main-content:has(.disruption-feed-page) .signal-card.fx-signal-card::after,
+.main-content:has(.disruption-feed-page) .signal-card.weather-signal-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(4, 16, 32, 0.34)
+  ) !important;
+}
+
+.main-content:has(.disruption-feed-page) .signal-card.fx-signal-card > *,
+.main-content:has(.disruption-feed-page) .signal-card.weather-signal-card > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.main-content:has(.disruption-feed-page) .signal-card.fx-signal-card .card-title,
+.main-content:has(.disruption-feed-page) .signal-card.weather-signal-card .card-title {
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
