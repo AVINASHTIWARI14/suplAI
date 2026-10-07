@@ -16730,3 +16730,246 @@ html[dir="rtl"] .settings-language-check {
 .main-content:has(.dashboard-story-page) .dashboard-story-map-overlay {
   z-index: 500 !important;
 }
+
+
+/* ============================================================
+   UNIVERSAL RESPONSIVE SAFETY
+   Keep the same visual proportions across laptop/desktop ratios
+   and prevent text, controls, and cards from overlapping.
+   The SuplAI logo is intentionally excluded.
+   ============================================================ */
+
+html {
+  font-size: 100%;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  min-width: 0;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label,
+a,
+button {
+  overflow-wrap: break-word;
+}
+
+/* Header: fluid columns instead of fixed-width pressure on laptops. */
+.top-nav {
+  grid-template-columns:
+    minmax(180px, 1fr)
+    minmax(0, auto)
+    minmax(180px, 1fr) !important;
+}
+
+.header-nav {
+  min-width: 0 !important;
+  flex-wrap: wrap !important;
+}
+
+.header-nav .nav-link {
+  font-size: clamp(0.78rem, 0.78vw + 0.35rem, 1.15rem) !important;
+  line-height: 1.15 !important;
+}
+
+.top-nav-actions {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.top-nav-actions > * {
+  min-width: 0 !important;
+}
+
+/* Company selector and profile controls shrink before they overlap. */
+.company-dropdown {
+  width: clamp(135px, 13vw, 190px) !important;
+  min-width: 0 !important;
+}
+
+.company-dropdown-selected {
+  min-width: 0 !important;
+}
+
+.company-dropdown-selected-text {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.header-login-button {
+  max-width: 160px !important;
+  white-space: nowrap;
+}
+
+/* Main page containers stay centered without forcing fixed widths. */
+.page-body {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  min-width: 0;
+}
+
+/* Generic grids/cards should collapse cleanly instead of colliding. */
+.dashboard-grid-top,
+.dashboard-grid-bottom,
+.explorer-layout,
+.network-layout,
+.signals-panel,
+.dashboard-info-grid {
+  min-width: 0;
+}
+
+.dashboard-grid-top > *,
+.dashboard-grid-bottom > *,
+.explorer-layout > *,
+.network-layout > *,
+.signals-panel > *,
+.dashboard-info-grid > * {
+  min-width: 0;
+}
+
+/* Buttons and control rows wrap instead of overlapping at odd ratios. */
+.card-actions,
+.form-actions,
+.action-row,
+.toolbar,
+.filters-row,
+.locate-row,
+.profile-actions,
+.site-footer-right {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.card-actions > *,
+.form-actions > *,
+.action-row > *,
+.toolbar > *,
+.filters-row > *,
+.locate-row > * {
+  min-width: 0;
+}
+
+/* Long labels never push neighboring controls outside their container. */
+.card-title,
+.page-sub,
+.dashboard-row-title,
+.dashboard-row-meta,
+.dashboard-row-date,
+.alert-title,
+.alert-message,
+.company-dropdown-option,
+.settings-language-info,
+.site-footer {
+  overflow-wrap: anywhere;
+}
+
+/* Charts/maps keep their intrinsic aspect without forcing overflow. */
+.map-card,
+.map-viewport,
+.dashboard-risk-trend-card,
+.dashboard-risk-trend-chart,
+.signal-card,
+.card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Laptop-safe breakpoint: keep nav readable before the phone breakpoint. */
+@media (max-width: 1250px) {
+  .top-nav {
+    grid-template-columns: minmax(160px, 1fr) minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .top-nav-brand {
+    min-width: 0;
+  }
+
+  .top-nav-actions {
+    justify-self: end;
+  }
+
+  .header-nav {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    justify-content: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    scrollbar-width: none;
+  }
+
+  .header-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .header-nav .nav-link {
+    flex: 0 0 auto;
+  }
+}
+
+/* Small laptops / short-height screens: reduce vertical pressure only. */
+@media (max-height: 760px) and (min-width: 701px) {
+  .top-nav {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+  }
+
+  .header-nav .nav-link {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .site-footer {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+}
+
+/* Universal mobile containment. */
+@media (max-width: 700px) {
+  .page-body {
+    padding-inline: 12px;
+  }
+
+  .dashboard-grid-top,
+  .dashboard-grid-bottom,
+  .explorer-layout,
+  .network-layout,
+  .signals-panel,
+  .dashboard-info-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .site-footer-right {
+    justify-self: stretch !important;
+    justify-content: center !important;
+  }
+}
