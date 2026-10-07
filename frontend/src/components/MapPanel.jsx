@@ -282,7 +282,7 @@ const MapPanel = ({
           <TileLayer
             url={TERRAIN_TILES}
             attribution={TERRAIN_ATTRIBUTION}
-            noWrap
+            noWrap={false}
           />
 
           <MapFitBounds />
