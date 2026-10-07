@@ -16704,3 +16704,20 @@ html[dir="rtl"] .settings-language-check {
     width: calc(100% - 118px) !important;
   }
 }
+
+
+/* FINAL DASHBOARD EFFECT — map softly blurs as lower cards enter */
+.main-content:has(.dashboard-story-page) .dashboard-story-map-canvas {
+  filter: blur(var(--story-map-blur, 0px)) !important;
+  transition: filter 180ms ease-out !important;
+  transform: scale(1.01) !important;
+  transform-origin: center center !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main-content:has(.dashboard-story-page) .dashboard-story-map-canvas {
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
