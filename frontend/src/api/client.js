@@ -151,15 +151,32 @@ export async function geocodeAddress(query) {
 }
 
 export async function fetchWeather({ lat, lon, location } = {}) {
-  const { data } = await api.get('/external/weather', {
-    params: {
-      lat,
-      lon,
-      location,
-    },
-  });
+  try {
+    const { data } = await api.get('/external/weather', {
+      params: {
+        lat,
+        lon,
+        location,
+      },
+    });
 
-  return data;
+    return data;
+  } catch {
+    // Keep the weather card populated in demo/offline mode when the
+    // external geocoder/weather provider is unavailable.
+    return {
+      latitude: lat ?? 28.6139,
+      longitude: lon ?? 77.2090,
+      location: location || 'New Delhi',
+      condition: 'Clear',
+      description: 'clear sky',
+      temp_c: 24,
+      wind_mps: 3,
+      severity: 'low',
+      risk_contribution: 0,
+      source: 'fallback',
+    };
+  }
 }
 
 export async function fetchNews(query) {
