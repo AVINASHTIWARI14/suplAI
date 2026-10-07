@@ -16973,3 +16973,30 @@ button {
     justify-content: center !important;
   }
 }
+
+
+/* FINAL DASHBOARD MAP WIDTH FIX
+   The story map must always span the actual viewport width, even when a
+   parent layout is temporarily narrower (common on narrow/mobile captures).
+   Prevent a plain dark-blue strip from appearing on the right side. */
+.main-content:has(.dashboard-story-page) .dashboard-story-page,
+.main-content:has(.dashboard-story-page) .dashboard-story-map,
+.main-content:has(.dashboard-story-page) .dashboard-story-map-canvas,
+.main-content:has(.dashboard-story-page) .dashboard-map-full,
+.main-content:has(.dashboard-story-page) .dashboard-map-fullscreen,
+.main-content:has(.dashboard-story-page) .dashboard-map-fullscreen .map-card,
+.main-content:has(.dashboard-story-page) .dashboard-map-fullscreen .map-viewport,
+.main-content:has(.dashboard-story-page) .dashboard-map-fullscreen .leaflet-container {
+  width: 100vw !important;
+  max-width: none !important;
+}
+
+.main-content:has(.dashboard-story-page) .dashboard-story-map,
+.main-content:has(.dashboard-story-page) .dashboard-story-map-canvas,
+.main-content:has(.dashboard-story-page) .dashboard-map-full,
+.main-content:has(.dashboard-story-page) .dashboard-map-fullscreen,
+.main-content:has(.dashboard-story-page) .dashboard-map-fullscreen .map-card,
+.main-content:has(.dashboard-story-page) .dashboard-map-fullscreen .map-viewport {
+  left: 0 !important;
+  right: auto !important;
+}
