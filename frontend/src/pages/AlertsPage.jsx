@@ -116,7 +116,7 @@ const AlertsPage = ({ companyId }) => {
                     onClick={() => onMarkRead(alert.id)}
                     disabled={alert.is_read}
                   >
-                    {alert.is_read ? 'Reviewed' : 'Reviewed'}
+                    {alert.is_read ? 'Reviewed' : 'Mark as Reviewed'}
                   </button>
 
                 </div>
