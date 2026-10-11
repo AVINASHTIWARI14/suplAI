@@ -1,4 +1,6 @@
-# SuplAI
+<p align="center">
+  <img src="./screenshots/suplai-header.jpg" alt="SupplAI — Supply Chain Risk Monitoring" width="100%">
+</p>
 
 > **Know what is coming. Keep supply moving.**
 
