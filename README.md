@@ -1,6 +1,11 @@
 <p align="center">
   <img src="./screenshots/suplai-header.jpg" alt="SupplAI — Supply Chain Risk Monitoring" width="100%">
 </p>
+
+> **Know what is coming. Keep supply moving.**
+
+SuplAI is an AI-powered **supply-chain risk monitoring platform** that helps businesses monitor suppliers, visualize dependencies, detect disruptions, score risk, and simulate the impact of supplier failures.
+
 <hr>
 <p align="center">
   <a href="https://supl-ai.vercel.app/"><strong>Live Demo</strong></a>
@@ -8,10 +13,6 @@
   <a href="https://youtu.be/9WQxe0l1aWE"><strong>Demo Video</strong></a>
 </p>
 <hr>
-
-> **Know what is coming. Keep supply moving.**
-
-SuplAI is an AI-powered **supply-chain risk monitoring platform** that helps businesses monitor suppliers, visualize dependencies, detect disruptions, score risk, and simulate the impact of supplier failures.
 
 ## Features
 
