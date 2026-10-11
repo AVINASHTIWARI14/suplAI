@@ -30,33 +30,71 @@ SuplAI is an AI-powered **supply-chain risk monitoring platform** that helps bus
 ## Screenshots
 
 ### Landing Page
+The main dashboard introduces SupplAI and provides an overview of the platform.
+
 ![SupplAI Landing Page](./screenshots/home.jpg)
 
+---
+
 ### How to Use
+A quick guide to the key workflows and how to navigate the application.
+
 ![How to Use](./screenshots/how-to-use.jpg)
 
+---
+
 ### Global Supply Network
+Explore supplier locations and visualize connections across the supply network.
+
 ![Global Supply Network](./screenshots/network-map.jpg)
 
+---
+
 ### Suppliers
+Review supplier profiles, risk scores, lead times, and cost-related information.
+
 ![Supplier Risk Management](./screenshots/suppliers.jpg)
 
+---
+
 ### What-If Simulation
+Simulate supplier disruptions and inspect their potential impact on the wider network.
+
 ![What-If Simulation](./screenshots/simulation.jpg)
 
+---
+
 ### Alternatives
+Compare potential alternative suppliers to help reduce dependency on at-risk sources.
+
 ![Alternative Suppliers](./screenshots/alternatives.jpg)
 
+---
+
 ### Disruptions
+Monitor reported events that could affect suppliers, logistics, or supply continuity.
+
 ![Disruptions](./screenshots/disruptions.jpg)
 
+---
+
 ### Alerts
+View risk alerts highlighting suppliers or events that cross configured thresholds.
+
 ![Alerts](./screenshots/alerts.jpg)
 
+---
+
 ### Settings
+Manage application preferences and configure available integrations.
+
 ![Settings & Integration](./screenshots/settings.jpg)
 
+---
+
 ### Database
+A visual overview of the database structure supporting SupplAI's data model.
+
 ![Database Schema](./screenshots/database.jpg)
 
 ## Tech Stack
