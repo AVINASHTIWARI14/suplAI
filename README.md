@@ -1,13 +1,12 @@
 <p align="center">
   <img src="./screenshots/suplai-header.jpg" alt="SupplAI — Supply Chain Risk Monitoring" width="100%">
 </p>
-## Live Demo
 
-**https://supl-ai.vercel.app/**
-
-## Repository
-
-**https://github.com/AVINASHTIWARI14/suplAI**
+<p align="center">
+  <a href="https://supl-ai.vercel.app/"><strong>🚀 Live Demo</strong></a>
+  &nbsp; • &nbsp;
+  <a href="https://youtu.be/9WQxe0l1aWE"><strong>▶️ Demo Video</strong></a>
+</p>
 
 > **Know what is coming. Keep supply moving.**
 
