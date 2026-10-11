@@ -1,7 +1,6 @@
 <p align="center">
   <img src="./screenshots/suplai-header.jpg" alt="SupplAI — Supply Chain Risk Monitoring" width="100%">
 </p>
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 <p align="center">
   <a href="https://supl-ai.vercel.app/"><strong>🚀 Live Demo</strong></a>
   &nbsp; • &nbsp;
