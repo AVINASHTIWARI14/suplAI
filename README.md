@@ -95,7 +95,31 @@ Manage application preferences and configure available integrations.
 ### Database
 A visual overview of the database structure supporting SupplAI's data model.
 
-![Database Schema](./screenshots/database.jpg)
+<table>
+  <tr>
+    <td width="58%" valign="top">
+      <img src="./screenshots/database.jpg" alt="SupplAI Database Schema" width="100%">
+    </td>
+    <td width="42%" valign="top">
+      <h4>Supabase & PostgreSQL</h4>
+      <p>SupplAI uses Supabase/PostgreSQL to store supplier, company, dependency, disruption, and risk data.</p>
+      <p><strong>Core tables</strong></p>
+      <ul>
+        <li><code>companies</code> — company records</li>
+        <li><code>suppliers</code> — supplier details and risk scores</li>
+        <li><code>dependencies</code> — company-to-supplier links</li>
+        <li><code>supplier_dependencies</code> — multi-tier supplier relationships</li>
+        <li><code>disruption_events</code> — disruption event data</li>
+        <li><code>risk_history</code> — historical risk scores</li>
+        <li><code>alerts</code> — supplier and company alerts</li>
+        <li><code>app_users</code> — application users and roles</li>
+        <li><code>app_config</code> — risk thresholds and configuration</li>
+      </ul>
+      <p><strong>Row Level Security (RLS)</strong></p>
+      <p>RLS policies in Supabase should restrict table access according to the authenticated user and their role/company. The repository schema defines the tables and indexes; verify that RLS is enabled and policies are configured for the deployed project.</p>
+    </td>
+  </tr>
+</table>
 
 ## Tech Stack
 
