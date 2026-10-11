@@ -1,6 +1,13 @@
 <p align="center">
   <img src="./screenshots/suplai-header.jpg" alt="SupplAI — Supply Chain Risk Monitoring" width="100%">
 </p>
+## Live Demo
+
+**https://supl-ai.vercel.app/**
+
+## Repository
+
+**https://github.com/AVINASHTIWARI14/suplAI**
 
 > **Know what is coming. Keep supply moving.**
 
@@ -78,12 +85,6 @@ npm run dev
 
 Create a `.env` from `.env.example` and add the required configuration. The application can also run in **demo mode with synthetic data** when external services are not configured.
 
-## Live Demo
 
-**https://supl-ai.vercel.app/**
-
-## Repository
-
-**https://github.com/AVINASHTIWARI14/suplAI**
 
 > **Note:** The deployed demo uses synthetic supplier, disruption, and risk data.
